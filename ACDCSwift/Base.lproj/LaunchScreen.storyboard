@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFCompactDisplay-Light.otf">
+            <string>SFCompactDisplay-Light</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_tmobile" translatesAutoresizingMaskIntoConstraints="NO" id="Hzp-7W-dRx">
+                                <rect key="frame" x="312" y="344" width="400" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="400" id="Ny0-kK-NUc"/>
+                                    <constraint firstAttribute="height" constant="100" id="lHX-YB-Vo0"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZ8-R2-R0n">
+                                <rect key="frame" x="434" y="727" width="156" height="21"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snw-qm-J59">
+                                        <rect key="frame" x="16" y="0.5" width="66" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="66" id="fSb-vC-2TE"/>
+                                            <constraint firstAttribute="height" constant="21" id="k6i-Gx-EqR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFCompactDisplay-Light" family="SF Compact Display" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pervacioLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="FvU-Ei-tww">
+                                        <rect key="frame" x="82" y="5" width="74" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="9xe-pd-nEg"/>
+                                            <constraint firstAttribute="width" constant="74" id="Q0M-JY-bwA"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="snw-qm-J59" firstAttribute="centerY" secondItem="VZ8-R2-R0n" secondAttribute="centerY" id="5ie-KM-mtj"/>
+                                    <constraint firstItem="snw-qm-J59" firstAttribute="leading" secondItem="VZ8-R2-R0n" secondAttribute="leadingMargin" constant="8" id="AX0-rj-AOm"/>
+                                    <constraint firstAttribute="height" constant="21" id="N5X-7z-qGX"/>
+                                    <constraint firstItem="FvU-Ei-tww" firstAttribute="leading" secondItem="snw-qm-J59" secondAttribute="trailing" id="N93-J6-dEI"/>
+                                    <constraint firstItem="FvU-Ei-tww" firstAttribute="centerY" secondItem="VZ8-R2-R0n" secondAttribute="centerY" id="Nol-vN-SCd"/>
+                                    <constraint firstAttribute="trailing" secondItem="FvU-Ei-tww" secondAttribute="trailing" id="aVN-6e-Yny"/>
+                                    <constraint firstAttribute="width" constant="156" id="agc-h5-LLc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="VZ8-R2-R0n" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9T1-gW-55s"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VZ8-R2-R0n" secondAttribute="bottom" constant="20" id="Aym-T6-O1r"/>
+                            <constraint firstItem="Hzp-7W-dRx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="EXU-K3-M6i"/>
+                            <constraint firstItem="Hzp-7W-dRx" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="nCu-81-KbL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo_tmobile" width="264" height="64"/>
+        <image name="pervacioLogo.png" width="320" height="52"/>
+    </resources>
+</document>

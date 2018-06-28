@@ -1,0 +1,11 @@
+framework module AcdcNetwork {
+  umbrella header "AcdcNetwork.h"
+
+  export *
+  module * { export * }
+}
+
+module AcdcNetwork.Swift {
+    header "AcdcNetwork-Swift.h"
+    requires objc
+}
