@@ -298,7 +298,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         } else {
         cell?.backgroundColor = indexPath.row % 2 == 0 ? evenRowColor : oddRowColor
 
-            cell?.label.text = record.startDateTime
+            cell?.label.text = dateFromMillisecinds(timeInMilliseconds: record.startDateTime)//record["Date"]
             cell?.label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1)
             cell?.backgroundColor = indexPath.row % 2 == 0 ? evenRowColor : oddRowColor
             }
@@ -479,7 +479,6 @@ extension IMEIViewController {
         }
     }
     
-
     func getTransactionHistory() {
         
         //parameters to send. //TODO:Add guardStatments
@@ -506,14 +505,22 @@ extension IMEIViewController {
                 print("End result for IMEI history session is \(jsonResponse)")
                 
 //                let dataDict = jsonResponse["data"] as! [[String:Any]]
+                /////////
+                
+                let dataDict = jsonResponse["data"] as! [[String:Any]]
+                
+                /////////
                 
                 let inputData = try! JSONSerialization.data(withJSONObject: jsonResponse["data"]!, options: JSONSerialization.WritingOptions.prettyPrinted)
-                let dataHistoryArray = try JSONDecoder().decode([HistoryRecord].self, from: inputData)
-                print("Data History : \(dataHistoryArray)")
+//                let dataHistoryArray = try JSONDecoder().decode([HistoryRecord].self, from: inputData)
                 self.recordsArray.removeAll()
-                self.recordsArray.append(contentsOf: dataHistoryArray)
-                let headerHistoryRecord = HistoryRecord.init(acdcSessionId: 0, sessionStatus: "", sessionStage: "", userId: "", storeRepId: "Store Rep ID", imei: "", programUsed: "Purpose Of Visit", chamberRetryAttempts: "", imagecapturedtime: 0, chamberId: "", storeid: "Store Id", admServerUsed: "", admNetworkVersion: "", acdcApplicationVersion: "", acdcFirmvareVersion: "", overallResult: "Results", startDateTime: "Date", endDateTime: "", customerRating: 0, operatorRating: 0, evaluationAccepted: "", deviceExchanged: "", additionalInfo: "", storeLocation:"Store Location")
+
+                self.loadProductDataFor(flags: jsonResponse["data"]! as! [[String:Any]])
+                
+                let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                 self.recordsArray.insert(headerHistoryRecord, at: 0)
+
+                print(self.recordsArray)
                 
                 DispatchQueue.main.async {
                     self.spreadSheetVw.reloadData()
@@ -526,6 +533,13 @@ extension IMEIViewController {
         }
     }
     
+    func loadProductDataFor(flags:[[String:Any]]) {
+        for count in 0..<flags.count {
+            let prodModel = HistoryRecord.init(json: flags[count])
+            recordsArray.append(prodModel)
+        }
+    }
+
     func getPDFPreview(forSelectedTransactionID: String) {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
@@ -558,8 +572,6 @@ extension IMEIViewController {
                             print("Document named \(smallPDFDocumentName) not found in the file system")
                         }
                 }
-                    
-                
                 
             } catch let parsingError {
                 print("Error", parsingError)
