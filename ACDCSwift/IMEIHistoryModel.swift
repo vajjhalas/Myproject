@@ -64,7 +64,7 @@ struct HistoryRecord {
     func getHistoryRecordInString(jsonString: Any) -> String {
         let stringValue : String?
         if jsonString is String {
-            stringValue = jsonString as! String
+            stringValue = (jsonString as! String)
         } else if jsonString is NSNumber {
             stringValue = (jsonString as! NSNumber).stringValue
         } else {
