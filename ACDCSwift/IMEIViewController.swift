@@ -194,7 +194,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
 //        elements.removeAllObjects()
         self.view.endEditing(true)
         
-        
+        //TODO:Validate IMEI
         self.getTransactionHistory()
         
         
@@ -503,19 +503,16 @@ extension IMEIViewController {
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                     dataResponse, options: []) as! [String : Any]
                 print("End result for IMEI history session is \(jsonResponse)")
+
+                guard let receivedData = (jsonResponse["data"]! as? [[String:Any]]) else {
+                    //TODO: show alert popup
+                    return
+                }
                 
-//                let dataDict = jsonResponse["data"] as! [[String:Any]]
-                /////////
                 
-                let dataDict = jsonResponse["data"] as! [[String:Any]]
-                
-                /////////
-                
-                let inputData = try! JSONSerialization.data(withJSONObject: jsonResponse["data"]!, options: JSONSerialization.WritingOptions.prettyPrinted)
-//                let dataHistoryArray = try JSONDecoder().decode([HistoryRecord].self, from: inputData)
                 self.recordsArray.removeAll()
 
-                self.loadProductDataFor(flags: jsonResponse["data"]! as! [[String:Any]])
+                self.loadProductDataFor(flags: receivedData)
                 
                 let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                 self.recordsArray.insert(headerHistoryRecord, at: 0)
@@ -559,10 +556,12 @@ extension IMEIViewController {
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                     dataResponse, options: []) as! [String : Any]
                 print("End result for IMEI history session is \(jsonResponse)")
-                //parse the PDF
-                let pdfString = jsonResponse["data"] as! String
-//                let pdfFilePath = String.init(format: "%@/Documents/sample.pdf", NSHomeDirectory())
-//                try pdfString.write(toFile: pdfFilePath, atomically: true, encoding: String.Encoding.utf8)
+                
+                guard let pdfString = jsonResponse["data"] as? String else {
+                    //TODO: PDF Data not received! prompt alet
+                    return
+                }
+                
                 
                 DispatchQueue.main.async {
                         let smallPDFDocumentName = "samplePDF"
