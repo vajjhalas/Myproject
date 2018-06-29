@@ -127,12 +127,13 @@ class CustomerResponseViewController: UIViewController {
                 //error occured:Prompt alert
                 print(error?.localizedDescription ?? "Response Error")
                 return
-            } do{
-                
-                
-            }catch {
-                
             }
+//            do{
+//                
+//                
+//            }catch {
+//                
+//            }
         }
     }
 
