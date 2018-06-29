@@ -24,6 +24,10 @@ class CustomerResponseViewController: UIViewController {
     
     var salesRepSelected : Bool = false
     var customerResSelected : Bool = false
+    
+    var customerRating: Int = 0
+    var operatorRating: Int = 0
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +75,8 @@ class CustomerResponseViewController: UIViewController {
                 allStars[i]?.setImage(UIImage(named: "star-inactive"), for: .normal)
             }
         }
+        
+        customerRating = selectedStar
     }
     
     @IBAction func salesRepStarSelected(_ sender: Any) {
@@ -89,16 +95,29 @@ class CustomerResponseViewController: UIViewController {
                 allStars[i]?.setImage(UIImage(named: "star-inactive"), for: .normal)
             }
         }
+        
+        operatorRating = selectedStar
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func endSessionWithFeedback() {
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
+        //parameters to send
+        let inputtransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
+        let customerRating = String(self.customerRating)
+        let operatorRating = String(self.operatorRating)
+//        let evaluationAccepted =
+//        let deviceExcahanged =
+        
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+acdcRequestAdapter.
     }
-    */
 
 }

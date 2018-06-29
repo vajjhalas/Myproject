@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		372FA19E20E6404300DDFB09 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FA19D20E6404300DDFB09 /* Connection.swift */; };
 		373EB4D920E0EDB90056089F /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D420E0EDB90056089F /* Moya.framework */; };
 		373EB4DA20E0EDB90056089F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D520E0EDB90056089F /* Result.framework */; };
 		373EB4DB20E0EDB90056089F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D620E0EDB90056089F /* Alamofire.framework */; };
@@ -108,6 +109,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		372FA19920E63BF200DDFB09 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		372FA19D20E6404300DDFB09 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		373EB4D420E0EDB90056089F /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Moya.framework; sourceTree = "<group>"; };
 		373EB4D520E0EDB90056089F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = "<group>"; };
 		373EB4D620E0EDB90056089F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 		B8B4432E05DC1F73234FCDC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				372FA19920E63BF200DDFB09 /* Reachability.framework */,
 				5F29781C28B78E127E221759 /* Pods_ACDCSwift.framework */,
 			);
 			name = Frameworks;
@@ -263,6 +267,7 @@
 			children = (
 				373EB4D220E0ED7C0056089F /* SupportingFrameworks */,
 				DA02C00A20C8F835007CF72E /* AppDelegate.swift */,
+				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA02C00C20C8F835007CF72E /* ViewController.swift */,
 				DA02C03F20C911BE007CF72E /* LoginViewController.swift */,
 				DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */,
@@ -374,7 +379,6 @@
 				DA02C00420C8F835007CF72E /* Frameworks */,
 				DA02C00520C8F835007CF72E /* Resources */,
 				08A2509EB8A49161D7079EAD /* [CP] Embed Pods Frameworks */,
-				FF8E5EF38B6FFE6C8DD54509 /* [CP] Copy Pods Resources */,
 				373EB4F120E0F0BD0056089F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -521,10 +525,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpreadsheetView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,21 +556,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF8E5EF38B6FFE6C8DD54509 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -573,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAFEBAC120D81D3B008A9690 /* ReportProblemViewController.swift in Sources */,
+				372FA19E20E6404300DDFB09 /* Connection.swift in Sources */,
 				DA22914320CA5071005451E6 /* ImageProcessingViewController.swift in Sources */,
 				DAFEBAAD20D7B2BB008A9690 /* DateCell.swift in Sources */,
 				DA02C04020C911BE007CF72E /* LoginViewController.swift in Sources */,
@@ -698,7 +690,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -752,7 +744,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
