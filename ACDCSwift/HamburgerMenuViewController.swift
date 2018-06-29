@@ -8,7 +8,13 @@
 
 import UIKit
 
+@objc protocol HamburgerMenuProtocol: class {
+    func popToSelectedOption(selectedOption : NSString)
+}
+
 class HamburgerMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
+
+    weak var delegate : HamburgerMenuProtocol!
 
     @IBOutlet weak var tableView: UITableView!
     var tableViewCellData = [[String]]()
