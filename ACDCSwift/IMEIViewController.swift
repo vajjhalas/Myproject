@@ -111,7 +111,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
                     self.navigationController!.popToViewController(aViewController, animated: true)
                 }
             }
-        } else {
+        } else if selectedOption == "Home" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
                 if aViewController is LoginViewController {

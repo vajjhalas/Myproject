@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TestResultsViewController: UIViewController,SendResultsProtocol {
+class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerMenuProtocol {
 
     @IBOutlet weak var sendResultsOutlet: UIButton!
     @IBOutlet weak var dvtImageView: UIImageView!
@@ -41,7 +41,15 @@ class TestResultsViewController: UIViewController,SendResultsProtocol {
     }
     
     @objc func showMenu() {
-        print("kwenkkw")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.delegate = self
+        vc.tableViewCellData = [["About","Contact","Feedback"],["Home"],["Logout"]]
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        navController.navigationController?.navigationItem.title = "Menu"
+        present(navController, animated: true, completion: nil)
     }
     
     @IBAction func finishButtonPressed(_ sender: Any) {
@@ -72,7 +80,7 @@ class TestResultsViewController: UIViewController,SendResultsProtocol {
         present(vc, animated: true, completion: nil)
     }
     
-    
+    //MARK: SendResultsProtocol delegates
     func selectedService(selectedString: NSString) {
         self.dismiss(animated: true, completion: nil)
         
@@ -84,6 +92,28 @@ class TestResultsViewController: UIViewController,SendResultsProtocol {
             self.handlePrint()
         }
     }
+    
+    // MARK: Hamburger menu delegate
+    
+    func popToSelectedOption(selectedOption: String) {
+        if selectedOption == "Home" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is ModuleSelectionViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        } else if selectedOption == "Logout" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is LoginViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        }
+    }
+
+    //MARK: Helper Methods
     
     func handleSMS() {
         let alertController = UIAlertController(title: "Send test results", message: "Please enter your mobile number to receive a copy of your test results.", preferredStyle: .alert)

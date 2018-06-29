@@ -9,7 +9,7 @@
 import UIKit
 import AcdcNetwork
 
-class CustomerResponseViewController: UIViewController {
+class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
 
     @IBOutlet weak var cFirstStar: UIButton!
     @IBOutlet weak var cSecondStar: UIButton!
@@ -46,7 +46,35 @@ class CustomerResponseViewController: UIViewController {
     }
     
     @objc func showMenu() {
-        print("kwenkkw")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.delegate = self
+        vc.tableViewCellData = [["About","Contact","Feedback"],["Home"],["Logout"]]
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        navController.navigationController?.navigationItem.title = "Menu"
+        present(navController, animated: true, completion: nil)
+    }
+
+    // MARK: Hamburger menu delegate
+    
+    func popToSelectedOption(selectedOption: String) {
+        if selectedOption == "Home" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is ModuleSelectionViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        } else if selectedOption == "Logout" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is LoginViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        }
     }
 
     @IBAction func endSessionPressed(_ sender: Any) {
@@ -121,7 +149,7 @@ class CustomerResponseViewController: UIViewController {
         let didExchangeDevice = deviceExchangeSwitch.isOn
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evaluationAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID) { (responseResult, error) in
+        acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evalAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID) { (responseResult, error) in
             
             guard let dataResponse = responseResult, error == nil else {
                 //error occured:Prompt alert

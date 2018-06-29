@@ -55,7 +55,7 @@ struct ProductModel {
     
 }
 
-class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
+class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HamburgerMenuProtocol {
     
     @IBOutlet weak var modulesCollectionView: UICollectionView!
     @IBOutlet weak var collectionViewWidth: NSLayoutConstraint!
@@ -83,14 +83,36 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
 
     }
 
-    @objc func showMenu() {
-        print("kwenkkw")
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    @objc func showMenu() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.delegate = self
+        vc.tableViewCellData = [["About","Contact","Feedback"],["Logout"]]
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        navController.navigationController?.navigationItem.title = "Menu"
+        present(navController, animated: true, completion: nil)
+    }
+
+    // MARK: Hamburger menu delegate
+    
+    func popToSelectedOption(selectedOption: String) {
+        var optionString : String?
+        if selectedOption == "Logout" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is LoginViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        }
+    }
+
     //COLLECTION VIEW STUFFS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productList.count
