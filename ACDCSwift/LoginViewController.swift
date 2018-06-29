@@ -109,6 +109,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     // MARK: Button Action
 
     @IBAction func loginPressed(_ sender: Any) {
+        
         self.trimWhiteSpaces()
         if (userIDOutlet.text == "") || (passwordOutlet.text == "") {
             ACDCUtilities.showMessage(title: "Alert", msg: "Please provide valid input.")
@@ -117,10 +118,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
-        
-        
-        /////
-        //Supriya: Add guard statement and check the username password values after triming string: Empty fields not allowed.Throw alert if condition  fails
+
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+
+        }
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
 

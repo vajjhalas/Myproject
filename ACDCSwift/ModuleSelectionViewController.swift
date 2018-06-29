@@ -91,16 +91,6 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
         super.didReceiveMemoryWarning()
     }
     
-
-    @IBAction func modulePressed(_ sender: Any) {
-        
-        // SHOULD SEND MODULES
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "IMEIViewController") as! IMEIViewController
-        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
     //COLLECTION VIEW STUFFS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productList.count
@@ -122,15 +112,34 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-
-        ///
         
-        //parameters to send. //TODO:Add guardStatments
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
         let selectedProgram = productList[indexPath.row].productTagName
+        self.sendSelectedProductToServer(name: selectedProgram)
+        
+        
+    }
+
+    func loadProductDataFor(flags:[String]) {
+        
+        for count in 0..<flags.count {
+            let prodModel = ProductModel.init(productTagName: flags[count])
+            self.productList.append(prodModel)
+        }
+    }
+    
+    func sendSelectedProductToServer(name:String) {
+        
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.startCosmeticCheck(forProgram: selectedProgram, storeIdentifier: inputStoreID) { (responseResult, error) in
+        acdcRequestAdapter.startCosmeticCheck(forProgram: name, storeIdentifier: inputStoreID) { (responseResult, error) in
             
             guard let dataResponse = responseResult, error == nil else {
                 
@@ -160,7 +169,7 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                     let vc = storyboard.instantiateViewController(withIdentifier: "IMEIViewController") as! IMEIViewController
                     self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
                     self.navigationController?.pushViewController(vc, animated: true)
-
+                    
                 }
                 else if(jsonResponse["data"] is NSNumber){
                     inputTransactionID = (jsonResponse["data"] as! NSNumber).stringValue
@@ -173,7 +182,7 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                     let vc = storyboard.instantiateViewController(withIdentifier: "IMEIViewController") as! IMEIViewController
                     self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
                     self.navigationController?.pushViewController(vc, animated: true)
-
+                    
                 }
                 
                 
@@ -182,17 +191,7 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
             }
             
         }
-        
-        ///
-        
-    }
 
-    func loadProductDataFor(flags:[String]) {
-        
-        for count in 0..<flags.count {
-            let prodModel = ProductModel.init(productTagName: flags[count])
-            self.productList.append(prodModel)
-        }
     }
 
 }

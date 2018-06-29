@@ -37,6 +37,14 @@ class ChamberConnectionCheckVC: UIViewController {
     }
     
     func connectToChamber(withChamberID:String) {
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID) { (responseResult, error) in
             
