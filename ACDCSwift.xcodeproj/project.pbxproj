@@ -47,6 +47,7 @@
 		DA4764FD20D8DCD100FDFF9F /* CapturedImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DA4764FC20D8DCD100FDFF9F /* CapturedImage.jpg */; };
 		DA4764FF20D916F400FDFF9F /* ACDCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */; };
 		DA47650320D9747400FDFF9F /* SendResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47650220D9747400FDFF9F /* SendResultsViewController.swift */; };
+		DA64679020E60E73004CA821 /* ACDCUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64678F20E60E73004CA821 /* ACDCUtilities.swift */; };
 		DA656DC920DC181000DDD8D9 /* grayShade.png in Resources */ = {isa = PBXBuildFile; fileRef = DA656DC820DC180F00DDD8D9 /* grayShade.png */; };
 		DA656DCF20DC188300DDD8D9 /* PDFPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA656DCB20DC188300DDD8D9 /* PDFPageView.swift */; };
 		DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA656DCC20DC188300DDD8D9 /* TiledView.swift */; };
@@ -144,6 +145,7 @@
 		DA4764FC20D8DCD100FDFF9F /* CapturedImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = CapturedImage.jpg; sourceTree = "<group>"; };
 		DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDCConstants.swift; sourceTree = "<group>"; };
 		DA47650220D9747400FDFF9F /* SendResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendResultsViewController.swift; sourceTree = "<group>"; };
+		DA64678F20E60E73004CA821 /* ACDCUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDCUtilities.swift; sourceTree = "<group>"; };
 		DA656DC820DC180F00DDD8D9 /* grayShade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayShade.png; sourceTree = "<group>"; };
 		DA656DCB20DC188300DDD8D9 /* PDFPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageView.swift; sourceTree = "<group>"; };
 		DA656DCC20DC188300DDD8D9 /* TiledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledView.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */,
 				DAFEBAAC20D7B2BB008A9690 /* DateCell.swift */,
 				DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */,
+				DA64678F20E60E73004CA821 /* ACDCUtilities.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */,
 				DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */,
 				DA22913F20CA4EBD005451E6 /* TestResultsViewController.swift in Sources */,
+				DA64679020E60E73004CA821 /* ACDCUtilities.swift in Sources */,
 				DA02C00B20C8F835007CF72E /* AppDelegate.swift in Sources */,
 				DA22914120CA4F1F005451E6 /* CustomerResponseViewController.swift in Sources */,
 				DA4764FF20D916F400FDFF9F /* ACDCConstants.swift in Sources */,

@@ -78,6 +78,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func trimWhiteSpaces() {
+        let trimmedUserID : String = (userIDOutlet.text?.trimmingCharacters(in: .whitespaces))!
+        userIDOutlet.text = trimmedUserID
+        let trimmedPasswordID : String = (passwordOutlet.text?.trimmingCharacters(in: .whitespaces))!
+        passwordOutlet.text = trimmedPasswordID
+    }
 
     // MARK: Keyboard Notifiactions
     
@@ -109,6 +116,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        self.trimWhiteSpaces()
+        
         if !(userIDOutlet.text == "") && !(passwordOutlet.text == "") {
             loginBtnOutlet.isEnabled = true
             loginBtnOutlet.alpha = 1.0
@@ -122,6 +131,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     // MARK: Button Action
 
     @IBAction func loginPressed(_ sender: Any) {
+        self.trimWhiteSpaces()
+        if (userIDOutlet.text == "") || (passwordOutlet.text == "") {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Please provide valid input.")
+            return
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
         
@@ -131,7 +146,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
 
-        acdcRequestAdapter.loginUser(with: "acdc", usrPassword: "acdc") { (responseResult, error) in
+        acdcRequestAdapter.loginUser(with: userIDOutlet.text!, usrPassword: passwordOutlet.text!) { (responseResult, error) in
 
             guard let dataResponse = responseResult, error == nil else {
 
