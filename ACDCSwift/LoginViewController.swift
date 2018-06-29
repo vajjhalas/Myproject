@@ -47,36 +47,14 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @objc func showMenu() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Home", style: UIAlertActionStyle.default, handler: { (action) in
-//            ACDCCommonMethods.showMessage(title: "SOME", msg: "SOMMmmmmmm")
-            // TODO: Export wordlist
-            print("Home")
-
-        }))
-        alert.addAction(UIAlertAction(title: "Feedback", style: UIAlertActionStyle.default, handler: { (action) in
-            
-            // TODO: Import wordlist
-            print("Feedback")
-
-        }))
-        alert.addAction(UIAlertAction(title: "Logout", style: UIAlertActionStyle.default, handler: { (action) in
-//            ACDCCommonMethods.showMessage(title: "Logout", msg: "Are you sure that you want to logout?")
-            // TODO: Import wordlist
-            print("Logout")
-
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: { (action) in
-            print("Cancel")
-        }))
-
-        if let popoverPresentationController = alert.popoverPresentationController {
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue:0)
-            popoverPresentationController.sourceRect = CGRect(x:self.view.bounds.size.width / 2.0, y:self.view.bounds.size.height / 2.0, width:1.0, height:1.0)
-        }
-        self.present(alert, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.tableViewCellData = [["About","Contact","Feedback"]]
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        navController.navigationController?.navigationItem.title = "Menu"
+        present(navController, animated: true, completion: nil)
     }
     
     func trimWhiteSpaces() {
