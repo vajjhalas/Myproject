@@ -35,20 +35,11 @@
 		DA02C03C20C8FA19007CF72E /* tMobileLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C03A20C8FA19007CF72E /* tMobileLogo.png */; };
 		DA02C03E20C8FAD4007CF72E /* grayTMobileLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C03D20C8FAD4007CF72E /* grayTMobileLogo.png */; };
 		DA02C04020C911BE007CF72E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C03F20C911BE007CF72E /* LoginViewController.swift */; };
-		DA02C04220C914CA007CF72E /* loginUser.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04120C914C9007CF72E /* loginUser.png */; };
 		DA02C04420C9159D007CF72E /* ModuleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */; };
-		DA02C04B20C91DF6007CF72E /* jump_Tmob.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04620C91DF5007CF72E /* jump_Tmob.png */; };
-		DA02C04C20C91DF6007CF72E /* tradein_Tmob.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04720C91DF5007CF72E /* tradein_Tmob.png */; };
-		DA02C04D20C91DF6007CF72E /* exchange_Tmob.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04820C91DF5007CF72E /* exchange_Tmob.png */; };
-		DA02C04E20C91DF6007CF72E /* jumpOnD_Tmob.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04920C91DF5007CF72E /* jumpOnD_Tmob.png */; };
-		DA02C04F20C91DF6007CF72E /* return_TMob.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C04A20C91DF6007CF72E /* return_TMob.png */; };
 		DA02C05120C91E9E007CF72E /* hambergerMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C05020C91E9E007CF72E /* hambergerMenu.png */; };
 		DA02C05320C9218F007CF72E /* IMEIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C05220C9218F007CF72E /* IMEIViewController.swift */; };
 		DA02C05520C92333007CF72E /* chamber.gif in Resources */ = {isa = PBXBuildFile; fileRef = DA02C05420C92332007CF72E /* chamber.gif */; };
 		DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C05620C923CF007CF72E /* ChamberConnectionCheckVC.swift */; };
-		DA02C05A20C92AFF007CF72E /* star_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C05820C92AFD007CF72E /* star_selected.png */; };
-		DA02C05B20C92AFF007CF72E /* star_unSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = DA02C05920C92AFE007CF72E /* star_unSelected.png */; };
-		DA22913D20CA4E4D005451E6 /* capture_phone.PNG in Resources */ = {isa = PBXBuildFile; fileRef = DA22913C20CA4E4C005451E6 /* capture_phone.PNG */; };
 		DA22913F20CA4EBD005451E6 /* TestResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22913E20CA4EBD005451E6 /* TestResultsViewController.swift */; };
 		DA22914120CA4F1F005451E6 /* CustomerResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22914020CA4F1F005451E6 /* CustomerResponseViewController.swift */; };
 		DA22914320CA5071005451E6 /* ImageProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */; };
@@ -68,7 +59,6 @@
 		DAFEBAA720D79EC3008A9690 /* Modules.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAA620D79E9B008A9690 /* Modules.geojson */; };
 		DAFEBAAB20D7AFDF008A9690 /* IMEIHistory.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */; };
 		DAFEBAAD20D7B2BB008A9690 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEBAAC20D7B2BB008A9690 /* DateCell.swift */; };
-		DAFEBABF20D81C6C008A9690 /* ic_report_a_problem.png in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBABE20D81C6B008A9690 /* ic_report_a_problem.png */; };
 		DAFEBAC120D81D3B008A9690 /* ReportProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEBAC020D81D3B008A9690 /* ReportProblemViewController.swift */; };
 		DAFF2DBC20D25D0E000555D5 /* SFCompactDisplay-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = DAFF2DB320D25D0D000555D5 /* SFCompactDisplay-Ultralight.otf */; };
 		DAFF2DBD20D25D0E000555D5 /* SFCompactDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DAFF2DB420D25D0D000555D5 /* SFCompactDisplay-Semibold.otf */; };
@@ -142,20 +132,11 @@
 		DA02C03A20C8FA19007CF72E /* tMobileLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tMobileLogo.png; sourceTree = "<group>"; };
 		DA02C03D20C8FAD4007CF72E /* grayTMobileLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayTMobileLogo.png; sourceTree = "<group>"; };
 		DA02C03F20C911BE007CF72E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		DA02C04120C914C9007CF72E /* loginUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loginUser.png; sourceTree = "<group>"; };
 		DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSelectionViewController.swift; sourceTree = "<group>"; };
-		DA02C04620C91DF5007CF72E /* jump_Tmob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jump_Tmob.png; sourceTree = "<group>"; };
-		DA02C04720C91DF5007CF72E /* tradein_Tmob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tradein_Tmob.png; sourceTree = "<group>"; };
-		DA02C04820C91DF5007CF72E /* exchange_Tmob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exchange_Tmob.png; sourceTree = "<group>"; };
-		DA02C04920C91DF5007CF72E /* jumpOnD_Tmob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jumpOnD_Tmob.png; sourceTree = "<group>"; };
-		DA02C04A20C91DF6007CF72E /* return_TMob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return_TMob.png; sourceTree = "<group>"; };
 		DA02C05020C91E9E007CF72E /* hambergerMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hambergerMenu.png; sourceTree = "<group>"; };
 		DA02C05220C9218F007CF72E /* IMEIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMEIViewController.swift; sourceTree = "<group>"; };
 		DA02C05420C92332007CF72E /* chamber.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chamber.gif; sourceTree = "<group>"; };
 		DA02C05620C923CF007CF72E /* ChamberConnectionCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberConnectionCheckVC.swift; sourceTree = "<group>"; };
-		DA02C05820C92AFD007CF72E /* star_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_selected.png; sourceTree = "<group>"; };
-		DA02C05920C92AFE007CF72E /* star_unSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_unSelected.png; sourceTree = "<group>"; };
-		DA22913C20CA4E4C005451E6 /* capture_phone.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture_phone.PNG; sourceTree = "<group>"; };
 		DA22913E20CA4EBD005451E6 /* TestResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResultsViewController.swift; sourceTree = "<group>"; };
 		DA22914020CA4F1F005451E6 /* CustomerResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerResponseViewController.swift; sourceTree = "<group>"; };
 		DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +156,6 @@
 		DAFEBAA620D79E9B008A9690 /* Modules.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Modules.geojson; sourceTree = "<group>"; };
 		DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = IMEIHistory.geojson; sourceTree = "<group>"; };
 		DAFEBAAC20D7B2BB008A9690 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
-		DAFEBABE20D81C6B008A9690 /* ic_report_a_problem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_report_a_problem.png; sourceTree = "<group>"; };
 		DAFEBAC020D81D3B008A9690 /* ReportProblemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportProblemViewController.swift; sourceTree = "<group>"; };
 		DAFF2DB320D25D0D000555D5 /* SFCompactDisplay-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFCompactDisplay-Ultralight.otf"; sourceTree = "<group>"; };
 		DAFF2DB420D25D0D000555D5 /* SFCompactDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFCompactDisplay-Semibold.otf"; sourceTree = "<group>"; };
@@ -325,34 +305,16 @@
 		DA02C03820C8F893007CF72E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				DA02C04520C91DE2007CF72E /* Module Images */,
 				DA02C03920C8FA19007CF72E /* pervacioLogo.png */,
 				DA656DD720DC1E5B00DDD8D9 /* crossImage.png */,
-				DA02C04120C914C9007CF72E /* loginUser.png */,
 				DA656DC820DC180F00DDD8D9 /* grayShade.png */,
-				DAFEBABE20D81C6B008A9690 /* ic_report_a_problem.png */,
 				DA02C03D20C8FAD4007CF72E /* grayTMobileLogo.png */,
 				DA02C03A20C8FA19007CF72E /* tMobileLogo.png */,
 				DA4764FC20D8DCD100FDFF9F /* CapturedImage.jpg */,
 				DA02C05020C91E9E007CF72E /* hambergerMenu.png */,
 				DA02C05420C92332007CF72E /* chamber.gif */,
-				DA02C05820C92AFD007CF72E /* star_selected.png */,
-				DA02C05920C92AFE007CF72E /* star_unSelected.png */,
-				DA22913C20CA4E4C005451E6 /* capture_phone.PNG */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		DA02C04520C91DE2007CF72E /* Module Images */ = {
-			isa = PBXGroup;
-			children = (
-				DA02C04820C91DF5007CF72E /* exchange_Tmob.png */,
-				DA02C04620C91DF5007CF72E /* jump_Tmob.png */,
-				DA02C04920C91DF5007CF72E /* jumpOnD_Tmob.png */,
-				DA02C04A20C91DF6007CF72E /* return_TMob.png */,
-				DA02C04720C91DF5007CF72E /* tradein_Tmob.png */,
-			);
-			path = "Module Images";
 			sourceTree = "<group>";
 		};
 		DA22914420CA63DA005451E6 /* Supporting Files */ = {
@@ -507,34 +469,24 @@
 			files = (
 				DAFF2DC120D25D0E000555D5 /* SFCompactDisplay-Medium.otf in Resources */,
 				DAFEBAA720D79EC3008A9690 /* Modules.geojson in Resources */,
-				DA02C04D20C91DF6007CF72E /* exchange_Tmob.png in Resources */,
 				DA02C01520C8F836007CF72E /* LaunchScreen.storyboard in Resources */,
 				DA02C03C20C8FA19007CF72E /* tMobileLogo.png in Resources */,
 				DA02C05520C92333007CF72E /* chamber.gif in Resources */,
-				DA02C05A20C92AFF007CF72E /* star_selected.png in Resources */,
 				DA02C05120C91E9E007CF72E /* hambergerMenu.png in Resources */,
 				DAFEBAAB20D7AFDF008A9690 /* IMEIHistory.geojson in Resources */,
 				DAFF2DC020D25D0E000555D5 /* SFCompactDisplay-Regular.otf in Resources */,
 				DA656DD820DC1E5B00DDD8D9 /* crossImage.png in Resources */,
-				DA02C04F20C91DF6007CF72E /* return_TMob.png in Resources */,
 				DAFF2DBC20D25D0E000555D5 /* SFCompactDisplay-Ultralight.otf in Resources */,
-				DA02C04220C914CA007CF72E /* loginUser.png in Resources */,
 				DAFF2DBF20D25D0E000555D5 /* SFCompactDisplay-Heavy.otf in Resources */,
-				DA02C04C20C91DF6007CF72E /* tradein_Tmob.png in Resources */,
-				DAFEBABF20D81C6C008A9690 /* ic_report_a_problem.png in Resources */,
 				DA656DD420DC189100DDD8D9 /* samplePDF.pdf in Resources */,
 				DAFF2DBE20D25D0E000555D5 /* SFCompactDisplay-Thin.otf in Resources */,
-				DA02C04E20C91DF6007CF72E /* jumpOnD_Tmob.png in Resources */,
 				DA02C03B20C8FA19007CF72E /* pervacioLogo.png in Resources */,
-				DA02C05B20C92AFF007CF72E /* star_unSelected.png in Resources */,
-				DA22913D20CA4E4D005451E6 /* capture_phone.PNG in Resources */,
 				DAFF2DBD20D25D0E000555D5 /* SFCompactDisplay-Semibold.otf in Resources */,
 				DA02C01220C8F836007CF72E /* Assets.xcassets in Resources */,
 				DAEC942820DA51AF003442D4 /* jjson.geojson in Resources */,
 				DA656DC920DC181000DDD8D9 /* grayShade.png in Resources */,
 				DAFF2DC420D25D0E000555D5 /* SFCompactDisplay-Light.otf in Resources */,
 				DAFF2DC220D25D0E000555D5 /* SFCompactDisplay-Bold.otf in Resources */,
-				DA02C04B20C91DF6007CF72E /* jump_Tmob.png in Resources */,
 				DA02C01020C8F835007CF72E /* Main.storyboard in Resources */,
 				DA4764FD20D8DCD100FDFF9F /* CapturedImage.jpg in Resources */,
 				DAFF2DC320D25D0E000555D5 /* SFCompactDisplay-Black.otf in Resources */,
