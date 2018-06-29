@@ -66,7 +66,6 @@ class ChamberConnectionCheckVC: UIViewController {
                     UserDefaults.standard.set(sessionID, forKey: "SESSION_ID")
                     UserDefaults.standard.synchronize()
                     
-                    
                     //session is established. Navigate to next screen
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "ImageProcessingViewController") as! ImageProcessingViewController
@@ -80,10 +79,6 @@ class ChamberConnectionCheckVC: UIViewController {
                     //TODO: Retry connection or fetch the chambers?
                     
                 }
-                
-                
-                
-                
                 
             } catch let parsingError {
                 print("Error", parsingError)

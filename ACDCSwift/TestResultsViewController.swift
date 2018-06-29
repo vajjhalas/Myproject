@@ -26,12 +26,13 @@ class TestResultsViewController: UIViewController,SendResultsProtocol {
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
-        if (dvtImage == nil){
+        if (dvtImage != nil){
+            
+            dvtImageView.image = dvtImage
+            
+        }else {
             //Should not be the case
             //Prompt a message that image not found and hide all the buttons(Print, email and SMS)
-        }else {
-            
-            
         }
     }
 

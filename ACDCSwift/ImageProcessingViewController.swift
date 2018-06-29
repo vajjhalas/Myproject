@@ -77,6 +77,7 @@ class ImageProcessingViewController: UIViewController {
         view3.isHidden = false
         view3.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
         view4.isHidden = true
+        //TODO: this stage is not required. Review?
         perform(#selector(self.continueToNextStage4), with: nil, afterDelay: 1.0)
     }
     
@@ -94,6 +95,7 @@ class ImageProcessingViewController: UIViewController {
     @objc func proceedToNextCtrl() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TestResultsViewController") as! TestResultsViewController
+        vc.dvtImage = capturedImageView.image
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
