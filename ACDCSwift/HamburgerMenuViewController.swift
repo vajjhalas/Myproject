@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol HamburgerMenuProtocol: class {
-    func popToSelectedOption(selectedOption : NSString)
+    func popToSelectedOption(selectedOption : String)
 }
 
 class HamburgerMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
@@ -74,9 +74,15 @@ class HamburgerMenuViewController: UIViewController,UITableViewDelegate,UITableV
         print(selectedoption)
         switch selectedoption {
         case "Logout":
-            print("LOGOUT")
+            dismiss(animated: true, completion: nil)
+            if ((self.delegate) != nil) {
+                self.delegate.popToSelectedOption(selectedOption: selectedoption)
+            }
         case "Home":
-            print("HOME")
+            dismiss(animated: true, completion: nil)
+            if ((self.delegate) != nil) {
+                self.delegate.popToSelectedOption(selectedOption: selectedoption)
+            }
         case "Contact","Feedback","About":
             print(selectedoption)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

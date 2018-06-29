@@ -10,7 +10,7 @@ import UIKit
 import SpreadsheetView
 import AcdcNetwork
 
-class IMEIViewController: UIViewController, SpreadsheetViewDelegate, SpreadsheetViewDataSource, UITextFieldDelegate {
+class IMEIViewController: UIViewController, SpreadsheetViewDelegate, SpreadsheetViewDataSource, UITextFieldDelegate, HamburgerMenuProtocol {
 
     @IBOutlet weak var nextButtonOutlet: UIButton!
     @IBOutlet weak var showHistoryOutlet: UIButton!
@@ -61,6 +61,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     @objc func showMenu() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.delegate = self
         vc.tableViewCellData = [["About","Contact","Feedback"],["Home"],["Logout"]]
         let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
         navController.modalTransitionStyle = .coverVertical
@@ -97,6 +98,27 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             index += 1
         }
         return (oddSum + evenSum) % 10 == 0
+    }
+    
+    // MARK: Hamburger menu delegates
+
+    func popToSelectedOption(selectedOption: String) {
+        var optionString : String?
+        if selectedOption == "Home" {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is ModuleSelectionViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        } else {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is LoginViewController {
+                    self.navigationController!.popToViewController(aViewController, animated: true)
+                }
+            }
+        }
     }
 
     // MARK: Text Field delegates
