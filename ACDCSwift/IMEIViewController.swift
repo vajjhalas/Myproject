@@ -331,10 +331,10 @@ extension IMEIViewController {
         //parameters to send. //TODO:Add guardStatments
         let validIMEInumber = (IMEItextField.text)!
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
-        let inputtransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.fetchChamberList(forIMEI: validIMEInumber, storeIdentifier: inputStoreID, transactionIdentifier: inputtransactionID) { (responseResult, error) in
+        acdcRequestAdapter.fetchChamberList(forIMEI: validIMEInumber, storeIdentifier: inputStoreID, transactionIdentifier: inputTransactionID) { (responseResult, error) in
             
             guard let dataResponse = responseResult, error == nil else {
                 

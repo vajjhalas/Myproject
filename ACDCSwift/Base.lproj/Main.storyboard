@@ -1901,7 +1901,9 @@ Build v1822.01</string>
                         <outlet property="cFourthStar" destination="NhE-tf-w9m" id="dqe-HB-AMH"/>
                         <outlet property="cSecondStar" destination="5ex-4i-14H" id="kFJ-RS-rnr"/>
                         <outlet property="cThirdStar" destination="CS5-UF-dtF" id="abY-ir-r59"/>
+                        <outlet property="deviceExchangeSwitch" destination="kR4-vg-Ecd" id="xbR-W3-gbC"/>
                         <outlet property="endSessionOutlet" destination="JYa-C3-jZH" id="a7X-HM-Khp"/>
+                        <outlet property="evalAcceptedSwitch" destination="czH-iO-c3m" id="F5c-ma-U7S"/>
                         <outlet property="sFifthStar" destination="7Jo-U9-LaW" id="M87-Bs-2Bu"/>
                         <outlet property="sFirstStar" destination="Pld-ek-kLl" id="Fcm-ps-6HP"/>
                         <outlet property="sFourthStar" destination="s88-BR-fsp" id="uKX-ir-Ozu"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AcdcNetwork
 
 class CustomerResponseViewController: UIViewController {
 
@@ -21,6 +22,9 @@ class CustomerResponseViewController: UIViewController {
     @IBOutlet weak var sFourthStar: UIButton!
     @IBOutlet weak var sFifthStar: UIButton!
     @IBOutlet weak var endSessionOutlet: UIButton!
+    @IBOutlet weak var evalAcceptedSwitch: UISwitch!
+    @IBOutlet weak var deviceExchangeSwitch: UISwitch!
+
     
     var salesRepSelected : Bool = false
     var customerResSelected : Bool = false
@@ -109,15 +113,27 @@ class CustomerResponseViewController: UIViewController {
         }
         
         //parameters to send
-        let inputtransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
         let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
-        let customerRating = String(self.customerRating)
-        let operatorRating = String(self.operatorRating)
-//        let evaluationAccepted =
-//        let deviceExcahanged =
+        let cusRating = String(self.customerRating)
+        let opeRating = String(self.operatorRating)
+        let evalAccepted = evalAcceptedSwitch.isOn
+        let didExchangeDevice = deviceExchangeSwitch.isOn
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-acdcRequestAdapter.
+        acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evaluationAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID) { (responseResult, error) in
+            
+            guard let dataResponse = responseResult, error == nil else {
+                //error occured:Prompt alert
+                print(error?.localizedDescription ?? "Response Error")
+                return
+            } do{
+                
+                
+            }catch {
+                
+            }
+        }
     }
 
 }
