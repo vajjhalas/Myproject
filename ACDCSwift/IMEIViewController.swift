@@ -59,50 +59,15 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     }
 
     @objc func showMenu() {
-        print("kwenkkw")
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Home", style: UIAlertActionStyle.default, handler: { (action) in
-            //            ACDCCommonMethods.showMessage(title: "SOME", msg: "SOMMmmmmmm")
-            // TODO: Export wordlist
-//            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-//            for aViewController in viewControllers {
-//                if aViewController is ModuleSelectionViewController {
-//                    self.navigationController!.popToViewController(aViewController, animated: true)
-//                }
-//            }
-            print("Home")
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Feedback", style: UIAlertActionStyle.default, handler: { (action) in
-            
-            // TODO: Import wordlist
-            print("Feedback")
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Logout", style: UIAlertActionStyle.default, handler: { (action) in
-//            ACDCCommonMethods.showMessage(title: "Logout", msg: "Are you sure that you want to logout?")
-//            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-//            for aViewController in viewControllers {
-//                if aViewController is LoginViewController {
-//                    self.navigationController!.popToViewController(aViewController, animated: true)
-//                }
-//            }
-
-            // TODO: Import wordlist
-            print("Logout")
-            
-        }))
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
+        vc.tableViewCellData = [["About","Contact","Feedback"],["Home"],["Logout"]]
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        navController.navigationController?.navigationItem.title = "Menu"
+        present(navController, animated: true, completion: nil)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive, handler: { (action) in
-            print("Cancel")
-        }))
-        
-        if let popoverPresentationController = alert.popoverPresentationController {
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue:0)
-            popoverPresentationController.sourceRect = CGRect(x:self.view.bounds.size.width / 2.0, y:self.view.bounds.size.height / 2.0, width:1.0, height:1.0)
-        }
-        self.present(alert, animated: true, completion: nil)
     }
 
     func dateFromMillisecinds(timeInMilliseconds:String) ->  String {
@@ -172,71 +137,29 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     @IBAction func IMEINextPressed(_ sender: Any) {
         
         ///TODO:Validate IMEI and then call API
-        self.getListOfChambers()
-        
-        return
-        
         let IMEINum = IMEItextField.text
-//        if self.validateIMEI(imeiString: IMEINum!) {
-            errorMessageOutlet.isHidden = true
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ChamberConnectionCheckVC") as! ChamberConnectionCheckVC
-            self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
 
-            self.navigationController?.pushViewController(vc, animated: true)
-//        } else {
-//            errorMessageOutlet.isHidden = false
-//            errorMessageOutlet.text = "Enter Valid IMEI number."
-//        }
+        if self.validateIMEI(imeiString: IMEINum!) {
+            errorMessageOutlet.isHidden = true
+            self.getListOfChambers()
+        } else {
+            errorMessageOutlet.isHidden = false
+            errorMessageOutlet.text = "Enter Valid IMEI number."
+        }
     }
 
     @IBAction func showHistoryPressed(_ sender: Any) {
-//        elements.removeAllObjects()
         self.view.endEditing(true)
         
-        //TODO:Validate IMEI
-        self.getTransactionHistory()
-        
-        
-        
-        return
-        
-        
-        
-        
-        
-        
-        
-        
-//        let IMEINum = IMEItextField.text
-////        if self.validateIMEI(imeiString: IMEINum!) {
-//            errorMessageOutlet.isHidden = true
-//
-//            let filePath = Bundle.main.path(forResource: "IMEIHistory", ofType: "geojson")
-//            let data = NSData(contentsOfFile: filePath ?? "") as Data?
-//
-//            if let aData = data {
-//                json = try! JSONSerialization.jsonObject(with: aData, options: []) as! [String : AnyObject]
-//
-//                elements.addObjects(from: json["imeidata"] as! [[String:String]])
-//                elements.insert([
-//                    "serialNumber": "S.No.",
-//                    "Date": "Date",
-//                    "storeRepId": "Store Rep Id",
-//                    "storeId":"Store Id",
-//                    "storeLocation":"Store Location",
-//                    "purposeOfVisit":"Purpose Of Visit",
-//                    "Result":"Results"
-//                    ], at: 0)
-//            }
-        
-        
-        
+        let IMEINum = IMEItextField.text
 
-//        } else {
-//            errorMessageOutlet.isHidden = false
-//            errorMessageOutlet.text = "Enter Valid IMEI number."
-//        }
+        if self.validateIMEI(imeiString: IMEINum!) {
+            errorMessageOutlet.isHidden = true
+            self.getTransactionHistory()
+        } else {
+            errorMessageOutlet.isHidden = false
+            errorMessageOutlet.text = "Enter Valid IMEI number."
+        }
     }
     
     // MARK: Spread Sheet Delegates
