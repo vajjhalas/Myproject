@@ -12,7 +12,7 @@ import UIKit
 class ACDCUtilities {
     static func showMessage(title: String, msg: String) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
     }
 }
