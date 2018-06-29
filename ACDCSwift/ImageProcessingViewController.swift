@@ -166,42 +166,84 @@ func pollForImageProcess() {
         
         do {
             
+            
             //parse dataResponse
             //TODO:Are guard statements necessary while in try catch block?
             let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as! [String : Any]
             print("End result for polling image process is \(jsonResponse)")
-            //TODO:Are guard statements necessary while in try catch block?
-            let imageBase64SStr = (jsonResponse["command"] as! [String: Any])["data"] as! String
-            let responseImageData = Data.init(base64Encoded: imageBase64SStr)
             
-            guard let recImageData = responseImageData else {
-                //TODO: did not receive image. something is wrong.Prompt alert??
+            guard let ackIdentifier = jsonResponse["ackid"] else {
+                //ackid missing
                 return
             }
-            let capturedImage = UIImage.init(data: recImageData)
             
-            
-            DispatchQueue.main.async {
-                self.capturedImageView.image = capturedImage
-              
-                switch self.imageType {
-                case .ImageCapture:
-                    self.imageType = .ChamberImage
-                    self.continueToNextStage2()
-                    self.pollForImageProcess()//Poll for DVT image
-                case .ChamberImage:
-                    self.imageType = .DVTImage
-                    self.continueToNextStage3()
-                case .DVTImage:
-                    self.imageType = .DVTImage
-                }
-               
-                
+            guard let imageStatus = jsonResponse["status"] else {
+                self.ackIdentifier = "-1"
+                self.pollForImageProcess()
+                return;
             }
             
-            //if we get image
             
+           
+        
+            //update the acknowledgement identifier
+            if (ackIdentifier is String){
+                if((ackIdentifier as! String) != "-1"){
+                    self.ackIdentifier = ackIdentifier as! String
+                }
+            }else if (ackIdentifier is NSNumber){
+                if( ((ackIdentifier  as! NSNumber).stringValue) != "-1"){
+                    self.ackIdentifier = (ackIdentifier  as! NSNumber).stringValue
+                }
+            }
+            
+            switch ((imageStatus as! String).uppercased()) {
+                
+            case "UNPROCESSED" :
+                guard let commandDict = jsonResponse["command"] else {
+                    self.pollForImageProcess()
+                    return
+                }
+                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                    self.pollForImageProcess()
+                    return
+                }
+                self.imageType = .ChamberImage
+                let imageBase64SStr = responseImageString as! String
+                self.updtaeImage(with: imageBase64SStr)
+                self.pollForImageProcess()
+                
+            case "ADM_STARTED" :
+                self.pollForImageProcess()
+            case "ADM_DONE" :
+                self.pollForImageProcess()
+            case "FINAL_IMAGE" :
+                guard let commandDict = jsonResponse["command"] else {
+                    self.pollForImageProcess()
+                    return;
+                }
+                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                    self.pollForImageProcess()
+                    return
+                }
+                self.imageType = .DVTImage
+                let imageBase64SStr = responseImageString as! String
+                self.updtaeImage(with: imageBase64SStr)
+                self.pollForImageProcess() //Poll for PDF
+                
+            case "TIMEOUT" :
+                self.pollForImageProcess()
+            case  "INVALID_SESSION" :
+                return
+            case  "FAIL" :
+                self.pollForImageProcess()
+                return
+            //TODO:PDF call is yet to be implemented
+            default :
+                return
+                
+            }
             
         } catch let parsingError {
             print("Error", parsingError)
@@ -209,6 +251,35 @@ func pollForImageProcess() {
         
     }
 
+    }
+    
+    func updtaeImage(with base64String:String) {
+        
+        let responseImageData = Data.init(base64Encoded: base64String)
+        
+        guard let recImageData = responseImageData else {
+            //TODO: did not receive image. something is wrong.Prompt alert??
+            return
+        }
+        let capturedImage = UIImage.init(data: recImageData)
+        
+        DispatchQueue.main.async {
+            self.capturedImageView.image = capturedImage
+            
+            switch self.imageType {
+            case .ImageCapture:
+                self.continueToNextStage2()
+            case .ChamberImage:
+                self.imageType = .DVTImage
+                self.continueToNextStage3()
+            case .DVTImage:
+                self.imageType = .DVTImage
+            }
+        }
+    }
+    
+    func receivedPDF() {
+        
     }
     
 }
