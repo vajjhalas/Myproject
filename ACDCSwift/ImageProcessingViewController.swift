@@ -173,7 +173,7 @@ func pollForImageProcess() {
                 dataResponse, options: []) as! [String : Any]
             print("End result for polling image process is \(jsonResponse)")
             
-            guard let ackIdentifier = jsonResponse["ackid"] else {
+            guard let ackIdentifier = jsonResponse["ackId"] else {
                 //ackid missing
                 return
             }
@@ -216,8 +216,10 @@ func pollForImageProcess() {
                 
             case "ADM_STARTED" :
                 self.pollForImageProcess()
+                return
             case "ADM_DONE" :
                 self.pollForImageProcess()
+                return
             case "FINAL_IMAGE" :
                 guard let commandDict = jsonResponse["command"] else {
                     self.pollForImageProcess()

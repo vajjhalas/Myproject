@@ -14,8 +14,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var userIDOutlet: UITextField!
     @IBOutlet weak var passwordOutlet: UITextField!
     @IBOutlet weak var loginBtnOutlet: UIButton!
-    
     @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

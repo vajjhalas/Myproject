@@ -24,14 +24,14 @@ class ViewController: UIViewController {
         animation.toValue = 2 * 3.14
         activityIndicatorOutlet.layer.add(animation, forKey: "loader")
 
-        var timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ViewController.proceedToNextTest), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ViewController.showInitialViewController), userInfo: nil, repeats: false)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    @objc func proceedToNextTest() {
+    @objc func showInitialViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         self.navigationController?.pushViewController(vc, animated: false)

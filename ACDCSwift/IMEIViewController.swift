@@ -350,6 +350,12 @@ extension IMEIViewController {
     
     func getListOfChambers() {
 
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
         //parameters to send. //TODO:Add guardStatments
         let validIMEInumber = (IMEItextField.text)!
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
@@ -426,6 +432,12 @@ extension IMEIViewController {
     
     func getTransactionHistory() {
         
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
         //parameters to send. //TODO:Add guardStatments
         let validIMEInumber = (IMEItextField.text)!
         

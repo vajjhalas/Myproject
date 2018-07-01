@@ -271,7 +271,6 @@
 			children = (
 				373EB4D220E0ED7C0056089F /* SupportingFrameworks */,
 				DA02C00A20C8F835007CF72E /* AppDelegate.swift */,
-				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA02C00C20C8F835007CF72E /* ViewController.swift */,
 				DA02C03F20C911BE007CF72E /* LoginViewController.swift */,
 				DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */,
@@ -286,6 +285,7 @@
 				DA656DD520DC18B900DDD8D9 /* HistoryPreviewViewController.swift */,
 				DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */,
 				DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */,
+				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
 				DA02C01120C8F836007CF72E /* Assets.xcassets */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
