@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AcdcNetwork
 
 class ReportProblemViewController: UIViewController,UITextViewDelegate {
 
@@ -53,12 +54,10 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate {
     }
     
     @IBAction func sendAction(_ sender: Any) {
-        let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-            self.proceedToNextTest()
-        })
-        alert.addAction(defaultAction)
-        present(alert, animated: true)
+        //TODO:Add guard statements for textview text presence
+        reportProblemToServer()
+        
+        
     }
     
     @IBAction func tickMarkAction(_ sender: Any) {
@@ -112,14 +111,54 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.endEditing(true)
     }
-    /*
-    // MARK: - Navigation
+    
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//API calls
+extension ReportProblemViewController {
+    
+    func reportProblemToServer() {
+        
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
+        //parameters to send
+        let issueText = feedbackTextView.text!
+        let isCrackPresentNotDetected = crackDError.isSelected
+        let isCrackAbsentDetected = crackNDError.isSelected
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+        acdcRequestAdapter.reportAProblem(requestingFor: "F", issueText: issueText, crackNotDetected: isCrackPresentNotDetected, crackWrongDetected: isCrackAbsentDetected, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
+            
+            guard let dataResponse = responseResult else{
+                //error occured:Prompt alert
+                return
+            }
+                        do{
+                            //TODO: guard for data status success string
+                            //{"data":null,"message":null,"status":"success"}
+
+                            /*
+                             let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
+                             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                             self.proceedToNextTest()
+                             })
+                             alert.addAction(defaultAction)
+                             present(alert, animated: true)
+                             */
+            
+                        }catch {
+            
+                        }
+        }) { (error) in
+            //Error
+        }
+
     }
-    */
-
 }

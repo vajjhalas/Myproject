@@ -95,7 +95,7 @@ class ImageProcessingViewController: UIViewController {
     @objc func proceedToNextCtrl() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TestResultsViewController") as! TestResultsViewController
-        vc.dvtImage = capturedImageView.image
+        vc.dvtImage = UIImage.init(named: "chamber")//capturedImageView.image
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -129,8 +129,9 @@ class ImageProcessingViewController: UIViewController {
                 //TODO: check if response is "success" String
                 
                 DispatchQueue.main.async {
-                    self.continueToNextStage1()
-                    self.pollForImageProcess()
+                    //self.continueToNextStage1()
+                   // self.pollForImageProcess()
+                    self.proceedToNextCtrl()
                 }
                 
                 
