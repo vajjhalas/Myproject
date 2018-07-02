@@ -76,13 +76,26 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else {
-                
-                //error occured:Prompt alert
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
             
-            do {
+            if(receivedStatusCode == 200) {
+                
+                guard let dataResponse = responseResult else {
+                    //TODO:error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                do{
+
                 
                 //parse dataResponse
                 //TODO:Are guard statements necessary while in try catch block?
@@ -113,13 +126,37 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     //TODO: Prompt alert if error required?
                     //TODO: Retry connection or fetch the chambers?
                     
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not connect to chamber.")
+                    }
+                    
                 }
                 
-            } catch let parsingError {
-                print("Error", parsingError)
+                } catch {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                    }
+                }
+                
+            }else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }
             }
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
         
     }

@@ -163,9 +163,23 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.startCosmeticCheck(forProgram: name, storeIdentifier: inputStoreID, successCallback: {(statusCode, responseResult) in
             
+            
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            
+            if(receivedStatusCode == 200) {
+            
+            
             guard let dataResponse = responseResult else {
-                
                 //error occured:Prompt alert
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                }
                 return
             }
             
@@ -210,10 +224,28 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
             } catch let parsingError {
                 print("Error", parsingError)
             }
+            } else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }
+            }
             
         }) { (error) in
             
             //Error
+            //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
 
     }
