@@ -36,7 +36,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         self.navigationItem.title = "Please enter a device ID"
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+        spreadSheetVw.isHidden = true
         spreadSheetVw.dataSource = self
         spreadSheetVw.delegate = self
         spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
@@ -527,10 +527,17 @@ extension IMEIViewController {
                     return
                 }
                 
-                
                 self.recordsArray.removeAll()
                 self.loadProductDataFor(flags: receivedData)
                 
+                    if self.recordsArray.count == 0 {
+                        self.errorMessageOutlet.isHidden = false
+                        self.errorMessageOutlet.text = "No records found."
+                        return
+                    }
+                    
+                    self.spreadSheetVw.isHidden = false
+
                     let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
