@@ -102,7 +102,6 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     // MARK: Hamburger menu delegate
     
     func popToSelectedOption(selectedOption: String) {
-        var optionString : String?
         if selectedOption == "Logout" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {

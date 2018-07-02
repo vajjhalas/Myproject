@@ -1,85 +1,46 @@
 {
-    "imeidata":[
-                {
-                "serialNumber": "1",
-                "Date": "1505129797158",
-                "storeRepId": "storeuser1",
-                "storeId":"1",
-                "storeLocation":"Hyd",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "2",
-                "Date": "1515121230819",
-                "storeRepId": "storeuser2",
-                "storeId":"2",
-                "storeLocation":"US",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "3",
-                "Date": "1512714139640",
-                "storeRepId": "storeuser4",
-                "storeId":"4",
-                "storeLocation":"USA",
-                "purposeOfVisit":"Jump",
-                "Result":"Qualified"
-                },
-                {
-                "serialNumber": "4",
-                "Date": "1505129797158",
-                "storeRepId": "storeuser1",
-                "storeId":"1",
-                "storeLocation":"Hyd",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "5",
-                "Date": "1515121230819",
-                "storeRepId": "storeuser2",
-                "storeId":"2",
-                "storeLocation":"US",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "6",
-                "Date": "1505129797158",
-                "storeRepId": "storeuser4",
-                "storeId":"4",
-                "storeLocation":"USA",
-                "purposeOfVisit":"Jump",
-                "Result":"Qualified"
-                },
-                {
-                "serialNumber": "7",
-                "Date": "1505125227615",
-                "storeRepId": "storeuser1",
-                "storeId":"1",
-                "storeLocation":"Hyd",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "8",
-                "Date": "1515121230819",
-                "storeRepId": "storeuser2",
-                "storeId":"2",
-                "storeLocation":"US",
-                "purposeOfVisit":"Trade In",
-                "Result":"Not Qualified"
-                },
-                {
-                "serialNumber": "9",
-                "Date": "1512714139640",
-                "storeRepId": "storeuser4",
-                "storeId":"4",
-                "storeLocation":"USA",
-                "purposeOfVisit":"Jump",
-                "Result":"Qualified"
-                }
-                ]
+    "data":[
+            {
+            "ChamberName": "Chamber 1",
+            "ChamberStatus": "Free",
+            "storeRepId": "storeuser1"
+            },
+            {
+            "ChamberName": "Chamber 2",
+            "ChamberStatus": "Dead",
+            "storeRepId": "storeuser2"
+            },
+            {
+            "ChamberName": "Chamber 3",
+            "ChamberStatus": "Free",
+            "storeRepId": "storeuser4"
+            },
+            {
+            "ChamberName": "Chamber 4",
+            "ChamberStatus": "Dead",
+            "storeRepId": "storeuser1"
+            },
+            {
+            "ChamberName": "Chamber 1",
+            "ChamberStatus": "Free",
+            "storeRepId": "storeuser1"
+            },
+            {
+            "ChamberName": "Chamber 2",
+            "ChamberStatus": "Dead",
+            "storeRepId": "storeuser2"
+            },
+            {
+            "ChamberName": "Chamber 3",
+            "ChamberStatus": "Free",
+            "storeRepId": "storeuser4"
+            },
+            {
+            "ChamberName": "Chamber 4",
+            "ChamberStatus": "Dead",
+            "storeRepId": "storeuser1"
+            }
+            ],
+    "message":null,
+    "status":null
 }

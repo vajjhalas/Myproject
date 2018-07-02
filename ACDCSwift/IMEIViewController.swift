@@ -103,7 +103,6 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     // MARK: Hamburger menu delegates
 
     func popToSelectedOption(selectedOption: String) {
-        var optionString : String?
         if selectedOption == "Home" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
@@ -111,7 +110,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
                     self.navigationController!.popToViewController(aViewController, animated: true)
                 }
             }
-        } else if selectedOption == "Home" {
+        } else if selectedOption == "Logout" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
                 if aViewController is LoginViewController {
@@ -421,6 +420,11 @@ extension IMEIViewController {
                 }else if(dataArray.count > 1) {
                  //if there are multiple chambers move to a screen and display chambers and and their status
                     //TODO: Navigate to screen that displays the chamber list
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "ChamberSelectionViewController") as! ChamberSelectionViewController
+                    vc.receivedChamberInfo = dataArray
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
                 
             } catch let parsingError {
