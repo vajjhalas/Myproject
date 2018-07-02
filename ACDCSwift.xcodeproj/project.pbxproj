@@ -45,6 +45,7 @@
 		DA22914120CA4F1F005451E6 /* CustomerResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22914020CA4F1F005451E6 /* CustomerResponseViewController.swift */; };
 		DA22914320CA5071005451E6 /* ImageProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */; };
 		DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22914520CA641C005451E6 /* ModuleSelectCollectionViewCell.swift */; };
+		DA36540A20E949CE00E895B6 /* ChamberSelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA36540920E949CE00E895B6 /* ChamberSelectCollectionViewCell.swift */; };
 		DA4764FD20D8DCD100FDFF9F /* CapturedImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DA4764FC20D8DCD100FDFF9F /* CapturedImage.jpg */; };
 		DA4764FF20D916F400FDFF9F /* ACDCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */; };
 		DA47650320D9747400FDFF9F /* SendResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47650220D9747400FDFF9F /* SendResultsViewController.swift */; };
@@ -59,6 +60,7 @@
 		DA656DD820DC1E5B00DDD8D9 /* crossImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DA656DD720DC1E5B00DDD8D9 /* crossImage.png */; };
 		DA9FDF7320E63728004A6695 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */; };
 		DA9FDF7520E63749004A6695 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */; };
+		DACBD6FE20E94268002884C1 /* ChamberSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */; };
 		DAEC942820DA51AF003442D4 /* jjson.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAEC942720DA51AF003442D4 /* jjson.geojson */; };
 		DAFEBAA720D79EC3008A9690 /* Modules.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAA620D79E9B008A9690 /* Modules.geojson */; };
 		DAFEBAAB20D7AFDF008A9690 /* IMEIHistory.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */; };
@@ -147,6 +149,7 @@
 		DA22914020CA4F1F005451E6 /* CustomerResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerResponseViewController.swift; sourceTree = "<group>"; };
 		DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewController.swift; sourceTree = "<group>"; };
 		DA22914520CA641C005451E6 /* ModuleSelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSelectCollectionViewCell.swift; sourceTree = "<group>"; };
+		DA36540920E949CE00E895B6 /* ChamberSelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberSelectCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA4764FC20D8DCD100FDFF9F /* CapturedImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = CapturedImage.jpg; sourceTree = "<group>"; };
 		DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDCConstants.swift; sourceTree = "<group>"; };
 		DA47650220D9747400FDFF9F /* SendResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendResultsViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +164,7 @@
 		DA656DD720DC1E5B00DDD8D9 /* crossImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crossImage.png; sourceTree = "<group>"; };
 		DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
+		DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberSelectionViewController.swift; sourceTree = "<group>"; };
 		DAEC942720DA51AF003442D4 /* jjson.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jjson.geojson; sourceTree = "<group>"; };
 		DAFEBAA620D79E9B008A9690 /* Modules.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Modules.geojson; sourceTree = "<group>"; };
 		DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = IMEIHistory.geojson; sourceTree = "<group>"; };
@@ -276,6 +280,7 @@
 				DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */,
 				DA02C05220C9218F007CF72E /* IMEIViewController.swift */,
 				373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */,
+				DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */,
 				DA02C05620C923CF007CF72E /* ChamberConnectionCheckVC.swift */,
 				DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */,
 				DA22913E20CA4EBD005451E6 /* TestResultsViewController.swift */,
@@ -338,6 +343,7 @@
 				DA656DD320DC189100DDD8D9 /* samplePDF.pdf */,
 				DAEC942720DA51AF003442D4 /* jjson.geojson */,
 				DA22914520CA641C005451E6 /* ModuleSelectCollectionViewCell.swift */,
+				DA36540920E949CE00E895B6 /* ChamberSelectCollectionViewCell.swift */,
 				DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */,
 				DAFEBAAC20D7B2BB008A9690 /* DateCell.swift */,
 				DA4764FE20D916F400FDFF9F /* ACDCConstants.swift */,
@@ -575,10 +581,12 @@
 				DAFEBAAD20D7B2BB008A9690 /* DateCell.swift in Sources */,
 				DA02C04020C911BE007CF72E /* LoginViewController.swift in Sources */,
 				DA02C04420C9159D007CF72E /* ModuleSelectionViewController.swift in Sources */,
+				DACBD6FE20E94268002884C1 /* ChamberSelectionViewController.swift in Sources */,
 				DA02C00D20C8F835007CF72E /* ViewController.swift in Sources */,
 				DA656DD220DC188300DDD8D9 /* PDFPageCollectionViewCell.swift in Sources */,
 				DA656DCF20DC188300DDD8D9 /* PDFPageView.swift in Sources */,
 				373EB4F720E2600B0056089F /* IMEIHistoryModel.swift in Sources */,
+				DA36540A20E949CE00E895B6 /* ChamberSelectCollectionViewCell.swift in Sources */,
 				DA656DD120DC188300DDD8D9 /* PDFDocument.swift in Sources */,
 				DA656DD620DC18B900DDD8D9 /* HistoryPreviewViewController.swift in Sources */,
 				DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */,

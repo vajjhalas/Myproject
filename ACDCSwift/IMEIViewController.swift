@@ -36,7 +36,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         self.navigationItem.title = "Please enter a device ID"
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        
+        spreadSheetVw.isHidden = true
         spreadSheetVw.dataSource = self
         spreadSheetVw.delegate = self
         spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
@@ -103,7 +103,6 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     // MARK: Hamburger menu delegates
 
     func popToSelectedOption(selectedOption: String) {
-        var optionString : String?
         if selectedOption == "Home" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
@@ -111,7 +110,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
                     self.navigationController!.popToViewController(aViewController, animated: true)
                 }
             }
-        } else if selectedOption == "Home" {
+        } else if selectedOption == "Logout" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
                 if aViewController is LoginViewController {
@@ -450,6 +449,11 @@ extension IMEIViewController {
                 }else if(dataArray.count > 1) {
                  //if there are multiple chambers move to a screen and display chambers and and their status
                     //TODO: Navigate to screen that displays the chamber list
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "ChamberSelectionViewController") as! ChamberSelectionViewController
+                    vc.receivedChamberInfo = dataArray
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
                 
             } catch let parsingError {
@@ -540,10 +544,17 @@ extension IMEIViewController {
                     return
                 }
                 
-                
                 self.recordsArray.removeAll()
                 self.loadProductDataFor(flags: receivedData)
                 
+                    if self.recordsArray.count == 0 {
+                        self.errorMessageOutlet.isHidden = false
+                        self.errorMessageOutlet.text = "No records found."
+                        return
+                    }
+                    
+                    self.spreadSheetVw.isHidden = false
+
                     let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
