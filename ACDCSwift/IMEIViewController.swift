@@ -363,14 +363,26 @@ extension IMEIViewController {
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.fetchChamberList(forIMEI: validIMEInumber, storeIdentifier: inputStoreID, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else {
-                
-                //error occured:Prompt alert
+            
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
             
-            do{
+            if(receivedStatusCode == 200) {
                 
+                
+                guard let dataResponse = responseResult else {
+                    //error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
+                    return
+                }
+                do {
                 //for a success response stor the IMEI
                 UserDefaults.standard.set(validIMEInumber, forKey: "IMEI_TRANSACTION")
                 UserDefaults.standard.synchronize()
@@ -380,12 +392,22 @@ extension IMEIViewController {
                     dataResponse, options: []) as! [String : Any]
                 print("End result for IMEI init session is \(jsonResponse)")
                 
-                //We get array of dictionaries as a value for "data" key
-                let dataArray = jsonResponse["data"] as! [[String:Any]]
+                    //We should get array of dictionaries as a value for "data" key
+
+                    guard let dataArray = jsonResponse["data"] as? [[String:Any]] else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                        }
+                        return
+                    }
                 
                 if(dataArray.count == 1) {
                  //if there is only one chamber check the status of the chamber, if "free" then try establishing chmaber connection
                     let chamberDataDict = dataArray[0];
+                    
+                    
+                    //TODO: Chamber free status uncomment in production
                     let chamberStatus = chamberDataDict["status"] as! String
 //                    if(chamberStatus.caseInsensitiveCompare("FREE") == ComparisonResult.orderedSame){
                         var chamberId:String = ""
@@ -428,10 +450,31 @@ extension IMEIViewController {
                 
             } catch let parsingError {
                 print("Error", parsingError)
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                }
             }
+        } else {
+            //status code not 200
+            
+            if(receivedStatusCode == 401){
+            DispatchQueue.main.async {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+            }
+            }
+        }
+        
             
         }) { (error) in
             //Error
+                    DispatchQueue.main.async {
+
+                    var errorDescription = ""
+                    if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                    }
+                    }
         }
     }
     
@@ -449,46 +492,80 @@ extension IMEIViewController {
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.fetchIMEIhistory(forIMEIValue: validIMEInumber, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else {
-                
-                //error occured:Prompt alert
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
             
-            do{
+            if(receivedStatusCode == 200) {
+                
+                guard let dataResponse = responseResult else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                do{
                 //for a success response stor the IMEI
                 UserDefaults.standard.set(validIMEInumber, forKey: "IMEI_TRANSACTION")
                 UserDefaults.standard.synchronize()
-                //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
+
+                    //parse dataResponse
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                     dataResponse, options: []) as! [String : Any]
                 print("End result for IMEI history session is \(jsonResponse)")
 
                 guard let receivedData = (jsonResponse["data"]! as? [[String:Any]]) else {
-                    //TODO: show alert popup
+                    
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
                     return
                 }
                 
                 
                 self.recordsArray.removeAll()
-
                 self.loadProductDataFor(flags: receivedData)
                 
-                let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
-                self.recordsArray.insert(headerHistoryRecord, at: 0)
+                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
+                    self.recordsArray.insert(headerHistoryRecord, at: 0)
 
-                print(self.recordsArray)
+                    print(self.recordsArray)
                 
-                DispatchQueue.main.async {
-                    self.spreadSheetVw.reloadData()
+                    DispatchQueue.main.async {
+                        self.spreadSheetVw.reloadData()
+                    }
+                
+                }  catch  {
+                   DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                      }
                 }
                 
-            } catch let parsingError {
-                print("Error", parsingError)
+            } else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }
             }
+                
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
         
     }
@@ -506,13 +583,26 @@ extension IMEIViewController {
         
         acdcRequestAdapter.fetchPreview(forTransactionID: forSelectedTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else {
-                
-                //error occured:Prompt alert
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
             
-            do{
+            if(receivedStatusCode == 200) {
+                
+                guard let dataResponse = responseResult else {
+                    //TODO:error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                do{
+
                 //parse dataResponse
                 //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
@@ -534,12 +624,32 @@ extension IMEIViewController {
                         }
                 }
                 
-            } catch let parsingError {
-                print("Error", parsingError)
+                } catch {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                    }
+                }
+                
+            }else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }
             }
             
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
     }
 }
