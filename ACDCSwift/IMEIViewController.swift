@@ -361,12 +361,11 @@ extension IMEIViewController {
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.fetchChamberList(forIMEI: validIMEInumber, storeIdentifier: inputStoreID, transactionIdentifier: inputTransactionID) { (responseResult, error) in
+        acdcRequestAdapter.fetchChamberList(forIMEI: validIMEInumber, storeIdentifier: inputStoreID, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -431,6 +430,8 @@ extension IMEIViewController {
                 print("Error", parsingError)
             }
             
+        }) { (error) in
+            //Error
         }
     }
     
@@ -446,12 +447,11 @@ extension IMEIViewController {
         let validIMEInumber = (IMEItextField.text)!
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.fetchIMEIhistory(forIMEIValue: validIMEInumber) { (responseResult, error) in
+        acdcRequestAdapter.fetchIMEIhistory(forIMEIValue: validIMEInumber, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -487,8 +487,10 @@ extension IMEIViewController {
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            
+        }) { (error) in
+            //Error
         }
+        
     }
     
     func loadProductDataFor(flags:[[String:Any]]) {
@@ -502,12 +504,11 @@ extension IMEIViewController {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         
-        acdcRequestAdapter.fetchPreview(forTransactionID: forSelectedTransactionID){ (responseResult, error) in
+        acdcRequestAdapter.fetchPreview(forTransactionID: forSelectedTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -537,6 +538,8 @@ extension IMEIViewController {
                 print("Error", parsingError)
             }
             
+        }) { (error) in
+            //Error
         }
     }
 }

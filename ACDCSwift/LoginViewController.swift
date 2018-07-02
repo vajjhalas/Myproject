@@ -20,7 +20,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
-        
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
 
         self.navigationItem.hidesBackButton = true
@@ -65,7 +64,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
 
     // MARK: Keyboard Notifiactions
-    
     @objc func keyboardWasShown(_ notification: Notification?) {
         if userIDOutlet.isFirstResponder || passwordOutlet.isFirstResponder {
             let info = notification?.userInfo
@@ -86,7 +84,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     // MARK: Text Field delegates
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -99,7 +96,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if !(userIDOutlet.text == "") && !(passwordOutlet.text == "") {
             loginBtnOutlet.isEnabled = true
             loginBtnOutlet.alpha = 1.0
-            print("CALLED== ")
         } else {
             loginBtnOutlet.isEnabled = false
             loginBtnOutlet.alpha = 0.5
@@ -107,7 +103,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     // MARK: Button Action
-
     @IBAction func loginPressed(_ sender: Any) {
         
         self.trimWhiteSpaces()
@@ -116,83 +111,130 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             return
         }
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
 
         let network: NetworkManager = NetworkManager.sharedInstance
         if(network.reachability.connection == .none) {
             ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
             return
-
         }
+        
+
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
 
-        acdcRequestAdapter.loginUser(with: userIDOutlet.text!, usrPassword: passwordOutlet.text!) { (responseResult, error) in
+        acdcRequestAdapter.loginUser(with: userIDOutlet.text!, usrPassword: passwordOutlet.text!, successCallback: {(statusCode, responseResult) in
 
-            guard let dataResponse = responseResult, error == nil else {
-
-                //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            
+            if(receivedStatusCode == 200) {
+            
+            guard let dataResponse = responseResult else {
+                //TODO:error occured:Prompt alert
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
 
             do{
+                
                 //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as! [String : Any]
                 
-                let dataDictionary = jsonResponse["data"] as! [String:Any]
-                
-                print("End result is \(jsonResponse)") //Response result
-                print("Flags are>> \((dataDictionary["options"] as! [String]))")
+                guard let dataDictionary = jsonResponse["data"] as? [String:Any] else {
+                    
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
+                    return
+                }
                 
                 if(dataDictionary["storeId"] is String){
-                    //what happens if nil
+                    
                     UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
-
-                    vc.loadProductDataFor(flags: ((jsonResponse["data"] as! [String:Any])["options"] as! [String]))
-                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                    guard let responseData = jsonResponse["data"] as? [String:Any] else {
+                        return
+                    }
+                    guard let receivedModules = responseData["options"] as? [String] else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.navigateToModuleSelectionScreenWith(productsArray: receivedModules)
+                    }
                 }
                 else if(dataDictionary["storeId"] is NSNumber){
-                    let storeIDValue = (dataDictionary["storeId"] as! NSNumber).stringValue
-                    UserDefaults.standard.set(storeIDValue, forKey: "STORE_ID")
+
+                    UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
-
-                    vc.loadProductDataFor(flags: ((jsonResponse["data"] as! [String:Any])["options"] as! [String]))
-                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-                    self.navigationController?.pushViewController(vc, animated: true)
                     
-
+                    guard let responseData = jsonResponse["data"] as? [String:Any] else {
+                        return
+                    }
+                    guard let receivedModules = responseData["options"] as? [String] else {
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.navigateToModuleSelectionScreenWith(productsArray: receivedModules)
+                    }
                 }
-                
 
-            } catch let parsingError {
-                print("Error", parsingError)
+            } catch {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                }
+            }
+                
+            }else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "You have entered an invalid username or password. Please try again.")
+                    }
+                }
+            }
+            
+        }) { (error) in
+            //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
             }
 
         }
 
     }
     
-    @IBAction func forgetBtnPressed(_ sender: Any) {
-        self.showALertss(title: "Please reset your password", body: "Please contact customer support.")
-    }
-    
-    // MARK: Helper Methods
-    func showALertss(title : String, body : String) {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-            print("OK")
-        })
-        alert.addAction(defaultAction)
-        present(alert, animated: true)
+    @IBAction func forgotPasswordAction(_ sender: Any) {
+        //TODO: forgot password flow?
+        ACDCUtilities.showMessage(title: "Alert", msg: "To be implemented")
     }
     
     
+    
+    func navigateToModuleSelectionScreenWith(productsArray: [String]) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let moduleSelectionViewCtrl = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
+        moduleSelectionViewCtrl.loadProductDataFor(flags: productsArray)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(moduleSelectionViewCtrl, animated: true)
+        
+    }
    
 }
 

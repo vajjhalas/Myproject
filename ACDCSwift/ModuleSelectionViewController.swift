@@ -160,12 +160,11 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.startCosmeticCheck(forProgram: name, storeIdentifier: inputStoreID) { (responseResult, error) in
+        acdcRequestAdapter.startCosmeticCheck(forProgram: name, storeIdentifier: inputStoreID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -211,6 +210,9 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                 print("Error", parsingError)
             }
             
+        }) { (error) in
+            
+            //Error
         }
 
     }

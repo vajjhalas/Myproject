@@ -109,12 +109,11 @@ class ImageProcessingViewController: UIViewController {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
        
-        acdcRequestAdapter.startImageCapture(sessionIdentifier: inputSessionID, commandName: "CaptureImage") { (responseResult, error) in
+        acdcRequestAdapter.startImageCapture(sessionIdentifier: inputSessionID, commandName: "CaptureImage", successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -139,7 +138,8 @@ class ImageProcessingViewController: UIViewController {
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            
+        }) { (error) in
+            //Error
         }
     }
 
@@ -152,12 +152,11 @@ func pollForImageProcess() {
   
     let acdcRequestAdapter = AcdcNetworkAdapter.shared()
     
-    acdcRequestAdapter.fetchProgressOfImagecapture(acknowledgeID: ackIdentifier, sessionIdentifier: inputSessionID) { (responseResult, error) in
+    acdcRequestAdapter.fetchProgressOfImagecapture(acknowledgeID: ackIdentifier, sessionIdentifier: inputSessionID, successCallback: {(statusCode, responseResult) in
         
-        guard let dataResponse = responseResult, error == nil else {
+        guard let dataResponse = responseResult else {
             
             //error occured:Prompt alert
-            print(error?.localizedDescription ?? "Response Error")
             if(responseResult == nil){
             self.pollForImageProcess()
             }
@@ -250,7 +249,8 @@ func pollForImageProcess() {
         } catch let parsingError {
             print("Error", parsingError)
         }
-        
+    }) { (error) in
+        //Error
     }
 
     }
