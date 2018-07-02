@@ -201,7 +201,7 @@
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="forgetBtnPressed:" destination="uSX-rO-Pe1" eventType="touchUpInside" id="jZN-TA-7Vh"/>
+                                                    <action selector="forgotPasswordAction:" destination="uSX-rO-Pe1" eventType="touchUpInside" id="UxT-Df-7mQ"/>
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signin" translatesAutoresizingMaskIntoConstraints="NO" id="PbG-cS-qgN">

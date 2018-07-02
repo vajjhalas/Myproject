@@ -74,12 +74,11 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
         }
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID) { (responseResult, error) in
+        acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else {
                 
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
             
@@ -119,7 +118,9 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            
+        }) { (error) in
+            //Error
         }
+        
     }
 }

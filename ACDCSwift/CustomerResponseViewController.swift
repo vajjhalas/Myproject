@@ -149,11 +149,10 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
         let didExchangeDevice = deviceExchangeSwitch.isOn
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evalAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID) { (responseResult, error) in
+        acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evalAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult, error == nil else {
+            guard let dataResponse = responseResult else{
                 //error occured:Prompt alert
-                print(error?.localizedDescription ?? "Response Error")
                 return
             }
 //            do{
@@ -162,6 +161,8 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
 //            }catch {
 //                
 //            }
+        }) { (error) in
+            //Error
         }
     }
 
