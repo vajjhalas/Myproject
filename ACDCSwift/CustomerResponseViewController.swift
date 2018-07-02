@@ -82,12 +82,18 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
 //        let vc = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
 //        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
 //        self.navigationController?.pushViewController(vc, animated: true)
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-        for aViewController in viewControllers {
-            if aViewController is ModuleSelectionViewController {
-                self.navigationController!.popToViewController(aViewController, animated: true)
-            }
-        }
+        
+        
+        endSessionWithFeedback()
+        
+        
+        
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+//        for aViewController in viewControllers {
+//            if aViewController is ModuleSelectionViewController {
+//                self.navigationController!.popToViewController(aViewController, animated: true)
+//            }
+//        }
 
     }
     
@@ -131,6 +137,42 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
         operatorRating = selectedStar
     }
 
+    
+    func terminateSession() {
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
+        //parameters to send
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
+        
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+
+        acdcRequestAdapter.terminateACDCSession(sessionIdenfifier: inputSessionID, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
+            
+            guard let dataResponse = responseResult else{
+                //error occured:Prompt alert
+                return
+            }
+            //            do{
+            //
+            //
+            //            }catch {
+            //
+            //            }
+        }) { (error) in
+            
+        }
+        
+        
+        
+    }
+    
     func endSessionWithFeedback() {
         
         let network: NetworkManager = NetworkManager.sharedInstance

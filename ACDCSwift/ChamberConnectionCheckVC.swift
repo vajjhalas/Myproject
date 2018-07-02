@@ -73,8 +73,11 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
             
         }
         
+        //parameters to send
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID, successCallback: {(statusCode, responseResult) in
+        acdcRequestAdapter.establishConnectionWithChamber(chamberIdentifier: withChamberID, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
             guard let receivedStatusCode = statusCode else {
                 //Status code should always exists
@@ -128,7 +131,15 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Could not connect to chamber.")
+
+                    
+                    //TODO: REMOVE THIS NAVIGATION THIS IS FOR TEST
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let vc = storyboard.instantiateViewController(withIdentifier: "CustomerResponseViewController") as! CustomerResponseViewController
+//                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+//                    self.navigationController?.pushViewController(vc, animated: true)
                     }
+
                     
                 }
                 
@@ -144,6 +155,10 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
                 }
             }

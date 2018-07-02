@@ -49,7 +49,7 @@ class ImageProcessingViewController: UIViewController {
         act1.startAnimating()
         view1.isHidden = true
    
-        self.startImageCapture()
+        self.startImageCapture(for: "CaptureImage")
     }
 
     @objc func continueToNextStage1() {
@@ -100,7 +100,7 @@ class ImageProcessingViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func startImageCapture() {
+    func startImageCapture(for command:String) {
         
         
         //parameters to send. //TODO:Add guardStatments
@@ -109,7 +109,7 @@ class ImageProcessingViewController: UIViewController {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
        
-        acdcRequestAdapter.startImageCapture(sessionIdentifier: inputSessionID, commandName: "CaptureImage", successCallback: {(statusCode, responseResult) in
+        acdcRequestAdapter.startImageCapture(sessionIdentifier: inputSessionID, commandName: command, successCallback: {(statusCode, responseResult) in
             
             guard let dataResponse = responseResult else {
                 
@@ -145,8 +145,7 @@ class ImageProcessingViewController: UIViewController {
 
 
 func pollForImageProcess() {
-    
-    
+
     //parameters to send. //TODO:Add guardStatments
     let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
   
@@ -232,13 +231,18 @@ func pollForImageProcess() {
                 let imageBase64SStr = responseImageString as! String
                 self.updtaeImage(with: imageBase64SStr)
                 self.pollForImageProcess() //Poll for PDF
-                
+          
+            case "PDF_DONE" :
+                //need to call PDF creation API
+                return
+
             case "TIMEOUT" :
                 self.pollForImageProcess()
             case  "INVALID_SESSION" :
+                //end session and move to module screen
                 return
             case  "FAIL" :
-                self.pollForImageProcess()
+                // an error occurred between server and chamber
                 return
             //TODO:PDF call is yet to be implemented
             default :

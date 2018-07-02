@@ -102,7 +102,6 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     // MARK: Hamburger menu delegate
     
     func popToSelectedOption(selectedOption: String) {
-        var optionString : String?
         if selectedOption == "Logout" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
@@ -145,8 +144,9 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
         let selectedProgram = productList[indexPath.row].productTagName
         self.sendSelectedProductToServer(name: selectedProgram)
         
-        
     }
+    
+    
 
     func loadProductDataFor(flags:[String]) {
         
@@ -232,11 +232,15 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
                     }
                 }
+                else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                }
             }
             
         }) { (error) in
             
-            //Error
             //Error
             DispatchQueue.main.async {
                 

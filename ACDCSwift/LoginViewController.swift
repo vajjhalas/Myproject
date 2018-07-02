@@ -199,7 +199,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Alert", msg: "You have entered an invalid username or password. Please try again.")
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Incorrect username or password. Please try again.")
+                    }
+                }
+                else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
                 }
             }

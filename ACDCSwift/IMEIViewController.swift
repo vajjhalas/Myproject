@@ -356,8 +356,16 @@ extension IMEIViewController {
             return
             
         }
-        //parameters to send. //TODO:Add guardStatments
-        let validIMEInumber = (IMEItextField.text)!
+        
+        guard let validIMEInumber = IMEItextField.text else {
+            
+            DispatchQueue.main.async {
+                ACDCUtilities.showMessage(title: "Alert", msg: "Please enter valid IMEI number.")
+            }
+            return
+        }
+        
+
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
         
@@ -457,7 +465,11 @@ extension IMEIViewController {
             DispatchQueue.main.async {
             ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
             }
-            }
+            }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                }
+                }
         }
         
             
@@ -482,8 +494,13 @@ extension IMEIViewController {
             return
             
         }
-        //parameters to send. //TODO:Add guardStatments
-        let validIMEInumber = (IMEItextField.text)!
+        guard let validIMEInumber = IMEItextField.text else {
+            
+            DispatchQueue.main.async {
+                ACDCUtilities.showMessage(title: "Alert", msg: "Please enter valid IMEI number.")
+            }
+            return
+        }
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.fetchIMEIhistory(forIMEIValue: validIMEInumber, successCallback: {(statusCode, responseResult) in
@@ -549,6 +566,10 @@ extension IMEIViewController {
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
                     }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
                 }
             }
                 
@@ -606,7 +627,7 @@ extension IMEIViewController {
                 print("End result for IMEI history session is \(jsonResponse)")
                 
                 guard let pdfString = jsonResponse["data"] as? String else {
-                    //TODO: PDF Data not received! prompt alet
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received from server.")
                     return
                 }
                 
@@ -632,6 +653,11 @@ extension IMEIViewController {
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }
+                else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
                 }
             }

@@ -31,3 +31,32 @@ extension UIApplication {
         return base
     }
 }
+
+enum ACDCResponseStatus {
+    case Informational
+    case Success
+    case Redirection
+    case ClientError
+    case ServerError
+    case Undefined
+    
+    public init(statusCode: Int) {
+        switch statusCode {
+        case 100 ..< 200:
+            self = .Informational
+        case 200 ..< 300:
+            self = .Success
+        case 300 ..< 400:
+            self = .Redirection
+        case 400 ..< 500:
+            self = .ClientError
+        case 500 ..< 600:
+            self = .ServerError
+        default:
+            self = .Undefined
+        }
+    }
+}
+
+
+
