@@ -83,6 +83,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
     // MARK: Hamburger menu delegates
     
     func popToSelectedOption(selectedOption: String) {
+        
         if selectedOption == "Home" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
