@@ -20,7 +20,7 @@ struct ChamberInfo {
 
 class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HamburgerMenuProtocol {
     
-    var receivedChamberInfo : [[String:Any]]?
+    var receivedChamberInfo : [[String:Any]] = [[:]]
     var chamberData : [ChamberInfo] = []
 
     @IBOutlet weak var chambersCollectionView: UICollectionView!
@@ -37,20 +37,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         chambersCollectionView.delegate = self
         chambersCollectionView.dataSource = self
 
- ////////////REMOVE  ///////
-        let filePath = Bundle.main.path(forResource: "IMEIHistory", ofType: "geojson")
-        let data = NSData(contentsOfFile: filePath ?? "") as Data?
-        var json = [String:AnyObject]()
-        let elements : NSMutableArray = NSMutableArray()
-        
-        if let aData = data {
-            json = try! JSONSerialization.jsonObject(with: aData, options: []) as! [String : AnyObject]
 
-        }
-
-        receivedChamberInfo = json["data"] as! [[String:Any]]
-//////////
-        if let receivedChamberInfo = receivedChamberInfo {
             for count in 0..<(receivedChamberInfo.count) {
                 let chamberModel = ChamberInfo.init(json: receivedChamberInfo[count])
                 chamberData.append(chamberModel)
@@ -63,7 +50,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
             } else {
                 collectionVwWidth.constant = CGFloat(210.0 * multiplier)
             }
-        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,7 +103,8 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
      // MARK: COLLECTION VIEW STUFFS
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return receivedChamberInfo!.count
+        
+        return receivedChamberInfo.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -144,6 +132,8 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         nextBtnOutlet.isUserInteractionEnabled = true
         let cell : UICollectionViewCell = collectionView.cellForItem(at: indexPath)!
         cell.contentView.backgroundColor = UIColor.lightGray
+        
+        //TODO: connect to the selected chamber
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

@@ -79,10 +79,10 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
         
         let issueText = feedbackTextField.text!
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
-        let dummyBool : Bool = false
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.reportAProblem(requestingFor: "F", issueText: issueText, crackNotDetected: dummyBool, crackWrongDetected: dummyBool, transactionIdentifier: inputTransactionID, successCallback: { (statusCode, responseResult) in
+        acdcRequestAdapter.provideFeedbackToServer(feedbackMessage: issueText, transactionIdentifier: inputTransactionID, successCallback: { (statusCode, responseResult) in
+            
             guard let receivedStatusCode = statusCode else {
                 DispatchQueue.main.async {
                     ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
@@ -100,25 +100,38 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
                 
                 do {
                     let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : String]
+                        dataResponse, options: []) as! [String : Any]
                     
-                    if(jsonResponse["status"]?.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                    guard let serverStatus = jsonResponse["status"] as? String else{
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received from server.")
+                        }
+                        return
+                    }
+                    if(serverStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        DispatchQueue.main.async {
+                         
                         let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
                         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                             self.navigationController?.popViewController(animated: true)
                         })
                         alert.addAction(defaultAction)
                         self.present(alert, animated: true)
+                        }
                     } else {
                         DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Server responsed with failed status.")
                         }
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong.")
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
                     }
                 }
+            }else {
+                //for any other status code
+                
             }
         }) { (error) in
             DispatchQueue.main.async {
