@@ -11,10 +11,18 @@ import UIKit
 struct ChamberInfo {
     var chamberName : String = ""
     var chamberStatus : String = ""
+    var chamberIdentifier : String = ""
     
     init(json : [String: Any]) {
-        chamberName = json["ChamberName"] as! String
-        chamberStatus = json["ChamberStatus"] as! String
+        chamberName = json["displayName"] as? String ?? ""
+        chamberStatus = json["status"] as? String ?? ""
+        if json["chamberId"] is String {
+            chamberIdentifier = (json["chamberId"] as! String)
+        } else if json["chamberId"] is NSNumber {
+            chamberIdentifier = (json["chamberId"] as! NSNumber).stringValue
+        } else {
+            chamberIdentifier = ""
+        }
     }
 }
 
@@ -22,6 +30,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
     
     var receivedChamberInfo : [[String:Any]] = [[:]]
     var chamberData : [ChamberInfo] = []
+    var selectedChamberID : String = ""
 
     @IBOutlet weak var chambersCollectionView: UICollectionView!
     @IBOutlet weak var nextBtnOutlet: UIButton!
@@ -96,6 +105,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
     @IBAction func nextButtonPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ChamberConnectionCheckVC") as! ChamberConnectionCheckVC
+        vc.chamberIdentifier = selectedChamberID
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -132,7 +142,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         nextBtnOutlet.isUserInteractionEnabled = true
         let cell : UICollectionViewCell = collectionView.cellForItem(at: indexPath)!
         cell.contentView.backgroundColor = UIColor.lightGray
-        
+        selectedChamberID = chamberData[indexPath.row].chamberIdentifier
         //TODO: connect to the selected chamber
     }
     
