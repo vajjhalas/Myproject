@@ -19,7 +19,7 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     var dataa : Data? = nil
     
     var dvtImage:UIImage?
-    
+    var overallTestResultText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +31,9 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
         
         let IMEINumber : String = UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as! String
         IMEIString.text = "IMEI : \(IMEINumber)"
+        
+        overallTestResult.text = overallTestResultText
+        resultImage.image = (overallTestResultText == "Qualified") ? UIImage.init(named: "qualified") : UIImage.init(named: "unqualified")
 
         if (dvtImage != nil){
             

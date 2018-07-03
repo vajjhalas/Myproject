@@ -30,12 +30,14 @@ class ImageProcessingViewController: UIViewController {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var IMEIString: UILabel!
     
+    
     @IBOutlet weak var progressStatus: UILabel!
     @IBOutlet weak var capturedImageView: UIImageView!
 
     var ackIdentifier = "-1"
     var imageType : ImageProcessState = .InitiateCapture
-
+    var imageQualifiedStatus = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,7 +89,8 @@ class ImageProcessingViewController: UIViewController {
         view3.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TestResultsViewController") as! TestResultsViewController
-        vc.dvtImage = UIImage.init(named: "chamber")//capturedImageView.image
+        vc.dvtImage = capturedImageView.image ?? UIImage.init(named: "chamber")
+        vc.overallTestResultText = self.imageQualifiedStatus
         self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -210,7 +213,7 @@ func pollForImageProcess() {
             case "ADM_DONE" :
                 self.pollForImageProcess()
                 return
-            case "FINAL_IMAGE" :
+            case "FINAL_IMAGE_QUALIFIED" :
                 guard let commandDict = jsonResponse["command"] else {
                     self.pollForImageProcess()
                     return;
@@ -219,10 +222,24 @@ func pollForImageProcess() {
                     self.pollForImageProcess()
                     return
                 }
+                self.imageQualifiedStatus = "Qualified"
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
                 self.updtaeImage(with: imageBase64SStr)
                // self.pollForImageProcess() //Poll for PDF
+            case "FINAL_IMAGE_NOT_QUALIFIED" :
+                guard let commandDict = jsonResponse["command"] else {
+                    self.pollForImageProcess()
+                    return;
+                }
+                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                    self.pollForImageProcess()
+                    return
+                }
+                self.imageQualifiedStatus = "Not Qualified"
+                self.imageType = .DVTImage
+                let imageBase64SStr = responseImageString as! String
+                self.updtaeImage(with: imageBase64SStr)
           
             case "PDF_DONE" :
                 //need to call PDF creation API

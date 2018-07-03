@@ -123,7 +123,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     // MARK: Text Field delegates
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if (string.characters.count == 0) {
+        if (string.isEmpty) {
             return true
         }
         if textField.text?.count == 15 {
@@ -409,15 +409,29 @@ extension IMEIViewController {
                         }
                         return
                     }
+                    
+                    if(dataArray.count == 0) {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "Alert", msg: "Empty chamber list received.")
+                        }
+                        return
+                    }
                 
-                if(dataArray.count == 1) {
+               else if(dataArray.count == 1) {
                  //if there is only one chamber check the status of the chamber, if "free" then try establishing chmaber connection
                     let chamberDataDict = dataArray[0];
                     
                     
                     //TODO: Chamber free status uncomment in production
-                    let chamberStatus = chamberDataDict["status"] as! String
-//                    if(chamberStatus.caseInsensitiveCompare("FREE") == ComparisonResult.orderedSame){
+                    guard let chamberStatus = chamberDataDict["status"] as? String else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Chamber status not received")
+                        }
+                        
+                        return
+                    }
+                    if(chamberStatus.caseInsensitiveCompare("FREE") == ComparisonResult.orderedSame){
                         var chamberId:String = ""
                         
                         if(chamberDataDict["chamberId"] is String){
@@ -442,18 +456,23 @@ extension IMEIViewController {
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     
-//                    }else {
-//                        //TODO: Chamber is not FREE. Prompt an alert
-//                    }
+                    }else {
+                        //TODO: Chamber is not FREE. Prompt an alert
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Chamber is not free. Please free the chamber and try again.")
+                        }
+                    }
                     
                 }else if(dataArray.count > 1) {
                  //if there are multiple chambers move to a screen and display chambers and and their status
                     //TODO: Navigate to screen that displays the chamber list
+                    DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "ChamberSelectionViewController") as! ChamberSelectionViewController
                     vc.receivedChamberInfo = dataArray
                     self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
                     self.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }
                 
             } catch let parsingError {
