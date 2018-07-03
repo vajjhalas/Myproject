@@ -21,7 +21,8 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     var json = [String:AnyObject]()
 //    var elements : NSMutableArray = NSMutableArray()
     
-    
+    var PDFDataForPrint : Data? = nil
+
     var recordsArray:[HistoryRecord] = []
     
     let acceptableCharacters = "0123456789."
@@ -247,7 +248,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             cell?.backgroundColor = indexPath.row % 2 == 0 ? evenRowColor : oddRowColor
             }
         case 2:
-            cell?.label.text = record.storeRepId
+            cell?.label.text = record.userId
             cell?.label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1)
             cell?.backgroundColor = indexPath.row % 2 == 0 ? evenRowColor : oddRowColor
         case 3:
@@ -313,11 +314,9 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     }
     
     func spreadsheetView(_ spreadSheetVw: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
-                if indexPath.row != 0 && indexPath.column == 7 {
-                    let transactionID = "\(recordsArray[indexPath.row].acdcSessionId)"
-                    self.getPDFPreview(forSelectedTransactionID:transactionID)
-                    
-
+        if indexPath.row != 0 && indexPath.column == 7 {
+            let transactionID = "\(recordsArray[indexPath.row].acdcSessionId)"
+            self.getPDFPreview(forSelectedTransactionID:transactionID)
         }
     }
     
@@ -332,9 +331,11 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     private func document(_ data: Data) -> PDFDocument? {
         return PDFDocument(fileData: data, fileName: "Sample PDF")
     }
+    
     private func showDocument(_ document: PDFDocument) {
         let image = UIImage(named: "")
         let controller = HistoryPreviewViewController.createNew(with: document, title: "", actionButtonImage: image, actionStyle: .activitySheet)
+        controller.dataa = PDFDataForPrint
         controller.modalTransitionStyle = .crossDissolve
         controller.modalPresentationStyle = .formSheet
         controller.preferredContentSize = CGSize(width: view.frame.size.width*5/6, height: view.frame.size.height*5/6)
@@ -555,7 +556,7 @@ extension IMEIViewController {
                     
                     self.spreadSheetVw.isHidden = false
 
-                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "", "storeRepId": "Store Rep ID", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
+                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
                     print(self.recordsArray)
@@ -606,81 +607,34 @@ extension IMEIViewController {
     }
 
     func getPDFPreview(forSelectedTransactionID: String) {
-        
-        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        
-        acdcRequestAdapter.fetchPreview(forTransactionID: forSelectedTransactionID, successCallback: {(statusCode, responseResult) in
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
             
-            guard let receivedStatusCode = statusCode else {
-                //Status code should always exists
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+        }
+        
+        PreviewPDFAPI.fetchPDFData(transactionID: forSelectedTransactionID) { (PDFData, errorMessage) -> (Void) in
+            guard let receivedPDFData = PDFData else {
+                guard let receivedErrorMessage = errorMessage else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong")
+                    }
+                    return
                 }
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: receivedErrorMessage)
+                    }
                 return
             }
             
-            if(receivedStatusCode == 200) {
-                
-                guard let dataResponse = responseResult else {
-                    //TODO:error occured:Prompt alert
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
-                    }
-                    return
-                }
-                
-                do{
-
-                //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
-                let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : Any]
-                print("End result for IMEI history session is \(jsonResponse)")
-                
-                guard let pdfString = jsonResponse["data"] as? String else {
-                    ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received from server.")
-                    return
-                }
-                
-                
-                DispatchQueue.main.async {
-                        let smallPDFDocumentName = "samplePDF"
-                    if let doc = self.document(Data.init(base64Encoded: pdfString)!) {
-                        self.showDocument(doc)
-                        } else {
-                            print("Document named \(smallPDFDocumentName) not found in the file system")
-                        }
-                }
-                
-                } catch {
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
-                    }
-                }
-                
-            }else {
-                //status code not 200
-                
-                if(receivedStatusCode == 401){
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
-                    }
-                }
-                else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
-                    }
-                }
-            }
+            self.PDFDataForPrint = receivedPDFData
             
-        }) { (error) in
-            //Error
             DispatchQueue.main.async {
-                
-                var errorDescription = ""
-                if let  errorDes = error?.localizedDescription {
-                    errorDescription = errorDes
-                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                if let doc = self.document(receivedPDFData) {
+                    self.showDocument(doc)
+                } else {
+                    print("Document named not found in the file system")
                 }
             }
         }
