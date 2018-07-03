@@ -12,6 +12,9 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
 
     @IBOutlet weak var sendResultsOutlet: UIButton!
     @IBOutlet weak var dvtImageView: UIImageView!
+    @IBOutlet weak var IMEIString: UILabel!
+    @IBOutlet weak var overallTestResult: UILabel!
+    @IBOutlet weak var resultImage: UIImageView!
     
     var dataa : Data? = nil
     
@@ -26,6 +29,9 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
+        let IMEINumber : String = UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as! String
+        IMEIString.text = "IMEI : \(IMEINumber)"
+
         if (dvtImage != nil){
             
             dvtImageView.image = dvtImage

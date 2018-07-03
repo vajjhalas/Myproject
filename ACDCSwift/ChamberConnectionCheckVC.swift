@@ -118,13 +118,13 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     UserDefaults.standard.synchronize()
                     
                     //session is established. Navigate to next screen
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "ImageProcessingViewController") as! ImageProcessingViewController
-                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-                    
-                    self.navigationController?.pushViewController(vc, animated: true)
-
-                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "ImageProcessingViewController") as! ImageProcessingViewController
+                        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+                        
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }else if(jsonResponse["type"]?.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
                     //TODO: Prompt alert if error required?
                     //TODO: Retry connection or fetch the chambers?

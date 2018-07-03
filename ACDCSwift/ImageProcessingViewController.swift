@@ -12,9 +12,10 @@ import AcdcNetwork
 
 
 enum ImageProcessState : String {
-    case ImageCapture
-    case ChamberImage
-    case DVTImage
+    case InitiateCapture = "Initiating Capture..."
+    case CapturingImage = "Capturing Image..."
+    case ChamberImage = "Analysing Image..."
+    case DVTImage = "Processed Image"
 }
 
 class ImageProcessingViewController: UIViewController {
@@ -22,46 +23,56 @@ class ImageProcessingViewController: UIViewController {
     @IBOutlet weak var act1: UIActivityIndicatorView!
     @IBOutlet weak var act2: UIActivityIndicatorView!
     @IBOutlet weak var act3: UIActivityIndicatorView!
-    @IBOutlet weak var act4: UIActivityIndicatorView!
     @IBOutlet weak var progessVw1: UIView!
     @IBOutlet weak var progessVw2: UIView!
-    @IBOutlet weak var progessVw3: UIView!
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
-    @IBOutlet weak var view4: UIView!
-
+    @IBOutlet weak var IMEIString: UILabel!
+    
+    @IBOutlet weak var progressStatus: UILabel!
     @IBOutlet weak var capturedImageView: UIImageView!
 
-    
-  
-    
     var ackIdentifier = "-1"
-    var imageType : ImageProcessState = .ImageCapture
+    var imageType : ImageProcessState = .InitiateCapture
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Capturing Image"
+        self.navigationItem.title = imageType.rawValue
         self.navigationItem.hidesBackButton = true
         
-        imageType = .ImageCapture
+        imageType = .InitiateCapture
         act1.startAnimating()
         view1.isHidden = true
+        
+        let IMEINumber : String = UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as! String
+        IMEIString.text = "IMEI : \(IMEINumber)"
    
         self.startImageCapture(for: "CaptureImage")
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 
-    @objc func continueToNextStage1() {
+    @objc func captureChamberImageProcess() {
+        imageType = .CapturingImage
+        progressStatus.text = imageType.rawValue
+        self.navigationItem.title = imageType.rawValue
         progessVw1.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
         act1.stopAnimating()
         act2.startAnimating()
         view1.isHidden = false
         view1.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
         view2.isHidden = true
+        
     }
 
-    @objc func continueToNextStage2() {
+    @objc func captureDVTImageProcess() {
+        imageType = .ChamberImage
+        progressStatus.text = imageType.rawValue
+        self.navigationItem.title = imageType.rawValue
         progessVw2.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
         act2.stopAnimating()
         act3.startAnimating()
@@ -70,29 +81,10 @@ class ImageProcessingViewController: UIViewController {
         view3.isHidden = true
     }
     
-    @objc func continueToNextStage3() {
-        progessVw3.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
+    @objc func proceedToTestResultsScreen() {
         act3.stopAnimating()
-        act4.startAnimating()
         view3.isHidden = false
         view3.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
-        view4.isHidden = true
-        //TODO: this stage is not required. Review?
-        perform(#selector(self.continueToNextStage4), with: nil, afterDelay: 1.0)
-    }
-    
-    @objc func continueToNextStage4() {
-        act4.stopAnimating()
-        view4.isHidden = false
-        view4.backgroundColor = UIColor.init(red: 226.0/255.0, green: 0.0/255.0, blue: 116.0/255.0, alpha: 1.0)
-        perform(#selector(self.proceedToNextCtrl), with: nil, afterDelay: 3.0)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    @objc func proceedToNextCtrl() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TestResultsViewController") as! TestResultsViewController
         vc.dvtImage = UIImage.init(named: "chamber")//capturedImageView.image
@@ -129,7 +121,7 @@ class ImageProcessingViewController: UIViewController {
                 //TODO: check if response is "success" String
                 
                 DispatchQueue.main.async {
-                    self.continueToNextStage1()
+                    self.captureChamberImageProcess()
                     self.pollForImageProcess()
                 }
                 
@@ -276,15 +268,14 @@ func pollForImageProcess() {
             self.capturedImageView.image = capturedImage
             
             switch self.imageType {
-            case .ImageCapture:
-                return
+            
             case .ChamberImage:
-                self.imageType = .DVTImage
-                self.continueToNextStage2()
+                self.captureDVTImageProcess()
 
             case .DVTImage:
-                self.imageType = .DVTImage
-                self.continueToNextStage3()
+                self.proceedToTestResultsScreen()
+            default :
+                return
             }
         }
     }
