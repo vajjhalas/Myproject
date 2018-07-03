@@ -86,7 +86,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         var evenSum : Int = 0
         
         var index : UInt = 0
-        for ch : Character in imeiString.characters {
+        for (_,ch) in imeiString.enumerated() {
             print("CHAR \(ch)");
             let digit : Int = Int(String(ch))!
             if (index % 2) == 0{
