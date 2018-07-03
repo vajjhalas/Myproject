@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AcdcNetwork
 
 class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerMenuProtocol {
 
@@ -132,6 +133,13 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
         })
         let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
             print("sendAction")
+            guard let phoneNumber =  alertController.textFields?.first?.text else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
+                }
+                return
+            }
+            self.sendSMSRequestToServer(phoneNumber: phoneNumber)
         })
         alertController.addAction(sendAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
@@ -149,6 +157,13 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
         })
         let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
             print("sendAction")
+            guard let emailID =  alertController.textFields?.first?.text else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
+                }
+                return
+            }
+            self.sendEmailRequestToServer(emailID: emailID)
         })
         alertController.addAction(sendAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
@@ -159,27 +174,31 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     }
     
     func handlePrint() {
-        print("---handlePrint")
-        let filePath: URL? = Bundle.main.url(forResource: "jjson", withExtension: "geojson")
-        let stringPath = filePath?.absoluteString
-        var data: Data? = nil
-        if let aPath = URL(string: stringPath ?? "") {
-            data = try! Data(contentsOf: aPath)
+        
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
         }
-        var jsonn = [String:Any]()
+        
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
 
-        if let aData = data {
-            jsonn = try! JSONSerialization.jsonObject(with: aData, options: []) as! [String:Any]
+        PreviewPDFAPI.fetchPDFData(transactionID: inputTransactionID) { (PDFData, errorMessage) -> (Void) in
+            guard let receivedPDFData = PDFData else {
+                guard let receivedErrorMessage = errorMessage else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong")
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: receivedErrorMessage)
+                }
+                return
+            }
+            self.dataa = receivedPDFData
         }
-        
-        let str = jsonn["data"] as? String
-        
-        dataa = Data.init(base64Encoded: str!)
-//        if let aData = data {
-//            dataa = Data(base64Encoded: dataarr!, options: .ignoreUnknownCharacters)
-//        }
-        //initWithData:data];
-        print(dataa as Any)
         callPrinter()
     }
 
@@ -214,3 +233,164 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     */
 
 }
+
+//API calls
+
+extension TestResultsViewController {
+    func sendSMSRequestToServer(phoneNumber: String) {
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
+        //parameters to send
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+        
+        acdcRequestAdapter.sendSMS(forMoblNumber: phoneNumber, transactionID: inputTransactionID, successCallback: {(statusCode, responseResult) in
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            
+            if(receivedStatusCode == 200) {
+                guard let dataResponse = responseResult else {
+                    //error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
+                    return
+                }
+                do {
+                    let jsonResponse = try JSONSerialization.jsonObject(with:
+                        dataResponse, options: []) as! [String : Any]
+                    
+                    guard let successStatus = jsonResponse["status"] as? String else {
+                        return
+                    }
+                    
+                    if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "Alert", msg: "Your request is accepted by the server.")
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                    }
+                } catch let parsingError {
+                    print("Error", parsingError)
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                    }
+                }
+            } else {
+                //status code not 200
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                }
+            }
+        }) { (error) in
+            //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
+        }
+    }
+    
+    func sendEmailRequestToServer(emailID: String) {
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
+        
+        //parameters to send
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+        
+        acdcRequestAdapter.sendEmail(forEmailID: emailID, transactionID: inputTransactionID, successCallback: {(statusCode, responseResult) in
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            
+            if(receivedStatusCode == 200) {
+                guard let dataResponse = responseResult else {
+                    //error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
+                    return
+                }
+                do {
+                    let jsonResponse = try JSONSerialization.jsonObject(with:
+                        dataResponse, options: []) as! [String : Any]
+                    
+                    guard let successStatus = jsonResponse["status"] as? String else {
+                        return
+                    }
+                    
+                    if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "Alert", msg: "Your request is accepted by the server.")
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                    }
+                } catch let parsingError {
+                    print("Error", parsingError)
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                    }
+                }
+            } else {
+                //status code not 200
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                }
+            }
+        }) { (error) in
+            //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
+        }
+    }
+}
+

@@ -58,6 +58,7 @@
 		DA656DD420DC189100DDD8D9 /* samplePDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA656DD320DC189100DDD8D9 /* samplePDF.pdf */; };
 		DA656DD620DC18B900DDD8D9 /* HistoryPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA656DD520DC18B900DDD8D9 /* HistoryPreviewViewController.swift */; };
 		DA656DD820DC1E5B00DDD8D9 /* crossImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DA656DD720DC1E5B00DDD8D9 /* crossImage.png */; };
+		DA671F5E20EB96F6005027E3 /* PreviewPDFApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */; };
 		DA9FDF7320E63728004A6695 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */; };
 		DA9FDF7520E63749004A6695 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */; };
 		DACBD6FE20E94268002884C1 /* ChamberSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */; };
@@ -162,6 +163,7 @@
 		DA656DD320DC189100DDD8D9 /* samplePDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = samplePDF.pdf; sourceTree = "<group>"; };
 		DA656DD520DC18B900DDD8D9 /* HistoryPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPreviewViewController.swift; sourceTree = "<group>"; };
 		DA656DD720DC1E5B00DDD8D9 /* crossImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crossImage.png; sourceTree = "<group>"; };
+		DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPDFApi.swift; sourceTree = "<group>"; };
 		DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
 		DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberSelectionViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */,
 				DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */,
 				372FA19D20E6404300DDFB09 /* Connection.swift */,
+				DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
 				DA02C01120C8F836007CF72E /* Assets.xcassets */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
@@ -592,6 +595,7 @@
 				DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */,
 				DA02C05320C9218F007CF72E /* IMEIViewController.swift in Sources */,
 				DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */,
+				DA671F5E20EB96F6005027E3 /* PreviewPDFApi.swift in Sources */,
 				DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */,
 				DA22913F20CA4EBD005451E6 /* TestResultsViewController.swift in Sources */,
 				DA64679020E60E73004CA821 /* ACDCUtilities.swift in Sources */,
