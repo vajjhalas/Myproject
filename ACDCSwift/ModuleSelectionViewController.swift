@@ -91,7 +91,7 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
         vc.delegate = self
-        vc.tableViewCellData = [["About","Contact","Feedback"],["Logout"]]
+        vc.tableViewCellData = [["About","Contact"],["Logout"]]
         let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
         navController.modalTransitionStyle = .coverVertical
         navController.modalPresentationStyle = .formSheet

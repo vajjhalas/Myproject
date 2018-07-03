@@ -2347,7 +2347,7 @@ Build v1822.01</string>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rru-Ey-feB">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rru-Ey-feB">
                                         <rect key="frame" x="46" y="382" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="c6f-la-0Oc"/>
@@ -2358,7 +2358,7 @@ Build v1822.01</string>
                                             <action selector="tickMarkAction:" destination="j2X-qC-0vi" eventType="touchUpInside" id="lWp-9w-C3S"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mJ-Xp-z38">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mJ-Xp-z38">
                                         <rect key="frame" x="46" y="337" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Y12-Mj-WRm"/>
