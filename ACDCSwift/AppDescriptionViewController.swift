@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AcdcNetwork
 
 class AppDescriptionViewController: UIViewController,UITextViewDelegate {
 
@@ -64,14 +65,73 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
     }
     
     @IBAction func sendBtnAction(_ sender: Any) {
-        let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-            self.navigationController?.popViewController(animated: true)
-        })
-        alert.addAction(defaultAction)
-        present(alert, animated: true)
+        sendFeedbackToServer()
     }
     
+    //API Method
+    
+    func sendFeedbackToServer() {
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+        }
+        
+        let issueText = feedbackTextField.text!
+        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
+        let dummyBool : Bool = false
+        
+        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
+        acdcRequestAdapter.reportAProblem(requestingFor: "F", issueText: issueText, crackNotDetected: dummyBool, crackWrongDetected: dummyBool, transactionIdentifier: inputTransactionID, successCallback: { (statusCode, responseResult) in
+            guard let receivedStatusCode = statusCode else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            
+            if(receivedStatusCode == 200) {
+                guard let dataResponse = responseResult else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                do {
+                    let jsonResponse = try JSONSerialization.jsonObject(with:
+                        dataResponse, options: []) as! [String : String]
+                    
+                    if(jsonResponse["status"]?.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
+                        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                        alert.addAction(defaultAction)
+                        self.present(alert, animated: true)
+                    } else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong.")
+                    }
+                }
+            }
+        }) { (error) in
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
+        }
+    }
+
     //Text Field delegates
     
     func textViewDidBeginEditing(_ textView: UITextView) {

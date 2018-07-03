@@ -50,7 +50,7 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate {
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        self.proceedToNextTest()
+        self.popToPreviousCtrl()
     }
     
     @IBAction func sendAction(_ sender: Any) {
@@ -62,14 +62,14 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate {
     
     @IBAction func tickMarkAction(_ sender: Any) {
         if (sender as AnyObject).tag == 1 {
-            if crackDError.isSelected {
+            if !crackDError.isSelected {
                 crackDError.setImage(UIImage.init(named: "checkmark-active"), for: .normal)
             } else {
                 crackDError.setImage(UIImage.init(named: "checkmark-inactive"), for: .normal)
             }
             crackDError.isSelected = !crackDError.isSelected
         } else {
-            if crackNDError.isSelected {
+            if !crackNDError.isSelected {
                 crackNDError.setImage(UIImage.init(named: "checkmark-active"), for: .normal)
             } else {
                 crackNDError.setImage(UIImage.init(named: "checkmark-inactive"), for: .normal)
@@ -78,7 +78,7 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate {
         }
     }
     
-    @objc func proceedToNextTest() {
+    @objc func popToPreviousCtrl() {
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -134,31 +134,56 @@ extension ReportProblemViewController {
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
 
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.reportAProblem(requestingFor: "F", issueText: issueText, crackNotDetected: isCrackPresentNotDetected, crackWrongDetected: isCrackAbsentDetected, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
+        acdcRequestAdapter.reportAProblem(requestingFor: "R", issueText: issueText, crackNotDetected: isCrackPresentNotDetected, crackWrongDetected: isCrackAbsentDetected, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else{
-                //error occured:Prompt alert
+            guard let receivedStatusCode = statusCode else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
-                        do{
-                            //TODO: guard for data status success string
-                            //{"data":null,"message":null,"status":"success"}
+            
+            if(receivedStatusCode == 200) {
+                guard let dataResponse = responseResult else {
+                    //TODO:error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                do {
+                    let jsonResponse = try JSONSerialization.jsonObject(with:
+                        dataResponse, options: []) as! [String : String]
 
-                            /*
-                             let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
-                             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-                             self.proceedToNextTest()
-                             })
-                             alert.addAction(defaultAction)
-                             present(alert, animated: true)
-                             */
-            
-                        }catch {
-            
+                    if(jsonResponse["status"]?.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
+                        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                            self.popToPreviousCtrl()
+                        })
+                        alert.addAction(defaultAction)
+                        self.present(alert, animated: true)
+                    } else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
                         }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong.")
+                    }
+                }
+            }
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
-
     }
 }
