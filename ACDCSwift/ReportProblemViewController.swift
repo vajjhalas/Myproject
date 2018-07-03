@@ -134,7 +134,7 @@ extension ReportProblemViewController {
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
 
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        acdcRequestAdapter.reportAProblem(requestingFor: "F", issueText: issueText, crackNotDetected: isCrackPresentNotDetected, crackWrongDetected: isCrackAbsentDetected, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
+        acdcRequestAdapter.reportAProblem(issueText: issueText, crackNotDetected: isCrackPresentNotDetected, crackWrongDetected: isCrackAbsentDetected, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
             guard let dataResponse = responseResult else{
                 //error occured:Prompt alert

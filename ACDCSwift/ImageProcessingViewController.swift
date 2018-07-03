@@ -129,9 +129,8 @@ class ImageProcessingViewController: UIViewController {
                 //TODO: check if response is "success" String
                 
                 DispatchQueue.main.async {
-                    //self.continueToNextStage1()
-                   // self.pollForImageProcess()
-                    self.proceedToNextCtrl()
+                    self.continueToNextStage1()
+                    self.pollForImageProcess()
                 }
                 
                 
@@ -231,7 +230,7 @@ func pollForImageProcess() {
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
                 self.updtaeImage(with: imageBase64SStr)
-                self.pollForImageProcess() //Poll for PDF
+               // self.pollForImageProcess() //Poll for PDF
           
             case "PDF_DONE" :
                 //need to call PDF creation API
@@ -256,6 +255,9 @@ func pollForImageProcess() {
         }
     }) { (error) in
         //Error
+        //TODO:  Timed out: HTTP request times out. Weak wifi or slow server?
+        
+        
     }
 
     }
@@ -275,12 +277,14 @@ func pollForImageProcess() {
             
             switch self.imageType {
             case .ImageCapture:
-                self.continueToNextStage2()
+                return
             case .ChamberImage:
                 self.imageType = .DVTImage
-                self.continueToNextStage3()
+                self.continueToNextStage2()
+
             case .DVTImage:
                 self.imageType = .DVTImage
+                self.continueToNextStage3()
             }
         }
     }
