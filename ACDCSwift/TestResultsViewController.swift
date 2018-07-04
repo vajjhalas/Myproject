@@ -126,35 +126,47 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     //MARK: Helper Methods
     
     func handleSMS() {
-        let alertController = UIAlertController(title: "Send test results", message: "Please enter your mobile number to receive a copy of your test results.", preferredStyle: .alert)
-        alertController.addTextField(configurationHandler: { textField in
-            textField.placeholder = "123-456-7890"
-            textField.keyboardType = .numberPad
-        })
-        let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
-            print("sendAction")
-            guard let phoneNumber =  alertController.textFields?.first?.text else {
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter phone number to continue")
-                }
-                return
+//        let alertController = UIAlertController(title: "Send test results", message: "Please enter your mobile number to receive a copy of your test results.", preferredStyle: .alert)
+//        alertController.addTextField(configurationHandler: { textField in
+//            textField.placeholder = "123-456-7890"
+//            textField.keyboardType = .numberPad
+//        })
+//        let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
+//            print("sendAction")
+//            guard let phoneNumber =  alertController.textFields?.first?.text else {
+//                DispatchQueue.main.async {
+//                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter phone number to continue")
+//                }
+//                return
+//            }
+//            if ACDCUtilities.isValidPhoneNumber(phoneNumber: phoneNumber) {
+//                self.sendSMSRequestToServer(phoneNumber: phoneNumber)
+//            } else {
+//                DispatchQueue.main.async {
+//                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
+//                }
+//                return
+//            }
+//        })
+//        alertController.addAction(sendAction)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+//            print("Canelled")
+//        })
+//        alertController.addAction(cancelAction)
+//        present(alertController, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SMSViewController") as! SMSViewController
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        guard let transactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as? String else {
+            DispatchQueue.main.async {
+                ACDCUtilities.showMessage(title: "Alert", msg: "Problem in fetching transaction ID")
             }
-            if ACDCUtilities.isValidPhoneNumber(phoneNumber: phoneNumber) {
-                self.sendSMSRequestToServer(phoneNumber: phoneNumber)
-            } else {
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
-                }
-                return
-            }
-        })
-        alertController.addAction(sendAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            print("Canelled")
-        })
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true)
-        
+            return
+        }
+        vc.previewTrasactionID = transactionID
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        present(navController, animated: true, completion: nil)
     }
     
     func handleEmail() {
