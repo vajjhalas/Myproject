@@ -15,6 +15,30 @@ class ACDCUtilities {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
     }
+    
+    static func isValidPhoneNumber(phoneNumber: String)->Bool {
+        let phoneNumb = phoneNumber
+        if self.isAllDigits(phoneNumber: phoneNumb) == true {
+            let phoneRegex = "[235689][0-9]{6}([0-9]{3})?"
+            let predicate = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+            return  predicate.evaluate(with: phoneNumber)
+        }else {
+            return false
+        }
+    }
+    
+    static func isAllDigits(phoneNumber: String)->Bool {
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = phoneNumber.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        return  phoneNumber == filtered
+    }
+    
+    static func isValidEmailId(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
 }
 
 extension UIApplication {

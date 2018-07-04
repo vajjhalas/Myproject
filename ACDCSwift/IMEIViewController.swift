@@ -25,10 +25,11 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
 
     var recordsArray:[HistoryRecord] = []
     
-    let acceptableCharacters = "0123456789."
+    let acceptableCharacters = "0123456789"
     let topRowColor = UIColor(red: 235.0/255.0, green: 235.0/255.0, blue: 235.0/255.0, alpha: 1)
     let evenRowColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1)
     let oddRowColor: UIColor = .white
+    var isHistoryNextBtnEnabled : Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,14 +52,29 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         spreadSheetVw.register(DataCell.self, forCellWithReuseIdentifier: String(describing: DataCell.self))
         spreadSheetVw.register(ResultCell.self, forCellWithReuseIdentifier: String(describing: ResultCell.self))
 
-        
-        IMEItextField.text = "352066060926230"
+//        IMEItextField.text = "352066060926230"
+        IMEItextField.addTarget(self, action: #selector(IMEIViewController.textFieldDidChange(_:)),
+                            for: UIControlEvents.editingChanged)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.text?.count == 15 {
+            isHistoryNextBtnEnabled = true
+            showHistoryOutlet.isEnabled = true
+            nextButtonOutlet.isEnabled = true
+        } else {
+            if isHistoryNextBtnEnabled {
+                isHistoryNextBtnEnabled = false
+                showHistoryOutlet.isEnabled = false
+                nextButtonOutlet.isEnabled = false
+            }
+        }
+    }
+    
     @objc func showMenu() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuViewController") as! HamburgerMenuViewController
@@ -128,22 +144,12 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             return true
         }
         if textField.text?.count == 15 {
-//            showHistoryOutlet.isUserInteractionEnabled = true
-//            showHistoryOutlet.alpha = 1.0
-//            nextButtonOutlet.isUserInteractionEnabled = true
-//            nextButtonOutlet.alpha = 1.0
             return false
         }
         if (textField == self.IMEItextField) {
             let cs = NSCharacterSet(charactersIn: self.acceptableCharacters)
             let filtered = string.components(separatedBy: cs as CharacterSet).filter { !$0.isEmpty }
             let str = filtered.joined(separator: "")//filtered.joinWithSeparator("")
-            if textField.text?.count == 14 {
-                showHistoryOutlet.isUserInteractionEnabled = true
-                showHistoryOutlet.alpha = 1.0
-                nextButtonOutlet.isUserInteractionEnabled = true
-                nextButtonOutlet.alpha = 1.0
-            }
             return (string != str)
         }
         return true

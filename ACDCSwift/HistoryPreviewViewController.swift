@@ -43,11 +43,18 @@ class HistoryPreviewViewController: UIViewController {
         let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
             guard let phoneNumber =  alertController.textFields?.first?.text else {
                 DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter phone number to continue")
+                }
+                return
+            }
+            if ACDCUtilities.isValidPhoneNumber(phoneNumber: phoneNumber) {
+                self.sendSMSRequestToServer(phoneNumber: phoneNumber)
+            } else {
+                DispatchQueue.main.async {
                     ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
                 }
                 return
             }
-            self.sendSMSRequestToServer(phoneNumber: phoneNumber)
         })
         alertController.addAction(sendAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
@@ -66,11 +73,18 @@ class HistoryPreviewViewController: UIViewController {
             print("sendAction")
             guard let emailID =  alertController.textFields?.first?.text else {
                 DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter Email ID to continue")
                 }
                 return
             }
-            self.sendEmailRequestToServer(emailID: emailID)
+            if ACDCUtilities.isValidEmailId(testStr: emailID) {
+                self.sendEmailRequestToServer(emailID: emailID)
+            } else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid Email ID")
+                }
+                return
+            }
         })
         alertController.addAction(sendAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
