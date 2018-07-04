@@ -8,23 +8,6 @@
 
 import UIKit
 
-struct ChamberInfo {
-    var chamberName : String = ""
-    var chamberStatus : String = ""
-    var chamberIdentifier : String = ""
-    
-    init(json : [String: Any]) {
-        chamberName = json["displayName"] as? String ?? ""
-        chamberStatus = json["status"] as? String ?? ""
-        if json["chamberId"] is String {
-            chamberIdentifier = (json["chamberId"] as! String)
-        } else if json["chamberId"] is NSNumber {
-            chamberIdentifier = (json["chamberId"] as! NSNumber).stringValue
-        } else {
-            chamberIdentifier = ""
-        }
-    }
-}
 
 class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HamburgerMenuProtocol {
     
@@ -48,7 +31,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
 
 
             for count in 0..<(receivedChamberInfo.count) {
-                let chamberModel = ChamberInfo.init(json: receivedChamberInfo[count])
+                let chamberModel = ChamberInfo.init(jsonRecord: receivedChamberInfo[count])
                 chamberData.append(chamberModel)
             }
             chambersCollectionView.reloadData()

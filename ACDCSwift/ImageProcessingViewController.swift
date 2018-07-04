@@ -164,7 +164,7 @@ func pollForImageProcess() {
             //TODO:Are guard statements necessary while in try catch block?
             let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as! [String : Any]
-            print("End result for polling image process is \(jsonResponse)")
+            //print("End result for polling image process is \(jsonResponse)")
             
             guard let ackIdentifier = jsonResponse["ackId"] else {
                 //ackid missing
@@ -190,7 +190,7 @@ func pollForImageProcess() {
                     self.ackIdentifier = (ackIdentifier  as! NSNumber).stringValue
                 }
             }
-            
+            print("End result for polling image process status is \(imageStatus)")
             switch ((imageStatus as! String).uppercased()) {
                 
             case "UNPROCESSED" :
@@ -265,7 +265,20 @@ func pollForImageProcess() {
     }) { (error) in
         //Error
         //TODO:  Timed out: HTTP request times out. Weak wifi or slow server?
-        
+        DispatchQueue.main.async {
+            
+            let alert = UIAlertController(title: "ERROR", message: "Request Timed out. It may be due to slow network connection or unresponive server. Would you like to retry?", preferredStyle: .alert)
+            let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { action in
+                self.pollForImageProcess()
+            })
+            let popAction = UIAlertAction(title: "Back", style: .default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            alert.addAction(retryAction)
+            alert.addAction(popAction)
+            self.present(alert, animated: true)
+        }
         
     }
 

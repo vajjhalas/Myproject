@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3725DB9020ECD80A001CE039 /* ChamberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725DB8F20ECD80A001CE039 /* ChamberModel.swift */; };
 		372FA19E20E6404300DDFB09 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FA19D20E6404300DDFB09 /* Connection.swift */; };
 		373EB4D920E0EDB90056089F /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D420E0EDB90056089F /* Moya.framework */; };
 		373EB4DA20E0EDB90056089F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D520E0EDB90056089F /* Result.framework */; };
@@ -114,6 +115,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3725DB8F20ECD80A001CE039 /* ChamberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberModel.swift; sourceTree = "<group>"; };
 		372FA19920E63BF200DDFB09 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372FA19D20E6404300DDFB09 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		373EB4D420E0EDB90056089F /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Moya.framework; sourceTree = "<group>"; };
@@ -281,7 +283,6 @@
 				DA02C03F20C911BE007CF72E /* LoginViewController.swift */,
 				DA02C04320C9159D007CF72E /* ModuleSelectionViewController.swift */,
 				DA02C05220C9218F007CF72E /* IMEIViewController.swift */,
-				373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */,
 				DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */,
 				DA02C05620C923CF007CF72E /* ChamberConnectionCheckVC.swift */,
 				DA22914220CA5071005451E6 /* ImageProcessingViewController.swift */,
@@ -294,6 +295,8 @@
 				DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */,
 				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */,
+				3725DB8F20ECD80A001CE039 /* ChamberModel.swift */,
+				373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
 				DA02C01120C8F836007CF72E /* Assets.xcassets */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
@@ -594,6 +597,7 @@
 				DA656DD620DC18B900DDD8D9 /* HistoryPreviewViewController.swift in Sources */,
 				DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */,
 				DA02C05320C9218F007CF72E /* IMEIViewController.swift in Sources */,
+				3725DB9020ECD80A001CE039 /* ChamberModel.swift in Sources */,
 				DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */,
 				DA671F5E20EB96F6005027E3 /* PreviewPDFApi.swift in Sources */,
 				DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */,
