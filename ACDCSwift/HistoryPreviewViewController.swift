@@ -22,6 +22,7 @@ class HistoryPreviewViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var dataa : Data? = nil
+    var previewTrasactionID : String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class HistoryPreviewViewController: UIViewController {
     }
     
     @IBAction func sendSMS(_ sender: Any) {
+        /*
         let alertController = UIAlertController(title: "Send test results", message: "Please enter your mobile number to receive a copy of your test results.", preferredStyle: .alert)
         alertController.addTextField(configurationHandler: { textField in
             textField.placeholder = "123-456-7890"
@@ -62,6 +64,14 @@ class HistoryPreviewViewController: UIViewController {
         })
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
+ */
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SMSViewController") as! SMSViewController
+        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        vc.previewTrasactionID = previewTrasactionID
+        navController.modalTransitionStyle = .coverVertical
+        navController.modalPresentationStyle = .formSheet
+        present(navController, animated: true, completion: nil)
     }
     
     @IBAction func sendEmail(_ sender: Any) {

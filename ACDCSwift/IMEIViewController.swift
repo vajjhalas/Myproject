@@ -179,6 +179,13 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     @IBAction func showHistoryPressed(_ sender: Any) {
         self.view.endEditing(true)
         
+//        let smallPDFDocumentName = "samplePDF"
+//        if let doc = document(smallPDFDocumentName) {
+//            showDocument(doc)
+//        } else {
+//            print("Document named \(smallPDFDocumentName) not found in the file system")
+//        }
+//return
         let IMEINum = IMEItextField.text
 
         if self.validateIMEI(imeiString: IMEINum!) {
@@ -338,17 +345,16 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         return PDFDocument(fileData: data, fileName: "Sample PDF")
     }
     
-    private func showDocument(_ document: PDFDocument) {
+    private func showDocument(_ document: PDFDocument, transactionID: String) {
         let image = UIImage(named: "")
         let controller = HistoryPreviewViewController.createNew(with: document, title: "", actionButtonImage: image, actionStyle: .activitySheet)
         controller.dataa = PDFDataForPrint
+        controller.previewTrasactionID = transactionID
         controller.modalTransitionStyle = .crossDissolve
         controller.modalPresentationStyle = .formSheet
         controller.preferredContentSize = CGSize(width: view.frame.size.width*5/6, height: view.frame.size.height*5/6)
         present(controller, animated: true)
     }
-    
-
 }
 
 //API calls
@@ -657,7 +663,7 @@ extension IMEIViewController {
             
             DispatchQueue.main.async {
                 if let doc = self.document(receivedPDFData) {
-                    self.showDocument(doc)
+                    self.showDocument(doc, transactionID: forSelectedTransactionID)
                 } else {
                     print("Document named not found in the file system")
                 }

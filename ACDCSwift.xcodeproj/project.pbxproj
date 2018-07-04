@@ -62,6 +62,7 @@
 		DA9FDF7320E63728004A6695 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */; };
 		DA9FDF7520E63749004A6695 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */; };
 		DACBD6FE20E94268002884C1 /* ChamberSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */; };
+		DAD786C820ECAD3700740EF3 /* SMSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD786C720ECAD3700740EF3 /* SMSViewController.swift */; };
 		DAEC942820DA51AF003442D4 /* jjson.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAEC942720DA51AF003442D4 /* jjson.geojson */; };
 		DAFEBAA720D79EC3008A9690 /* Modules.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAA620D79E9B008A9690 /* Modules.geojson */; };
 		DAFEBAAB20D7AFDF008A9690 /* IMEIHistory.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */; };
@@ -167,6 +168,7 @@
 		DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
 		DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberSelectionViewController.swift; sourceTree = "<group>"; };
+		DAD786C720ECAD3700740EF3 /* SMSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSViewController.swift; sourceTree = "<group>"; };
 		DAEC942720DA51AF003442D4 /* jjson.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jjson.geojson; sourceTree = "<group>"; };
 		DAFEBAA620D79E9B008A9690 /* Modules.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Modules.geojson; sourceTree = "<group>"; };
 		DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = IMEIHistory.geojson; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */,
 				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */,
+				DAD786C720ECAD3700740EF3 /* SMSViewController.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
 				DA02C01120C8F836007CF72E /* Assets.xcassets */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
@@ -395,6 +398,7 @@
 				DA02C00520C8F835007CF72E /* Resources */,
 				08A2509EB8A49161D7079EAD /* [CP] Embed Pods Frameworks */,
 				373EB4F120E0F0BD0056089F /* Embed Frameworks */,
+				825E624CDFF03F38CC7D8661 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -540,11 +544,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpreadsheetView.framework",
 			);
@@ -571,6 +577,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		825E624CDFF03F38CC7D8661 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -594,6 +615,7 @@
 				DA656DD620DC18B900DDD8D9 /* HistoryPreviewViewController.swift in Sources */,
 				DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */,
 				DA02C05320C9218F007CF72E /* IMEIViewController.swift in Sources */,
+				DAD786C820ECAD3700740EF3 /* SMSViewController.swift in Sources */,
 				DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */,
 				DA671F5E20EB96F6005027E3 /* PreviewPDFApi.swift in Sources */,
 				DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */,
