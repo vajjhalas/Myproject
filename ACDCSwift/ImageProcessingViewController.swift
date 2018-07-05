@@ -168,6 +168,17 @@ func pollForImageProcess() {
             
             guard let ackIdentifier = jsonResponse["ackId"] else {
                 //ackid missing
+                
+                DispatchQueue.main.async {
+                    
+                    let alert = UIAlertController(title: "ERROR", message: "Fatal error. Missing acknowledge.", preferredStyle: .alert)
+                    let popAction = UIAlertAction(title: "Back", style: .default, handler: { action in
+                        //TODO: End session required?
+                        self.navigateToIMEIForANewTransaction()
+                    })
+                    alert.addAction(popAction)
+                    self.present(alert, animated: true)
+                }
                 return
             }
             
@@ -242,16 +253,19 @@ func pollForImageProcess() {
                 self.updateImage(with: imageBase64SStr)
           
             case "PDF_DONE" :
-                //need to call PDF creation API
+                
+                //TODO: verify If this case required ? If so need to call PDF creation API
                 return
 
             case "TIMEOUT" :
                 self.pollForImageProcess()
             case  "INVALID_SESSION" :
                 //end session and move to module screen
+                //TODO: End session required? and navigate to IMEI?
                 return
             case  "FAIL" :
                 // an error occurred between server and chamber
+                //TODO: End session required? and navigate to IMEI?
                 return
             //TODO:PDF call is yet to be implemented
             default :
@@ -272,7 +286,9 @@ func pollForImageProcess() {
                 self.pollForImageProcess()
             })
             let popAction = UIAlertAction(title: "Back", style: .default, handler: { action in
-                self.navigationController?.popViewController(animated: true)
+                //will run in main thread. Async not required.
+                //TODO: End session required?
+                self.navigateToIMEIForANewTransaction()
             })
             
             alert.addAction(retryAction)
