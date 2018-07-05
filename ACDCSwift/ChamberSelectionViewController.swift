@@ -112,7 +112,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         cell?.layer.borderColor = UIColor.lightGray.cgColor
         cell?.layer.cornerRadius = 5.0
 
-        if chamb.chamberStatus != "Free" {
+        if chamb.chamberStatus.uppercased() != "FREE" {
             cell?.alpha = 0.5
             cell?.isUserInteractionEnabled = false
         }
@@ -127,7 +127,6 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         let cell : UICollectionViewCell = collectionView.cellForItem(at: indexPath)!
         cell.contentView.backgroundColor = UIColor.lightGray
         selectedChamberID = chamberData[indexPath.row].chamberIdentifier
-        //TODO: connect to the selected chamber
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

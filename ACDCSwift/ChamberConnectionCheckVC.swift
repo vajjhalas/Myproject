@@ -123,12 +123,28 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                         
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
+                    return
                 }else if(jsonResponse["type"]?.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
                     
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not connect to chamber.")
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Could not connect to chamber.")
                     }
 
+                    
+                }else if(jsonResponse["type"]?.caseInsensitiveCompare("BUSY") == ComparisonResult.orderedSame){
+                    
+                   
+                    
+                    DispatchQueue.main.async {
+                        
+                        let alert = UIAlertController(title: "Alert", message: "Chamber status is refreshed. Please try again.", preferredStyle: .alert)
+                        let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                            self.navigateToIMEIForANewTransaction()
+                        })
+                        alert.addAction(popAction)
+                        self.present(alert, animated: true)
+                    }
+                    return
                     
                 }else {
                     DispatchQueue.main.async {
@@ -166,5 +182,16 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
             }
         }
         
+    }
+    
+    func navigateToIMEIForANewTransaction() {
+        
+        if let viewControllers = self.navigationController?.viewControllers
+        {
+            if let imeiCtrl = viewControllers.first(where: {return $0 is IMEIViewController}) {
+                
+                self.navigationController?.popToViewController(imeiCtrl, animated: true)
+            }
+        }
     }
 }
