@@ -192,20 +192,76 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.sendCustomerRating(custmomerRating: cusRating, operatorRating: opeRating, evaluationAccepted: evalAccepted, deviceExchanged: didExchangeDevice, transactionIdentifier: inputTransactionID, sessionIdentifier: inputSessionID, successCallback: {(statusCode, responseResult) in
-            
-            guard let dataResponse = responseResult else{
-                //error occured:Prompt alert
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
-//            do{
-//                
-//                
-//            }catch {
-//                
-//            }
+            
+            if(receivedStatusCode == 200) {
+                guard let dataResponse = responseResult else {
+                    //error occured:Prompt alert
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                    }
+                    return
+                }
+                do {
+                    let jsonResponse = try JSONSerialization.jsonObject(with:
+                        dataResponse, options: []) as! [String : Any]
+                    
+                    guard let successStatus = jsonResponse["status"] as? String else {
+                        return
+                    }
+                    
+                    if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                        DispatchQueue.main.async {
+                            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+                            for aViewController in viewControllers {
+                                if aViewController is ModuleSelectionViewController {
+                                    self.navigationController!.popToViewController(aViewController, animated: true)
+                                }
+                            }
+                            
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Server responded with failed status.")
+                        }
+                    }
+                } catch let parsingError {
+                    print("Error", parsingError)
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                    }
+                }
+            } else {
+                //status code not 200
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                }
+            }
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                
+                var errorDescription = ""
+                if let  errorDes = error?.localizedDescription {
+                    errorDescription = errorDes
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                }
+            }
         }
+            
+            
     }
 
 }
