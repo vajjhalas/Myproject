@@ -16,6 +16,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     @IBOutlet weak var showHistoryOutlet: UIButton!
     @IBOutlet weak var IMEItextField: UITextField!
     @IBOutlet weak var spreadSheetVw: SpreadsheetView!
+    @IBOutlet weak var spreadSheetHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var errorMessageOutlet: UILabel!
     var json = [String:AnyObject]()

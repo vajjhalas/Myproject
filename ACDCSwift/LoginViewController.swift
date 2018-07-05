@@ -27,8 +27,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         userIDOutlet.delegate = self
         passwordOutlet.delegate = self
         loginBtnOutlet.isEnabled = false
-        loginBtnOutlet.alpha = 0.5
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,20 +88,28 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     // MARK: Text Field delegates
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return true
+        
+        if textField == userIDOutlet {
+            passwordOutlet.becomeFirstResponder()
+            return true
+
+        }
         textField.resignFirstResponder()
         return true
+
     }
     
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.trimWhiteSpaces()
         
+        
         if !(userIDOutlet.text == "") && !(passwordOutlet.text == "") {
             loginBtnOutlet.isEnabled = true
-            loginBtnOutlet.alpha = 1.0
         } else {
             loginBtnOutlet.isEnabled = false
-            loginBtnOutlet.alpha = 0.5
         }
     }
     
