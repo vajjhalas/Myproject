@@ -26,15 +26,28 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
         
         self.navigationItem.title = "Send test results"
 
-        let countryPickerView = CountryPickerView(frame: CGRect(x: 0, y: 0, width: 120, height: 20))
+        let countryPickerView = CountryPickerView(frame: CGRect(x: 2, y: 5, width: 120, height: 20))
         countryPickerView.delegate = self
-        smsTextField.leftView = countryPickerView
+        
+        let separatorView : UIView = UIView()
+        separatorView.frame = CGRect(x: 125, y: 1, width: 1, height: 28)
+        separatorView.backgroundColor = UIColor.lightGray
+        
+        let countryCodeView : UIView = UIView()
+        countryCodeView.frame = CGRect(x: 0, y: 0, width: 135, height: 30)
+        
+        countryCodeView.addSubview(countryPickerView)
+        countryCodeView.addSubview(separatorView)
+
+        smsTextField.leftView = countryCodeView
         smsTextField.leftViewMode = .always
         smsTextField.delegate = self
         smsTextField.keyboardType = .phonePad
         smsTextField.addTarget(self, action: #selector(IMEIViewController.textFieldDidChange(_:)),
                                 for: UIControlEvents.editingChanged)
-
+        smsTextField.layer.cornerRadius = 5.0
+        smsTextField.layer.borderColor = UIColor.lightGray.cgColor
+        smsTextField.layer.borderWidth = 1.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,7 +99,10 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
         }
         let phoneNumberWithCountryCode = countryCode + phoneNumber
         if ACDCUtilities.isValidPhoneNumber(phoneNumber: phoneNumber) {
-            self.sendSMSRequestToServer(phoneNumber: phoneNumberWithCountryCode)
+            let subSeq = phoneNumberWithCountryCode.index(phoneNumberWithCountryCode.startIndex, offsetBy: 1)
+            let trimmedString = phoneNumberWithCountryCode[subSeq...]
+            let smsNumber = String(trimmedString)
+            self.sendSMSRequestToServer(phoneNumber: smsNumber)
         } else {
             DispatchQueue.main.async {
                 ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
