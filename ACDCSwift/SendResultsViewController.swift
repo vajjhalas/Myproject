@@ -45,7 +45,7 @@ class SendResultsViewController: UIViewController,UITableViewDelegate,UITableVie
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: simpleTableIdentifier)
         }
-        cell?.textLabel?.text = tableViewCellData[indexPath.row] as? String
+        cell?.textLabel?.text = tableViewCellData[indexPath.row]
         cell?.textLabel?.textAlignment = .center
         if let aSize = UIFont(name: "Arial", size: 18.0) {
             cell?.textLabel?.font = aSize

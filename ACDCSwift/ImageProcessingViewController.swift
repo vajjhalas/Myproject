@@ -204,7 +204,7 @@ func pollForImageProcess() {
                 }
                 self.imageType = .ChamberImage
                 let imageBase64SStr = responseImageString as! String
-                self.updtaeImage(with: imageBase64SStr)
+                self.updateImage(with: imageBase64SStr)
                 self.pollForImageProcess()
                 
             case "ADM_STARTED" :
@@ -225,7 +225,7 @@ func pollForImageProcess() {
                 self.imageQualifiedStatus = "Qualified"
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
-                self.updtaeImage(with: imageBase64SStr)
+                self.updateImage(with: imageBase64SStr)
                // self.pollForImageProcess() //Poll for PDF
             case "FINAL_IMAGE_NOT_QUALIFIED" :
                 guard let commandDict = jsonResponse["command"] else {
@@ -239,7 +239,7 @@ func pollForImageProcess() {
                 self.imageQualifiedStatus = "Not Qualified"
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
-                self.updtaeImage(with: imageBase64SStr)
+                self.updateImage(with: imageBase64SStr)
           
             case "PDF_DONE" :
                 //need to call PDF creation API
@@ -284,7 +284,7 @@ func pollForImageProcess() {
 
     }
     
-    func updtaeImage(with base64String:String) {
+    func updateImage(with base64String:String) {
         
         let responseImageData = Data.init(base64Encoded: base64String)
         
@@ -310,8 +310,15 @@ func pollForImageProcess() {
         }
     }
     
-    func receivedPDF() {
+    func navigateToIMEIForANewTransaction() {
         
+        if let viewControllers = self.navigationController?.viewControllers
+        {
+            if let imeiCtrl = viewControllers.first(where: {return $0 is IMEIViewController}) {
+                
+                self.navigationController?.popToViewController(imeiCtrl, animated: true)
+            }
+        }
     }
     
 }

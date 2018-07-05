@@ -112,7 +112,7 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
                     if(serverStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
                         DispatchQueue.main.async {
                          
-                        let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Alert", message: "Thank you! We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
                         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                             self.navigationController?.popViewController(animated: true)
                         })
@@ -148,7 +148,7 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
     //Text Field delegates
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if (textView.text == "Please include a detailed description of the problem of your suggestion.") {
+        if (textView.text == "Please include a detailed description of the problem.") {
             feedbackTextField.textColor = UIColor.black
             feedbackTextField.text = ""
         }

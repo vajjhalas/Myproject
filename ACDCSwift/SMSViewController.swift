@@ -140,7 +140,7 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
                         }
                     } else {
                         DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Sorry, server could not accept your request.")
                         }
                     }
                 } catch let parsingError {

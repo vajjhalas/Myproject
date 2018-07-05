@@ -170,7 +170,7 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     }
     
     func handleEmail() {
-        let alertController = UIAlertController(title: "Send test results", message: "Please enter your email address to receive a copy of your test results.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Alert", message: "Please enter your email address to receive a copy of your test results.", preferredStyle: .alert)
         alertController.addTextField(configurationHandler: { textField in
             textField.placeholder = "xxx@xxxxx.xxx"
         })
@@ -178,7 +178,7 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
             print("sendAction")
             guard let emailID =  alertController.textFields?.first?.text else {
                 DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter Email ID to continue")
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter email address to continue.")
                 }
                 return
             }
@@ -385,7 +385,7 @@ extension TestResultsViewController {
                         }
                     } else {
                         DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Sorry, server could not accept your request.")
                         }
                     }
                 } catch let parsingError {
