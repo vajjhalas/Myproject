@@ -36,41 +36,13 @@ class HistoryPreviewViewController: UIViewController {
     }
     
     @IBAction func sendSMS(_ sender: Any) {
-        /*
-        let alertController = UIAlertController(title: "Send test results", message: "Please enter your mobile number to receive a copy of your test results.", preferredStyle: .alert)
-        alertController.addTextField(configurationHandler: { textField in
-            textField.placeholder = "123-456-7890"
-            textField.keyboardType = .numberPad
-        })
-        let sendAction = UIAlertAction(title: "Send", style: .default, handler: { action in
-            guard let phoneNumber =  alertController.textFields?.first?.text else {
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter phone number to continue")
-                }
-                return
-            }
-            if ACDCUtilities.isValidPhoneNumber(phoneNumber: phoneNumber) {
-                self.sendSMSRequestToServer(phoneNumber: phoneNumber)
-            } else {
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid phone number")
-                }
-                return
-            }
-        })
-        alertController.addAction(sendAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            print("Canelled")
-        })
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true)
- */
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SMSViewController") as! SMSViewController
-        let navController = UINavigationController(rootViewController: vc) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        let navController = UINavigationController(rootViewController: vc)
         vc.previewTrasactionID = previewTrasactionID
         navController.modalTransitionStyle = .coverVertical
         navController.modalPresentationStyle = .formSheet
+        navController.preferredContentSize = CGSize(width: self.view.frame.width/2, height: self.view.frame.height/2)
         present(navController, animated: true, completion: nil)
     }
     
@@ -187,84 +159,6 @@ extension HistoryPreviewViewController: UICollectionViewDelegateFlowLayout {
 //API calls
 
 extension HistoryPreviewViewController {
-    func sendSMSRequestToServer(phoneNumber: String) {
-        let network: NetworkManager = NetworkManager.sharedInstance
-        if(network.reachability.connection == .none) {
-            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
-            return
-            
-        }
-        
-        //parameters to send
-        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
-        
-        let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-        
-        acdcRequestAdapter.sendSMS(forMoblNumber: phoneNumber, transactionID: inputTransactionID, successCallback: {(statusCode, responseResult) in
-            guard let receivedStatusCode = statusCode else {
-                //Status code should always exists
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
-                }
-                return
-            }
-            
-            if(receivedStatusCode == 200) {
-                guard let dataResponse = responseResult else {
-                    //error occured:Prompt alert
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
-                    }
-                    return
-                }
-                do {
-                    let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : Any]
-
-                    guard let successStatus = jsonResponse["status"] as? String else {
-                        return
-                    }
-                    
-                    if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
-                        DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "Alert", msg: "Your request is accepted by the server.")
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
-                        }
-                    }
-                } catch let parsingError {
-                    print("Error", parsingError)
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
-                    }
-                }
-            } else {
-                //status code not 200
-                if(receivedStatusCode == 401){
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
-                    }
-                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
-                    DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
-                    }
-                }
-            }
-        }) { (error) in
-            //Error
-            DispatchQueue.main.async {
-                
-                var errorDescription = ""
-                if let  errorDes = error?.localizedDescription {
-                    errorDescription = errorDes
-                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
-                }
-            }
-        }
-    }
-    
     func sendEmailRequestToServer(emailID: String) {
         let network: NetworkManager = NetworkManager.sharedInstance
         if(network.reachability.connection == .none) {
