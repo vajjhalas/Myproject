@@ -141,6 +141,24 @@ class ImageProcessingViewController: UIViewController {
 
 func pollForImageProcess() {
 
+    
+    let network: NetworkManager = NetworkManager.sharedInstance
+
+    if(network.reachability.connection == .none) {
+        
+        let alert = UIAlertController(title: "Alert", message: "Internet connection appears to be offline. Please connect to a network and then retry.", preferredStyle: .alert)
+        let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { action in
+            self.pollForImageProcess()
+        })
+        let popAction = UIAlertAction(title: "Cancel", style: .default, handler: { action in
+            self.navigateToIMEIForANewTransaction()
+        })
+        alert.addAction(popAction)
+        alert.addAction(retryAction)
+        self.present(alert, animated: true)
+        return
+    }
+    
     //parameters to send. //TODO:Add guardStatments
     let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
   
@@ -172,7 +190,7 @@ func pollForImageProcess() {
                 DispatchQueue.main.async {
                     
                     let alert = UIAlertController(title: "ERROR", message: "Fatal error. Missing acknowledge.", preferredStyle: .alert)
-                    let popAction = UIAlertAction(title: "Back", style: .default, handler: { action in
+                    let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                         //TODO: End session required?
                         self.navigateToIMEIForANewTransaction()
                     })
@@ -237,7 +255,6 @@ func pollForImageProcess() {
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
                 self.updateImage(with: imageBase64SStr)
-               // self.pollForImageProcess() //Poll for PDF
             case "FINAL_IMAGE_NOT_QUALIFIED" :
                 guard let commandDict = jsonResponse["command"] else {
                     self.pollForImageProcess()
@@ -251,21 +268,25 @@ func pollForImageProcess() {
                 self.imageType = .DVTImage
                 let imageBase64SStr = responseImageString as! String
                 self.updateImage(with: imageBase64SStr)
-          
-            case "PDF_DONE" :
-                
-                //TODO: verify If this case required ? If so need to call PDF creation API
-                return
-
             case "TIMEOUT" :
                 self.pollForImageProcess()
+                return
             case  "INVALID_SESSION" :
                 //end session and move to module screen
                 //TODO: End session required? and navigate to IMEI?
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "ERROR", message: "Session aborted. Please start a new transaction", preferredStyle: .alert)
+                    let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                        self.navigateToIMEIForANewTransaction()
+                    })
+                    alert.addAction(popAction)
+                    self.present(alert, animated: true)
+                }
                 return
             case  "FAIL" :
                 // an error occurred between server and chamber
                 //TODO: End session required? and navigate to IMEI?
+                self.pollForImageProcess()
                 return
             //TODO:PDF call is yet to be implemented
             default :
@@ -316,9 +337,11 @@ func pollForImageProcess() {
             switch self.imageType {
             
             case .ChamberImage:
+                //Received chamber image. So, show DVT processing state
                 self.captureDVTImageProcess()
 
             case .DVTImage:
+                //Received DVT processed image. So, Move to test results screen
                 self.proceedToTestResultsScreen()
             default :
                 return

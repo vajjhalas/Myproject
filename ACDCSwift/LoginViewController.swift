@@ -68,10 +68,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if userIDOutlet.isFirstResponder || passwordOutlet.isFirstResponder {
             let info = notification?.userInfo
             let keyboardSize: CGSize? = (info?[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
-            let buttonOrigin: CGPoint = loginBtnOutlet.frame.origin
+            
+            let superPoint = scrollView.convert(loginBtnOutlet.frame.origin, to: self.view)
+
+            let buttonOrigin: CGPoint = superPoint
             let buttonHeight: CGFloat = loginBtnOutlet.frame.size.height
             var visibleRect: CGRect = view.frame
             visibleRect.size.height -= keyboardSize?.height ?? 0.0
+            
+            
             if !visibleRect.contains(buttonOrigin) {
                 let scrollPoint = CGPoint(x: 0.0, y: buttonOrigin.y - visibleRect.size.height + buttonHeight)
                 scrollView.setContentOffset(scrollPoint, animated: true)

@@ -90,7 +90,6 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
             if(receivedStatusCode == 200) {
                 
                 guard let dataResponse = responseResult else {
-                    //TODO:error occured:Prompt alert
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
                     }
@@ -98,10 +97,8 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                 }
                 
                 do{
-
                 
                 //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                     dataResponse, options: []) as! [String : String]
                 print("End result for product selection is \(jsonResponse)")
@@ -109,8 +106,9 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                 if((jsonResponse["type"])?.caseInsensitiveCompare("sid") == ComparisonResult.orderedSame) {
                     //store session ID
                     guard let sessionID = jsonResponse["value"] else{
-                        //TODO: Prompt alert required?
-                        print("Session ID NOT RECEIVED. SOMETHING IS WRONG")
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Session ID not received.")
+                        }
                         return
                     }
                     
@@ -126,39 +124,33 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
                 }else if(jsonResponse["type"]?.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
-                    //TODO: Prompt alert if error required?
-                    //TODO: Retry connection or fetch the chambers?
                     
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Could not connect to chamber.")
-
-                    
-                    //TODO: REMOVE THIS NAVIGATION THIS IS FOR TEST
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let vc = storyboard.instantiateViewController(withIdentifier: "CustomerResponseViewController") as! CustomerResponseViewController
-//                    self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-//                    self.navigationController?.pushViewController(vc, animated: true)
                     }
 
                     
-                }
+                }else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    }
                 
                 } catch {
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "could not parse response.")
                     }
                 }
                 
             }else {
                 //status code not 200
-                
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
                     }
                 }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Server error")
                     }
                 }
             }

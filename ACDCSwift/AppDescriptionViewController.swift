@@ -21,6 +21,8 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var cancelOutlet: UIButton!
     @IBOutlet weak var feedbackTextField: UITextView!
     
+    var textviewPlaceholderText = "Please include a detailed description of the problem."
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,7 +43,7 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
             feedbackTextField.layer.cornerRadius = 8.0
             feedbackTextField.layer.borderWidth = 1.0
             feedbackTextField.layer.borderColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
-            feedbackTextField.text = "Please include a detailed description of the problem of your suggestion."
+            feedbackTextField.text = textviewPlaceholderText
             sendOutlet.alpha = 0.5
             sendOutlet.isUserInteractionEnabled = false
             self.navigationItem.title = "Feedback"
@@ -148,7 +150,7 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
     //Text Field delegates
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if (textView.text == "Please include a detailed description of the problem.") {
+        if (textView.text == textviewPlaceholderText) {
             feedbackTextField.textColor = UIColor.black
             feedbackTextField.text = ""
         }
