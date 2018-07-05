@@ -41,13 +41,13 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         spreadSheetVw.isHidden = true
         spreadSheetVw.dataSource = self
         spreadSheetVw.delegate = self
-        spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
-        spreadSheetVw.layer.borderWidth = 1.0
+//        spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
+//        spreadSheetVw.layer.borderWidth = 1.0
         
         spreadSheetVw.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         spreadSheetVw.intercellSpacing = CGSize(width: 1, height: 1)
-        spreadSheetVw.gridStyle = .solid(width: 1.0, color: .gray)
+       // spreadSheetVw.gridStyle = .solid(width: 1.0, color: .gray)
         spreadSheetVw.bounces = false
         spreadSheetVw.register(DataCell.self, forCellWithReuseIdentifier: String(describing: DataCell.self))
         spreadSheetVw.register(ResultCell.self, forCellWithReuseIdentifier: String(describing: ResultCell.self))
@@ -472,7 +472,7 @@ extension IMEIViewController {
                     }else {
                         //TODO: Chamber is not FREE. Prompt an alert
                         DispatchQueue.main.async {
-                            ACDCUtilities.showMessage(title: "ERROR", msg: "Chamber is not free. Please free the chamber and try again.")
+                            ACDCUtilities.showMessage(title: "Alert", msg: "Chamber is not free. Please free the chamber and try again.")
                         }
                     }
                     
