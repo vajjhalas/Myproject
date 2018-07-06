@@ -144,9 +144,17 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
                 }
                 do {
                     let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : Any]
+                        dataResponse, options: [])
                     
-                    guard let successStatus = jsonResponse["status"] as? String else {
+                    guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    guard let successStatus = parsedResponse["status"] as? String else {
                         return
                     }
                     
@@ -159,14 +167,14 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Sorry, server could not accept your request.")
                         }
                     }
-                } catch let parsingError {
-                    print("Error", parsingError)
+                } catch  {
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
                     }
                 }
             } else {
                 //status code not 200
+                
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
@@ -175,7 +183,12 @@ class SMSViewController: UIViewController,UITextFieldDelegate,CountryPickerViewD
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
                 }
+                
             }
         }) { (error) in
             //Error

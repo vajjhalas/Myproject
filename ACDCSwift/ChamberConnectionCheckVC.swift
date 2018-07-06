@@ -100,12 +100,28 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                 
                 //parse dataResponse
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : String]
-                print("End result for product selection is \(jsonResponse)")
+                    dataResponse, options: [])
                 
-                if((jsonResponse["type"])?.caseInsensitiveCompare("sid") == ComparisonResult.orderedSame) {
+                    guard let parsedResponse = jsonResponse as? [String : Any] else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    guard let receivedType = parsedResponse["type"] as? String else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    
+                if(receivedType.caseInsensitiveCompare("sid") == ComparisonResult.orderedSame) {
                     //store session ID
-                    guard let sessionID = jsonResponse["value"] else{
+                    guard let sessionID = parsedResponse["value"] else{
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Session ID not received.")
                         }
@@ -124,14 +140,14 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
                     return
-                }else if(jsonResponse["type"]?.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
+                }else if(receivedType.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
                     
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Could not connect to chamber.")
                     }
 
                     
-                }else if(jsonResponse["type"]?.caseInsensitiveCompare("BUSY") == ComparisonResult.orderedSame){
+                }else if(receivedType.caseInsensitiveCompare("BUSY") == ComparisonResult.orderedSame){
                     
                    
                     
@@ -158,26 +174,29 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     }
                 }
                 
-            }else {
+            } else {
                 //status code not 200
+                
                 if(receivedStatusCode == 401){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
                     }
                 }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Server error")
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
                     }
                 }
+                
             }
         }) { (error) in
             //Error
             DispatchQueue.main.async {
-                
-                var errorDescription = ""
                 if let  errorDes = error?.localizedDescription {
-                    errorDescription = errorDes
-                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDes)
                 }
             }
         }

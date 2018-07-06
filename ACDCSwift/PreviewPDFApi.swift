@@ -26,11 +26,14 @@ class PreviewPDFAPI {
                 }
                 do{
                     //parse dataResponse
-                    //TODO:Are guard statements necessary while in try catch block?
                     let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : Any]
-                    print("End result for IMEI history session is \(jsonResponse)")
-                    guard let pdfString = jsonResponse["data"] as? String else {
+                        dataResponse, options: [])
+                    guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                        
+                        return completion(nil, "Unexpected response received from server.")
+
+                    }
+                    guard let pdfString = parsedResponse["data"] as? String else {
                         return completion(nil, "Unexpected response received from server.")
                     }
                      let dataFromServer = Data.init(base64Encoded: pdfString)!

@@ -421,12 +421,20 @@ extension IMEIViewController {
                 //parse dataResponse
                 //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : Any]
+                    dataResponse, options: [])
                 print("End result for IMEI init session is \(jsonResponse)")
                 
                     //We should get array of dictionaries as a value for "data" key
 
-                    guard let dataArray = jsonResponse["data"] as? [[String:Any]] else {
+                    guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    guard let dataArray = parsedResponse["data"] as? [[String:Any]] else {
                         
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
@@ -499,25 +507,29 @@ extension IMEIViewController {
                     }
                 }
                 
-            } catch let parsingError {
-                print("Error", parsingError)
+            } catch  {
                 DispatchQueue.main.async {
                     ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
                 }
             }
-        } else {
-            //status code not 200
-            
-            if(receivedStatusCode == 401){
-            DispatchQueue.main.async {
-            ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+            } else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
+                }
+                
             }
-            }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
-                DispatchQueue.main.async {
-                    ACDCUtilities.showMessage(title: "Error", msg: "Server error")
-                }
-                }
-        }
         
             
         }) { (error) in
@@ -576,10 +588,17 @@ extension IMEIViewController {
 
                     //parse dataResponse
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : Any]
-                print("End result for IMEI history session is \(jsonResponse)")
+                    dataResponse, options: [])
 
-                guard let receivedData = (jsonResponse["data"]! as? [[String:Any]]) else {
+                    guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                guard let receivedData = (parsedResponse["data"]! as? [[String:Any]]) else {
                     
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
@@ -624,7 +643,12 @@ extension IMEIViewController {
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
                 }
+                
             }
                 
         }) { (error) in

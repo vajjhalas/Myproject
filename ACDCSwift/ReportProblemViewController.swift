@@ -155,9 +155,25 @@ extension ReportProblemViewController {
                 
                 do {
                     let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : String]
+                        dataResponse, options: [])
+                        
+                    guard let parsedResponse = jsonResponse as? [String : Any] else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    guard let dataStatus = parsedResponse["status"] as? String else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
 
-                    if(jsonResponse["status"]?.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+                    if(dataStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
                         let alert = UIAlertController(title: "Thank you", message: "We have noted your concern. All necessary actions will be taken.", preferredStyle: .alert)
                         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                             self.popToPreviousCtrl()
@@ -174,15 +190,32 @@ extension ReportProblemViewController {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong.")
                     }
                 }
+            } else {
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
+                }
+                
             }
+            
+            
         }) { (error) in
             //Error
             DispatchQueue.main.async {
                 
-                var errorDescription = ""
                 if let  errorDes = error?.localizedDescription {
-                    errorDescription = errorDes
-                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDes)
                 }
             }
         }

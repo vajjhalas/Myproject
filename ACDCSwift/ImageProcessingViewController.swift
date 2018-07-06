@@ -13,7 +13,7 @@ import AcdcNetwork
 
 enum ImageProcessState : String {
     case InitiateCapture = "Initiating Capture..."
-    case CapturingImage = "Capturing Image..."
+    case CapturingImage = "Generating HDR Image..."
     case ChamberImage = "Analysing Image..."
     case DVTImage = "Processed Image"
 }
@@ -97,8 +97,14 @@ class ImageProcessingViewController: UIViewController {
 
     func startImageCapture(for command:String) {
         
+        let network: NetworkManager = NetworkManager.sharedInstance
+        if(network.reachability.connection == .none) {
+            ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
+            return
+            
+        }
         
-        //parameters to send. //TODO:Add guardStatments
+        //parameters to send.
         let inputSessionID = UserDefaults.standard.value(forKey: "SESSION_ID") as! String
 
         
@@ -106,35 +112,94 @@ class ImageProcessingViewController: UIViewController {
        
         acdcRequestAdapter.startImageCapture(sessionIdentifier: inputSessionID, commandName: command, successCallback: {(statusCode, responseResult) in
             
+            guard let receivedStatusCode = statusCode else {
+                //Status code should always exists
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
+            if(receivedStatusCode == 200) {
+
             guard let dataResponse = responseResult else {
-                
-                //error occured:Prompt alert
+
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
                 return
             }
             
             do {
                 
                 //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : Any]
-                print("End result for product selection is \(jsonResponse)")
+                    dataResponse, options: [])
                 
+                guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                    
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                guard let successStatus = parsedResponse["status"] as? String else {
+                    return
+                }
                 
-                //TODO: check if response is "success" String
-                
-                DispatchQueue.main.async {
-                    self.captureChamberImageProcess()
-                    self.pollForImageProcess()
+                if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
+
+                    DispatchQueue.main.async {
+                        self.captureChamberImageProcess()
+                        self.pollForImageProcess()
+                    }
+                    
+                } else {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Alert", message: "Initiation was not successful. Would you like to try again?", preferredStyle: .alert)
+                        let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { action in
+                            self.startImageCapture(for: "CaptureImage")
+                        })
+                        let popAction = UIAlertAction(title: "Cancel", style: .default, handler: { action in
+                            self.navigateToIMEIForANewTransaction()
+                        })
+                        alert.addAction(popAction)
+                        alert.addAction(retryAction)
+                        self.present(alert, animated: true)
+                        return
+                    }
                 }
                 
                 
+            } catch {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "could not parse response.")
+                }
+              }
+            } else {
+                //status code not 200
                 
-            } catch let parsingError {
-                print("Error", parsingError)
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
+                }
+                
             }
         }) { (error) in
             //Error
+            DispatchQueue.main.async {
+                if let  errorDes = error?.localizedDescription {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDes)
+                }
+            }
         }
     }
 
@@ -146,6 +211,7 @@ func pollForImageProcess() {
 
     if(network.reachability.connection == .none) {
         
+        DispatchQueue.main.async {
         let alert = UIAlertController(title: "Alert", message: "Internet connection appears to be offline. Please connect to a network and then retry.", preferredStyle: .alert)
         let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { action in
             self.pollForImageProcess()
@@ -156,6 +222,7 @@ func pollForImageProcess() {
         alert.addAction(popAction)
         alert.addAction(retryAction)
         self.present(alert, animated: true)
+        }
         return
     }
     
@@ -166,6 +233,16 @@ func pollForImageProcess() {
     
     acdcRequestAdapter.fetchProgressOfImagecapture(acknowledgeID: ackIdentifier, sessionIdentifier: inputSessionID, successCallback: {(statusCode, responseResult) in
         
+        guard let receivedStatusCode = statusCode else {
+            //Status code should always exists
+            DispatchQueue.main.async {
+                ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+            }
+            return
+        }
+        
+        if(receivedStatusCode == 200) {
+            
         guard let dataResponse = responseResult else {
             
             //error occured:Prompt alert
@@ -181,10 +258,17 @@ func pollForImageProcess() {
             //parse dataResponse
             //TODO:Are guard statements necessary while in try catch block?
             let jsonResponse = try JSONSerialization.jsonObject(with:
-                dataResponse, options: []) as! [String : Any]
-            //print("End result for polling image process is \(jsonResponse)")
+                dataResponse, options: [])
+
+            guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                }
+                return
+            }
             
-            guard let ackIdentifier = jsonResponse["ackId"] else {
+            guard let ackIdentifier = parsedResponse["ackId"] else {
                 //ackid missing
                 
                 DispatchQueue.main.async {
@@ -200,15 +284,12 @@ func pollForImageProcess() {
                 return
             }
             
-            guard let imageStatus = jsonResponse["status"] as? String else {
+            guard let imageStatus = parsedResponse["status"] as? String else {
                 self.ackIdentifier = "-1"
                 self.pollForImageProcess()
                 return
             }
-            
-            
-           
-        
+       
             //update the acknowledgement identifier
             if (ackIdentifier is String){
                 if((ackIdentifier as! String) != "-1"){
@@ -223,7 +304,7 @@ func pollForImageProcess() {
             switch (imageStatus.uppercased()) {
                 
             case "UNPROCESSED" :
-                guard let commandDict = (jsonResponse["command"] as? [String: Any]) else {
+                guard let commandDict = (parsedResponse["command"] as? [String: Any]) else {
                     self.pollForImageProcess()
                     return
                 }
@@ -245,7 +326,7 @@ func pollForImageProcess() {
                 self.pollForImageProcess()
                 return
             case "FINAL_IMAGE_QUALIFIED" :
-                guard let commandDict = (jsonResponse["command"]  as? [String: Any])else {
+                guard let commandDict = (parsedResponse["command"]  as? [String: Any])else {
                     self.pollForImageProcess()
                     return;
                 }
@@ -260,7 +341,7 @@ func pollForImageProcess() {
                     self.updateImage(with: imageBase64SStr)
                 }
             case "FINAL_IMAGE_NOT_QUALIFIED" :
-                guard let commandDict = (jsonResponse["command"]  as? [String: Any])else {
+                guard let commandDict = (parsedResponse["command"]  as? [String: Any])else {
                     self.pollForImageProcess()
                     return;
                 }
@@ -304,9 +385,27 @@ func pollForImageProcess() {
             
             DispatchQueue.main.async {
                 ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+               }
             }
-
+        } else {
+            //status code not 200
+            
+            if(receivedStatusCode == 401){
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                }
+            }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                }
+            }
+            
         }
+            
     }) { (error) in
         //Error
         //TODO:  Timed out: HTTP request times out. Weak wifi or slow server?

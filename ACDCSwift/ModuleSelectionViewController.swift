@@ -187,14 +187,23 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                 //parse dataResponse
                 //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: []) as! [String : Any]
-                print("End result for product selection is \(jsonResponse)")
+                    dataResponse, options: [])
+                
+                
+                guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                    
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
                 //We get TransactionID as a value for "data" key
                 var inputTransactionID:String = ""
                 
-                if(jsonResponse["data"] is String){
+                if(parsedResponse["data"] is String){
                     //what happens if nil?
-                    inputTransactionID = jsonResponse["data"] as! String
+                    inputTransactionID = parsedResponse["data"] as! String
                     
                     UserDefaults.standard.set(inputTransactionID, forKey: "TRANSACTION_ID")
                     UserDefaults.standard.synchronize()
@@ -206,8 +215,8 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 }
-                else if(jsonResponse["data"] is NSNumber){
-                    inputTransactionID = (jsonResponse["data"] as! NSNumber).stringValue
+                else if(parsedResponse["data"] is NSNumber){
+                    inputTransactionID = (parsedResponse["data"] as! NSNumber).stringValue
                     
                     UserDefaults.standard.set(inputTransactionID, forKey: "TRANSACTION_ID")
                     UserDefaults.standard.synchronize()
@@ -221,9 +230,13 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                 }
                 
                 
-            } catch let parsingError {
-                print("Error", parsingError)
-            }
+            } catch  {
+
+                DispatchQueue.main.async {
+                    ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+                }
+                
+                }
             } else {
                 //status code not 200
                 
@@ -231,12 +244,16 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
                     }
-                }
-                else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
                 }
+                
             }
             
         }) { (error) in

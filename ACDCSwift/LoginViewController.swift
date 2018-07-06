@@ -157,9 +157,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 
                 //parse dataResponse
                 let jsonResponse = try JSONSerialization.jsonObject(with:
-                dataResponse, options: []) as! [String : Any]
+                dataResponse, options: [])
                 
-                guard let dataDictionary = jsonResponse["data"] as? [String:Any] else {
+                guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                    
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                    }
+                    return
+                }
+                
+                guard let dataDictionary = parsedResponse["data"] as? [String:Any] else {
                     
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
@@ -172,7 +180,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
                     
-                    guard let responseData = jsonResponse["data"] as? [String:Any] else {
+                    guard let responseData = parsedResponse["data"] as? [String:Any] else {
                         return
                     }
                     guard let receivedModules = responseData["options"] as? [String] else {
@@ -187,7 +195,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
                     
-                    guard let responseData = jsonResponse["data"] as? [String:Any] else {
+                    guard let responseData = parsedResponse["data"] as? [String:Any] else {
                         return
                     }
                     guard let receivedModules = responseData["options"] as? [String] else {
@@ -218,6 +226,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         ACDCUtilities.showMessage(title: "Error", msg: "Server error")
                     }
                 }
+                 else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
+                    }
             }
             
         }) { (error) in

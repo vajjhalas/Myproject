@@ -102,9 +102,17 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
                 
                 do {
                     let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! [String : Any]
+                        dataResponse, options: [])
                     
-                    guard let serverStatus = jsonResponse["status"] as? String else{
+                    guard let parsedResponse = (jsonResponse as? [String : Any]) else {
+                        
+                        DispatchQueue.main.async {
+                            ACDCUtilities.showMessage(title: "ERROR", msg: "Something went wrong. Received bad response.")
+                        }
+                        return
+                    }
+                    
+                    guard let serverStatus = parsedResponse["status"] as? String else{
                         
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received from server.")
@@ -132,7 +140,21 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
                     }
                 }
             }else {
-                //for any other status code
+                //status code not 200
+                
+                if(receivedStatusCode == 401){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Alert", msg: "Not Authorized!")
+                    }
+                }else if(ACDCResponseStatus.init(statusCode: receivedStatusCode) == .ServerError){
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Server error")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
+                    }
+                }
                 
             }
         }) { (error) in
