@@ -204,7 +204,7 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
                 guard let dataResponse = responseResult else {
                     //error occured:Prompt alert
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received")
+                        ACDCUtilities.showMessage(title: "ERROR", msg: "Unexpected response received from server")
                     }
                     return
                 }
@@ -218,21 +218,20 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
                     
                     if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
                         DispatchQueue.main.async {
-                            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-                            for aViewController in viewControllers {
-                                if aViewController is ModuleSelectionViewController {
-                                    self.navigationController!.popToViewController(aViewController, animated: true)
-                                }
-                            }
                             
+                            let alert = UIAlertController(title: "Alert", message: "Thank you. Your feedback is recorded successfully.", preferredStyle: .alert)
+                            let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                                self.navigateToProductSelection()
+                            })
+                            alert.addAction(popAction)
+                            self.present(alert, animated: true)
                         }
                     } else {
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Server responded with failed status.")
                         }
                     }
-                } catch let parsingError {
-                    print("Error", parsingError)
+                } catch {
                     DispatchQueue.main.async {
                         ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
                     }
@@ -253,10 +252,8 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
             //Error
             DispatchQueue.main.async {
                 
-                var errorDescription = ""
                 if let  errorDes = error?.localizedDescription {
-                    errorDescription = errorDes
-                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDescription)
+                    ACDCUtilities.showMessage(title: "ERROR", msg: errorDes)
                 }
             }
         }
@@ -264,4 +261,12 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
             
     }
 
+    func navigateToProductSelection() {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+        for aViewController in viewControllers {
+            if aViewController is ModuleSelectionViewController {
+                self.navigationController!.popToViewController(aViewController, animated: true)
+            }
+        }
+    }
 }

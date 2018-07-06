@@ -200,10 +200,10 @@ func pollForImageProcess() {
                 return
             }
             
-            guard let imageStatus = jsonResponse["status"] else {
+            guard let imageStatus = jsonResponse["status"] as? String else {
                 self.ackIdentifier = "-1"
                 self.pollForImageProcess()
-                return;
+                return
             }
             
             
@@ -220,20 +220,22 @@ func pollForImageProcess() {
                 }
             }
             print("End result for polling image process status is \(imageStatus)")
-            switch ((imageStatus as! String).uppercased()) {
+            switch (imageStatus.uppercased()) {
                 
             case "UNPROCESSED" :
-                guard let commandDict = jsonResponse["command"] else {
+                guard let commandDict = (jsonResponse["command"] as? [String: Any]) else {
                     self.pollForImageProcess()
                     return
                 }
-                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                guard let responseImageString = commandDict["data"] as? String else {
                     self.pollForImageProcess()
                     return
                 }
                 self.imageType = .ChamberImage
-                let imageBase64SStr = responseImageString as! String
-                self.updateImage(with: imageBase64SStr)
+                let imageBase64SStr = responseImageString
+                if(!(imageBase64SStr.isEmpty)) {
+                    self.updateImage(with: imageBase64SStr)
+                }
                 self.pollForImageProcess()
                 
             case "ADM_STARTED" :
@@ -243,31 +245,35 @@ func pollForImageProcess() {
                 self.pollForImageProcess()
                 return
             case "FINAL_IMAGE_QUALIFIED" :
-                guard let commandDict = jsonResponse["command"] else {
+                guard let commandDict = (jsonResponse["command"]  as? [String: Any])else {
                     self.pollForImageProcess()
                     return;
                 }
-                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                guard let responseImageString = (commandDict["data"] as? String) else {
                     self.pollForImageProcess()
                     return
                 }
                 self.imageQualifiedStatus = "Qualified"
                 self.imageType = .DVTImage
-                let imageBase64SStr = responseImageString as! String
-                self.updateImage(with: imageBase64SStr)
+                let imageBase64SStr = responseImageString
+                if(!(imageBase64SStr.isEmpty)) {
+                    self.updateImage(with: imageBase64SStr)
+                }
             case "FINAL_IMAGE_NOT_QUALIFIED" :
-                guard let commandDict = jsonResponse["command"] else {
+                guard let commandDict = (jsonResponse["command"]  as? [String: Any])else {
                     self.pollForImageProcess()
                     return;
                 }
-                guard let responseImageString = (commandDict as! [String: Any])["data"] else {
+                guard let responseImageString = (commandDict["data"] as? String) else {
                     self.pollForImageProcess()
                     return
                 }
                 self.imageQualifiedStatus = "Not Qualified"
                 self.imageType = .DVTImage
-                let imageBase64SStr = responseImageString as! String
-                self.updateImage(with: imageBase64SStr)
+                let imageBase64SStr = responseImageString
+                if(!(imageBase64SStr.isEmpty)) {
+                    self.updateImage(with: imageBase64SStr)
+                }
             case "TIMEOUT" :
                 self.pollForImageProcess()
                 return
@@ -294,8 +300,12 @@ func pollForImageProcess() {
                 
             }
             
-        } catch let parsingError {
-            print("Error", parsingError)
+        } catch  {
+            
+            DispatchQueue.main.async {
+                ACDCUtilities.showMessage(title: "ERROR", msg: "Could not parse response.")
+            }
+
         }
     }) { (error) in
         //Error
