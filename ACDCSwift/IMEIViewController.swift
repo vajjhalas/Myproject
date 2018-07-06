@@ -210,7 +210,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             let transactionCount : Int = recordsArray.count
             let nextBtnY = nextButtonOutlet.frame.origin.y
             let spreadSheetY = spreadSheetVw.frame.origin.y
-            let maxSpreadSheetWidth  = nextBtnY - spreadSheetY - 10
+            let maxSpreadSheetWidth  = nextBtnY - spreadSheetY - 20
             if maxSpreadSheetWidth < CGFloat(40 * transactionCount) {
                 spreadSheetHeightConstraint.constant = maxSpreadSheetWidth
             }  else {
