@@ -26,8 +26,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        var finished = false
+        var bgTask: UIBackgroundTaskIdentifier = 0;
+        bgTask = application.beginBackgroundTask(withName:"MyBackgroundTask", expirationHandler: {() -> Void in
+            // Time is up.
+            if bgTask != UIBackgroundTaskInvalid {
+                // Do something to stop our background task or the app will be killed
+                finished = true
+                application.endBackgroundTask(bgTask)
+                bgTask = UIBackgroundTaskInvalid
+            }
+        })
+        
+        // Perform your background task here
+//        print("The task has started")
+//        while !finished {
+//            print("Not finished")
+//            // when done, set finished to true
+//            // If that doesn't happen in time, the expiration handler will do it for us
+//        }
+        
+        // Indicate that it is complete
+      
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
