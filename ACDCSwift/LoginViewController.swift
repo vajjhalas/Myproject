@@ -237,7 +237,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBAction func forgotPasswordAction(_ sender: Any) {
         //TODO: forgot password flow?
-        ACDCUtilities.showMessage(title: "Alert", msg: "To be implemented")
+        ACDCUtilities.showMessage(title: "Alert", msg: "Please contact our customer support.")
     }
     
     

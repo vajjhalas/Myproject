@@ -42,8 +42,8 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         spreadSheetVw.isHidden = true
         spreadSheetVw.dataSource = self
         spreadSheetVw.delegate = self
-//        spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
-//        spreadSheetVw.layer.borderWidth = 1.0
+        spreadSheetVw.layer.borderColor = UIColor.gray.cgColor
+        spreadSheetVw.layer.borderWidth = 1.0
         
         spreadSheetVw.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
@@ -206,8 +206,18 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     }
     
     func numberOfRows(in spreadSheetVw: SpreadsheetView) -> Int {
+        if recordsArray.count != 0 {
+            let transactionCount : Int = recordsArray.count
+            let nextBtnY = nextButtonOutlet.frame.origin.y
+            let spreadSheetY = spreadSheetVw.frame.origin.y
+            let maxSpreadSheetWidth  = nextBtnY - spreadSheetY - 10
+            if maxSpreadSheetWidth < CGFloat(40 * transactionCount) {
+                spreadSheetHeightConstraint.constant = maxSpreadSheetWidth
+            }  else {
+                spreadSheetHeightConstraint.constant = CGFloat(40 * transactionCount)
+            }
+        }
         return recordsArray.count
-        
     }
     
     func spreadsheetView(_ spreadSheetVw: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
