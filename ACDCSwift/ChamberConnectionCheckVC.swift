@@ -143,8 +143,15 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                 }else if(receivedType.caseInsensitiveCompare("error") == ComparisonResult.orderedSame){
                     
                     DispatchQueue.main.async {
-                        ACDCUtilities.showMessage(title: "Alert", msg: "Could not connect to chamber.")
+                        
+                        let alert = UIAlertController(title: "Alert", message: "Chamber status is refreshed. Please try again.", preferredStyle: .alert)
+                        let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                            self.navigateToIMEIForANewTransaction()
+                        })
+                        alert.addAction(popAction)
+                        self.present(alert, animated: true)
                     }
+                    return
 
                     
                 }else if(receivedType.caseInsensitiveCompare("BUSY") == ComparisonResult.orderedSame){
