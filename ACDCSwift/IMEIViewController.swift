@@ -178,8 +178,9 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
     }
 
     @IBAction func showHistoryPressed(_ sender: Any) {
-        self.view.endEditing(true)
-        
+        DispatchQueue.main.async {
+            self.view.endEditing(true)
+        }
 //        let smallPDFDocumentName = "samplePDF"
 //        if let doc = document(smallPDFDocumentName) {
 //            showDocument(doc)
@@ -620,7 +621,7 @@ extension IMEIViewController {
                     let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
-                    print(self.recordsArray)
+//                    print(self.recordsArray)
                 
                     DispatchQueue.main.async {
                         self.spreadSheetVw.reloadData()

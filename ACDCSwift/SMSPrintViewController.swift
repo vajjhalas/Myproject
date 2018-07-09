@@ -119,8 +119,10 @@ class SMSPrintViewController: UIViewController,UITextFieldDelegate,CountryPicker
     }
     
     @IBAction func sendResults(_ sender: Any) {
-        userCredTextField.resignFirstResponder()
-        perform(#selector(SMSPrintViewController.proceedToSendTestResults), with: nil, afterDelay: 0.8)
+        DispatchQueue.main.async {
+            self.userCredTextField.resignFirstResponder()
+        }
+        proceedToSendTestResults() //perform(#selector(SMSPrintViewController.proceedToSendTestResults), with: nil, afterDelay: 0.8)
     }
     
     @objc func proceedToSendTestResults() {
