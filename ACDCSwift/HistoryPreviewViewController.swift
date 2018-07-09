@@ -60,7 +60,7 @@ class HistoryPreviewViewController: UIViewController {
                 return
             }
             if ACDCUtilities.isValidEmailId(testStr: emailID) {
-                self.sendEmailRequestToServer(emailID: emailID)
+                self.sendEmailRequestToServer(emailID: emailID, trasactionIdentifier: self.previewTrasactionID)
             } else {
                 DispatchQueue.main.async {
                     ACDCUtilities.showMessage(title: "Alert", msg: "Please enter a valid Email ID")
@@ -159,7 +159,7 @@ extension HistoryPreviewViewController: UICollectionViewDelegateFlowLayout {
 //API calls
 
 extension HistoryPreviewViewController {
-    func sendEmailRequestToServer(emailID: String) {
+    func sendEmailRequestToServer(emailID: String, trasactionIdentifier: String) {
         let network: NetworkManager = NetworkManager.sharedInstance
         if(network.reachability.connection == .none) {
             ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
@@ -167,12 +167,9 @@ extension HistoryPreviewViewController {
             
         }
         
-        //parameters to send
-        let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
-        
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         
-        acdcRequestAdapter.sendEmail(forEmailID: emailID, transactionID: inputTransactionID, successCallback: {(statusCode, responseResult) in
+        acdcRequestAdapter.sendEmail(forEmailID: emailID, transactionID: trasactionIdentifier, successCallback: {(statusCode, responseResult) in
             guard let receivedStatusCode = statusCode else {
                 //Status code should always exists
                 DispatchQueue.main.async {

@@ -14,7 +14,7 @@ import AcdcNetwork
 enum ImageProcessState : String {
     case InitiateCapture = "Initiating Capture..."
     case CapturingImage = "Generating HDR Image..."
-    case ChamberImage = "Analysing Image..."
+    case ChamberImage = "Analyzing Image..."
     case DVTImage = "Processed Image"
 }
 
