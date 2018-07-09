@@ -676,15 +676,15 @@ Build v1822.01</string>
             </objects>
             <point key="canvasLocation" x="2519.7841726618708" y="141.72661870503597"/>
         </scene>
-        <!--View Controller-->
+        <!--Print View Controller-->
         <scene sceneID="AQB-SD-RkC">
             <objects>
-                <viewController storyboardIdentifier="SMSViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cN0-9y-WnI" customClass="SMSViewController" customModule="ACDCSwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SMSPrintViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cN0-9y-WnI" customClass="SMSPrintViewController" customModule="ACDCSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sTc-CT-GGr">
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="123-456-7890" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-eh-ZMB">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1234567890" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-eh-ZMB">
                                 <rect key="frame" x="406.5" y="130" width="300" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="XVL-m7-O5e"/>
@@ -751,7 +751,7 @@ Build v1822.01</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="cancelPress:" destination="cN0-9y-WnI" eventType="touchUpInside" id="gra-CO-KxH"/>
+                                            <action selector="cancelPress:" destination="cN0-9y-WnI" eventType="touchUpInside" id="ina-1b-vRJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5f0-L5-iRh">
@@ -770,7 +770,7 @@ Build v1822.01</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="sendSMS:" destination="cN0-9y-WnI" eventType="touchUpInside" id="THS-m0-EC0"/>
+                                            <action selector="sendResults:" destination="cN0-9y-WnI" eventType="touchUpInside" id="Y9P-La-Yy9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -801,8 +801,9 @@ Build v1822.01</string>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="sendSMSOutlet" destination="5f0-L5-iRh" id="sY6-Q4-Y2w"/>
-                        <outlet property="smsTextField" destination="pNx-eh-ZMB" id="Inl-eb-c3P"/>
+                        <outlet property="sendBtnOutlet" destination="5f0-L5-iRh" id="Oka-Jy-P8U"/>
+                        <outlet property="userCredTextField" destination="pNx-eh-ZMB" id="L3A-3a-Joi"/>
+                        <outlet property="userInfo" destination="lke-ba-3Zr" id="4hi-q7-oLQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TdZ-bH-1Nk" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -19,7 +19,7 @@ class ACDCUtilities {
     static func isValidPhoneNumber(phoneNumber: String)->Bool {
         let phoneNumb = phoneNumber
         if self.isAllDigits(phoneNumber: phoneNumb) == true {
-            let phoneRegex = "[235689][0-9]{6}([0-9]{3})?"
+            let phoneRegex = "[1-9][0-9]{6}([0-9]{3})?"
             let predicate = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
             return  predicate.evaluate(with: phoneNumber)
         }else {
