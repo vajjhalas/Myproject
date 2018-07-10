@@ -1278,7 +1278,7 @@ Build v1822.01</string>
                                     <constraint firstAttribute="trailing" secondItem="C5w-TY-zKJ" secondAttribute="trailing" id="zeK-rf-3SV"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I1p-3z-e63">
+                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I1p-3z-e63">
                                 <rect key="frame" x="456" y="312" width="200" height="230"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

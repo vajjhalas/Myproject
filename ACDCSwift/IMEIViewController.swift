@@ -294,14 +294,14 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             
             resCell.backgroundColor = indexPath.row % 2 == 0 ? evenRowColor : oddRowColor
             if indexPath.row == 0 {
-                resCell.label.text = record.overallResult
+                resCell.label.text = record.sessionStatus
                 resCell.label.textColor = UIColor.black
                 resCell.backgroundColor = topRowColor
                 resCell.layer.masksToBounds = true
                 return resCell
             }
             resCell.label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1)
-            if record.overallResult == "SUCCESS" {
+            if record.sessionStatus.caseInsensitiveCompare("QUALIFIED") == ComparisonResult.orderedSame  {
                 resCell.label.text = "Qualified"
                 resCell.imageView.image = UIImage.init(named: "qualified")
             } else {
@@ -618,7 +618,7 @@ extension IMEIViewController {
                     
                     self.spreadSheetVw.isHidden = false
 
-                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "Results", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
+                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "Results", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
 //                    print(self.recordsArray)

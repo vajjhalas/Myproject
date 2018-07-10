@@ -14,7 +14,8 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
     var receivedChamberInfo : [[String:Any]] = [[:]]
     var chamberData : [ChamberInfo] = []
     var selectedChamberID : String = ""
-
+    var selectedIndex : IndexPath?
+    
     @IBOutlet weak var chambersCollectionView: UICollectionView!
     @IBOutlet weak var nextBtnOutlet: UIButton!
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
@@ -28,7 +29,8 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         chambersCollectionView.delegate = self
         chambersCollectionView.dataSource = self
-
+        chambersCollectionView.allowsSelection = true
+        chambersCollectionView.allowsMultipleSelection = false
 
             for count in 0..<(receivedChamberInfo.count) {
                 let chamberModel = ChamberInfo.init(jsonRecord: receivedChamberInfo[count])
@@ -112,25 +114,48 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         cell?.layer.borderColor = UIColor.lightGray.cgColor
         cell?.layer.cornerRadius = 5.0
 
+        if ((selectedIndex != nil) && (selectedIndex == indexPath)) {
+            cell?.contentView.backgroundColor = UIColor.lightGray
+        } else {
+            cell?.contentView.backgroundColor = UIColor.white
+        }
+        
         if chamb.chamberStatus.uppercased() != "FREE" {
             cell?.alpha = 0.5
             cell?.isUserInteractionEnabled = false
+        } else {
+            cell?.alpha = 1.0
+            cell?.isUserInteractionEnabled = true
         }
         
         return cell!
         
     }
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (selectedIndex == nil) {
+            return
+        }
+        
+        if(selectedIndex == indexPath) {
+            cell.contentView.backgroundColor = UIColor.lightGray
+        } else {
+            cell.contentView.backgroundColor = UIColor.white
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         nextBtnOutlet.alpha = 1.0
         nextBtnOutlet.isUserInteractionEnabled = true
         let cell : UICollectionViewCell = collectionView.cellForItem(at: indexPath)!
         cell.contentView.backgroundColor = UIColor.lightGray
+        cell.isSelected = true
         selectedChamberID = chamberData[indexPath.row].chamberIdentifier
+        selectedIndex = indexPath
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell : UICollectionViewCell = collectionView.cellForItem(at: indexPath)!
-        cell.contentView.backgroundColor = UIColor.white
+        
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.white
+        //selectedIndex = nil
     }
 }
