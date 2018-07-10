@@ -695,7 +695,7 @@ Build v1822.01</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your mobile number to receive a copy of your test results." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lke-ba-3Zr">
-                                <rect key="frame" x="5" y="77" width="1102" height="20.5"/>
+                                <rect key="frame" x="10" y="77" width="1092" height="20.5"/>
                                 <fontDescription key="fontDescription" name="SFCompactDisplay-Regular" family="SF Compact Display" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -789,12 +789,12 @@ Build v1822.01</string>
                         <constraints>
                             <constraint firstItem="pNx-eh-ZMB" firstAttribute="top" secondItem="lke-ba-3Zr" secondAttribute="bottom" constant="32.5" id="7JG-oB-di4"/>
                             <constraint firstItem="lke-ba-3Zr" firstAttribute="top" secondItem="Ez9-YQ-eKT" secondAttribute="top" constant="57" id="Ao2-SU-8vA"/>
-                            <constraint firstItem="Ez9-YQ-eKT" firstAttribute="trailing" secondItem="lke-ba-3Zr" secondAttribute="trailing" constant="5" id="CyL-6H-udF"/>
+                            <constraint firstItem="Ez9-YQ-eKT" firstAttribute="trailing" secondItem="lke-ba-3Zr" secondAttribute="trailing" constant="10" id="CyL-6H-udF"/>
                             <constraint firstItem="Ez9-YQ-eKT" firstAttribute="bottom" secondItem="uqa-pR-fG6" secondAttribute="bottom" constant="10" id="U5l-bG-QOA"/>
                             <constraint firstItem="uqa-pR-fG6" firstAttribute="top" secondItem="H91-3m-t9d" secondAttribute="bottom" constant="20" id="Zp0-gQ-anR"/>
                             <constraint firstItem="pNx-eh-ZMB" firstAttribute="centerX" secondItem="Ez9-YQ-eKT" secondAttribute="centerX" id="lAb-EC-aga"/>
                             <constraint firstItem="H91-3m-t9d" firstAttribute="centerX" secondItem="Ez9-YQ-eKT" secondAttribute="centerX" id="luq-P7-5E1"/>
-                            <constraint firstItem="lke-ba-3Zr" firstAttribute="leading" secondItem="Ez9-YQ-eKT" secondAttribute="leading" constant="5" id="pL7-Re-uca"/>
+                            <constraint firstItem="lke-ba-3Zr" firstAttribute="leading" secondItem="Ez9-YQ-eKT" secondAttribute="leading" constant="10" id="pL7-Re-uca"/>
                             <constraint firstItem="uqa-pR-fG6" firstAttribute="centerX" secondItem="Ez9-YQ-eKT" secondAttribute="centerX" id="pgJ-T1-UPI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ez9-YQ-eKT"/>
@@ -1348,7 +1348,7 @@ Build v1822.01</string>
                                     <outlet property="delegate" destination="rvk-0e-CNr" id="GPe-6X-AIB"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one of the available ACDC applicances below." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zJ-EI-y0u">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one of the available ACDC appliances below." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zJ-EI-y0u">
                                 <rect key="frame" x="306.5" y="25" width="499" height="282"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="499" id="Z3j-vY-Ved"/>
@@ -1992,7 +1992,7 @@ Build v1822.01</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="czH-iO-c3m">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="czH-iO-c3m">
                                                 <rect key="frame" x="37" y="-2" width="49" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="onTintColor" red="0.8862745098" green="0.17254901959999999" blue="0.43768988720000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -2021,7 +2021,7 @@ Build v1822.01</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kR4-vg-Ecd">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kR4-vg-Ecd">
                                                 <rect key="frame" x="37" y="-2" width="49" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="onTintColor" red="0.8862745098" green="0.17254901959999999" blue="0.43768988720000002" alpha="1" colorSpace="calibratedRGB"/>
