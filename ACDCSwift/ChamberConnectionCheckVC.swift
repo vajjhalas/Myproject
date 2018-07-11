@@ -144,7 +144,7 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     
                     DispatchQueue.main.async {
                         
-                        let alert = UIAlertController(title: "Alert", message: "Chamber status is refreshed. Please try again.", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Alert", message: "Chamber is Busy/Dead. Please try again.", preferredStyle: .alert)
                         let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                             self.navigateToIMEIForANewTransaction()
                         })
@@ -160,7 +160,7 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                     
                     DispatchQueue.main.async {
                         
-                        let alert = UIAlertController(title: "Alert", message: "Chamber status is refreshed. Please try again.", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Alert", message: "Chamber is Busy/Dead. Please try again.", preferredStyle: .alert)
                         let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                             self.navigateToIMEIForANewTransaction()
                         })

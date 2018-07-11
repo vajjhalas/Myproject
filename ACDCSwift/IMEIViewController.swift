@@ -172,6 +172,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             errorMessageOutlet.isHidden = true
             self.getListOfChambers()
         } else {
+            spreadSheetVw.isHidden = true
             errorMessageOutlet.isHidden = false
             errorMessageOutlet.text = "Enter Valid IMEI number."
         }
@@ -194,6 +195,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             errorMessageOutlet.isHidden = true
             self.getTransactionHistory()
         } else {
+            spreadSheetVw.isHidden = true
             errorMessageOutlet.isHidden = false
             errorMessageOutlet.text = "Enter Valid IMEI number."
         }
