@@ -1306,8 +1306,8 @@ Build v1822.01</string>
                                                         <constraint firstAttribute="width" constant="100" id="bGq-eM-pxC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redmond 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4n-Vw-d0i">
-                                                    <rect key="frame" x="20" y="145" width="160" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redmond 1" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4n-Vw-d0i">
+                                                    <rect key="frame" x="20" y="133" width="160" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="Uyt-0E-eHN"/>
                                                     </constraints>
@@ -1328,9 +1328,9 @@ Build v1822.01</string>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="yhp-yi-N9B" firstAttribute="top" secondItem="M4n-Vw-d0i" secondAttribute="bottom" constant="10" id="1G5-iC-iie"/>
+                                            <constraint firstItem="yhp-yi-N9B" firstAttribute="top" secondItem="M4n-Vw-d0i" secondAttribute="bottom" constant="3" id="1G5-iC-iie"/>
                                             <constraint firstItem="MwY-8B-0da" firstAttribute="centerX" secondItem="bWM-ma-WDh" secondAttribute="centerX" id="6cx-Bv-g2K"/>
-                                            <constraint firstItem="M4n-Vw-d0i" firstAttribute="top" secondItem="MwY-8B-0da" secondAttribute="bottom" constant="15" id="Gwq-cB-Tx6"/>
+                                            <constraint firstItem="M4n-Vw-d0i" firstAttribute="top" secondItem="MwY-8B-0da" secondAttribute="bottom" constant="3" id="Gwq-cB-Tx6"/>
                                             <constraint firstItem="M4n-Vw-d0i" firstAttribute="centerX" secondItem="bWM-ma-WDh" secondAttribute="centerX" id="QTA-co-USN"/>
                                             <constraint firstAttribute="bottom" secondItem="yhp-yi-N9B" secondAttribute="bottom" constant="20" id="ZnT-aH-XUB"/>
                                             <constraint firstItem="MwY-8B-0da" firstAttribute="top" secondItem="bWM-ma-WDh" secondAttribute="top" constant="30" id="g7k-fB-v62"/>

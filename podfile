@@ -4,6 +4,8 @@ platform :ios, '9.0'
 use_frameworks!    
 
 target 'ACDCSwift' do
+    pod 'Firebase/Core'
+    pod 'Firebase/Database'
     pod 'SpreadsheetView'
     pod 'ReachabilitySwift'
     pod 'CountryPickerView'
