@@ -91,7 +91,8 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
 
     func dateFromMillisecinds(timeInMilliseconds:String) ->  String {
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+        dateFormat.timeZone = TimeZone(abbreviation: "UTC")
         let timeInMilliSec : Double = Double(timeInMilliseconds)!
         let date = Date(timeIntervalSince1970: timeInMilliSec / 1000.0)
         let dateString = dateFormat.string(from: date)
