@@ -36,7 +36,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         super.viewDidLoad()
         
         IMEItextField.delegate = self
-        self.navigationItem.title = "Please enter a device ID"
+        self.navigationItem.title = "Please enter IMEI"
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         spreadSheetVw.isHidden = true

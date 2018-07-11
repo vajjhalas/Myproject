@@ -327,7 +327,7 @@ func pollForImageProcess() {
                 return
             case "IMAGE_NOT_PROCESSED":
                 DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "ERROR", message: "Unable to process the image.Please try again.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "ERROR", message: "Unable to process the image. Please try again.", preferredStyle: .alert)
                     let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                         self.navigateToIMEIForANewTransaction()
                     })

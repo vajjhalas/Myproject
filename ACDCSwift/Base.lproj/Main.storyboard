@@ -384,7 +384,7 @@
                                             <constraint firstAttribute="height" constant="123" id="xqg-ps-Twh"/>
                                             <constraint firstAttribute="width" constant="373" id="yIq-ap-Mwh"/>
                                         </constraints>
-                                        <string key="text">Version v1.0
+                                        <string key="text">Version v1.0.1
 
 Build v1822.01</string>
                                         <fontDescription key="fontDescription" name="SFCompactDisplay-Regular" family="SF Compact Display" pointSize="24"/>
