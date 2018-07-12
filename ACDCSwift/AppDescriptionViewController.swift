@@ -29,9 +29,20 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
 
         let rightBarBtn = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneMethod))
         self.navigationItem.rightBarButtonItem = rightBarBtn
-
+        
+        var serverBuildVersion = "1.0"
+        if let buildVersion = Bundle.main.object(forInfoDictionaryKey: "ACDC_Product_Version") as? String {
+            serverBuildVersion = buildVersion
+        }
+        
+        var ipaBuildVersion = "1.0"
+        if let ipaVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String {
+            ipaBuildVersion = ipaVersion
+        }
+        
         switch selectedOption {
         case "About":
+            versionLabel.text = "Version : \(ipaBuildVersion) \n \n Build Version : \(serverBuildVersion)"
             self.navigationItem.title = "About"
             aboutView.isHidden = false
         case "Contact":

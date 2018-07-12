@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>ACDC_Product_Version</key>
-	<string>18.2v</string>
+	<string>1822.0</string>
 	<key>BASE_URL</key>
-	<string>http://10.10.40.188:8080</string>
+	<string>http://cgtdev.pervacioone.com:8080</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -21,9 +21,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

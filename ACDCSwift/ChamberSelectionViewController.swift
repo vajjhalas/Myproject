@@ -109,7 +109,6 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         cell?.layer.masksToBounds = true
         let chamb = chamberData[indexPath.row]
         cell?.chamberName.text = chamb.chamberName
-        cell?.chamberStatus.text = "Status : \((chamb.chamberStatus))"
         cell?.layer.borderWidth = 1.0
         cell?.layer.borderColor = UIColor.lightGray.cgColor
         cell?.layer.cornerRadius = 5.0
@@ -121,9 +120,11 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         }
         
         if chamb.chamberStatus.uppercased() != "FREE" {
+            cell?.chamberStatus.text = "Status : \((chamb.chamberStatus))"
             cell?.alpha = 0.5
             cell?.isUserInteractionEnabled = false
         } else {
+            cell?.chamberStatus.text = "Status : Available"
             cell?.alpha = 1.0
             cell?.isUserInteractionEnabled = true
         }
