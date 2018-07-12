@@ -20,6 +20,7 @@ class AppDescriptionViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var sendOutlet: UIButton!
     @IBOutlet weak var cancelOutlet: UIButton!
     @IBOutlet weak var feedbackTextField: UITextView!
+    @IBOutlet weak var versionLabel: UILabel!
     
     var textviewPlaceholderText = "Please include a detailed description of the problem."
     

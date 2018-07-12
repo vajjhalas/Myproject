@@ -544,6 +544,7 @@ Build v1822.01</string>
                         <outlet property="feedbackTextField" destination="GU4-G4-78h" id="xUZ-JQ-Kbe"/>
                         <outlet property="feedbackView" destination="hDP-oy-tkI" id="8eY-zp-U0g"/>
                         <outlet property="sendOutlet" destination="xyA-Rx-dzP" id="mWB-w2-r3f"/>
+                        <outlet property="versionLabel" destination="M03-9d-McI" id="pnc-Aj-P4l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zZs-Cn-z8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
