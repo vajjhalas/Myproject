@@ -29,7 +29,6 @@
 		DA02C00B20C8F835007CF72E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C00A20C8F835007CF72E /* AppDelegate.swift */; };
 		DA02C00D20C8F835007CF72E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C00C20C8F835007CF72E /* ViewController.swift */; };
 		DA02C01020C8F835007CF72E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA02C00E20C8F835007CF72E /* Main.storyboard */; };
-		DA02C01220C8F836007CF72E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA02C01120C8F836007CF72E /* Assets.xcassets */; };
 		DA02C01520C8F836007CF72E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */; };
 		DA02C02020C8F837007CF72E /* ACDCSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C01F20C8F836007CF72E /* ACDCSwiftTests.swift */; };
 		DA02C02B20C8F837007CF72E /* ACDCSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C02A20C8F837007CF72E /* ACDCSwiftUITests.swift */; };
@@ -64,6 +63,7 @@
 		DA9FDF7320E63728004A6695 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */; };
 		DA9FDF7520E63749004A6695 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */; };
 		DACBD6FE20E94268002884C1 /* ChamberSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */; };
+		DAE9E89920F8762D006D6264 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAE9E89820F8762B006D6264 /* Assets.xcassets */; };
 		DAEC942820DA51AF003442D4 /* jjson.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAEC942720DA51AF003442D4 /* jjson.geojson */; };
 		DAFEBAA720D79EC3008A9690 /* Modules.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAA620D79E9B008A9690 /* Modules.geojson */; };
 		DAFEBAAB20D7AFDF008A9690 /* IMEIHistory.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */; };
@@ -131,7 +131,6 @@
 		DA02C00A20C8F835007CF72E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA02C00C20C8F835007CF72E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DA02C00F20C8F835007CF72E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DA02C01120C8F836007CF72E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA02C01420C8F836007CF72E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA02C01620C8F836007CF72E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA02C01B20C8F836007CF72E /* ACDCSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACDCSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +170,7 @@
 		DA9FDF7220E63728004A6695 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		DA9FDF7420E63749004A6695 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
 		DACBD6FD20E94268002884C1 /* ChamberSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberSelectionViewController.swift; sourceTree = "<group>"; };
+		DAE9E89820F8762B006D6264 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAEC942720DA51AF003442D4 /* jjson.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jjson.geojson; sourceTree = "<group>"; };
 		DAFEBAA620D79E9B008A9690 /* Modules.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Modules.geojson; sourceTree = "<group>"; };
 		DAFEBAAA20D7AFDF008A9690 /* IMEIHistory.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = IMEIHistory.geojson; sourceTree = "<group>"; };
@@ -301,9 +301,9 @@
 				373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */,
 				DA23FFB720F3379000B6C33B /* SMSPrintViewController.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
-				DA02C01120C8F836007CF72E /* Assets.xcassets */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
 				DA02C01620C8F836007CF72E /* Info.plist */,
+				DAE9E89820F8762B006D6264 /* Assets.xcassets */,
 				DA22914420CA63DA005451E6 /* Supporting Files */,
 				DAFF2DB220D25CCD000555D5 /* Fonts */,
 				DA02C03820C8F893007CF72E /* Images */,
@@ -511,7 +511,6 @@
 				DAFF2DBE20D25D0E000555D5 /* SFCompactDisplay-Thin.otf in Resources */,
 				DA02C03B20C8FA19007CF72E /* pervacioLogo.png in Resources */,
 				DAFF2DBD20D25D0E000555D5 /* SFCompactDisplay-Semibold.otf in Resources */,
-				DA02C01220C8F836007CF72E /* Assets.xcassets in Resources */,
 				DAEC942820DA51AF003442D4 /* jjson.geojson in Resources */,
 				DA656DC920DC181000DDD8D9 /* grayShade.png in Resources */,
 				DAFF2DC420D25D0E000555D5 /* SFCompactDisplay-Light.otf in Resources */,
@@ -519,6 +518,7 @@
 				DA02C01020C8F835007CF72E /* Main.storyboard in Resources */,
 				DA4764FD20D8DCD100FDFF9F /* CapturedImage.jpg in Resources */,
 				DAFF2DC320D25D0E000555D5 /* SFCompactDisplay-Black.otf in Resources */,
+				DAE9E89920F8762D006D6264 /* Assets.xcassets in Resources */,
 				DA02C03E20C8FAD4007CF72E /* grayTMobileLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

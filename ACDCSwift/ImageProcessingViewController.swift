@@ -472,9 +472,9 @@ func pollForImageProcess() {
         
         if let viewControllers = self.navigationController?.viewControllers
         {
-            if let imeiCtrl = viewControllers.first(where: {return $0 is IMEIViewController}) {
+            if let moduleSelectionCtrl = viewControllers.first(where: {return $0 is ModuleSelectionViewController}) {
                 
-                self.navigationController?.popToViewController(imeiCtrl, animated: true)
+                self.navigationController?.popToViewController(moduleSelectionCtrl, animated: true)
             }
         }
     }

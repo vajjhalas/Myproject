@@ -5,7 +5,7 @@
 	<key>ACDC_Product_Version</key>
 	<string>1822.0</string>
 	<key>BASE_URL</key>
-	<string>http://cgtdev.pervacioone.com:8080</string>
+	<string>http://192.168.1.154:8080</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -64,5 +64,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>Framework_Verbose_Enable</key>
+	<true/>
 </dict>
 </plist>
