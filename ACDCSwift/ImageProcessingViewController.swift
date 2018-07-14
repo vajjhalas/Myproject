@@ -160,7 +160,7 @@ class ImageProcessingViewController: UIViewController {
                             self.startImageCapture(for: "CaptureImage")
                         })
                         let popAction = UIAlertAction(title: "Cancel", style: .default, handler: { action in
-                            self.navigateToIMEIForANewTransaction()
+                            self.navigateToModuleScreenForANewTransaction()
                         })
                         alert.addAction(popAction)
                         alert.addAction(retryAction)
@@ -217,7 +217,7 @@ func pollForImageProcess() {
             self.pollForImageProcess()
         })
         let popAction = UIAlertAction(title: "Cancel", style: .default, handler: { action in
-            self.navigateToIMEIForANewTransaction()
+            self.navigateToModuleScreenForANewTransaction()
         })
         alert.addAction(popAction)
         alert.addAction(retryAction)
@@ -276,7 +276,7 @@ func pollForImageProcess() {
                     let alert = UIAlertController(title: "ERROR", message: "Fatal error. Missing acknowledge.", preferredStyle: .alert)
                     let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                         //TODO: End session required?
-                        self.navigateToIMEIForANewTransaction()
+                        self.navigateToModuleScreenForANewTransaction()
                     })
                     alert.addAction(popAction)
                     self.present(alert, animated: true)
@@ -329,7 +329,7 @@ func pollForImageProcess() {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "ERROR", message: "Unable to process the image. Please try again.", preferredStyle: .alert)
                     let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-                        self.navigateToIMEIForANewTransaction()
+                        self.navigateToModuleScreenForANewTransaction()
                     })
                     alert.addAction(popAction)
                     self.present(alert, animated: true)
@@ -370,11 +370,11 @@ func pollForImageProcess() {
                 return
             case  "INVALID_SESSION" :
                 //end session and move to module screen
-                //TODO: End session required? and navigate to IMEI?
+                //TODO: End session required? and navigate to Product selection?
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "ERROR", message: "Session aborted. Please start a new transaction", preferredStyle: .alert)
                     let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-                        self.navigateToIMEIForANewTransaction()
+                        self.navigateToModuleScreenForANewTransaction()
                     })
                     alert.addAction(popAction)
                     self.present(alert, animated: true)
@@ -382,10 +382,9 @@ func pollForImageProcess() {
                 return
             case  "FAIL" :
                 // an error occurred between server and chamber
-                //TODO: End session required? and navigate to IMEI?
+                //TODO: End session required? and navigate to Product selection?
                 self.pollForImageProcess()
                 return
-            //TODO:PDF call is yet to be implemented
             default :
                 return
                 
@@ -428,7 +427,7 @@ func pollForImageProcess() {
             let popAction = UIAlertAction(title: "Back", style: .default, handler: { action in
                 //will run in main thread. Async not required.
                 //TODO: End session required?
-                self.navigateToIMEIForANewTransaction()
+                self.navigateToModuleScreenForANewTransaction()
             })
             
             alert.addAction(retryAction)
@@ -468,7 +467,7 @@ func pollForImageProcess() {
         }
     }
     
-    func navigateToIMEIForANewTransaction() {
+    func navigateToModuleScreenForANewTransaction() {
         
         if let viewControllers = self.navigationController?.viewControllers
         {

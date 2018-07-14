@@ -100,13 +100,12 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     }
 
     // MARK: Hamburger menu delegate
-    
     func popToSelectedOption(selectedOption: String) {
         if selectedOption == "Logout" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
                 if aViewController is LoginViewController {
-                    self.navigationController!.popToViewController(aViewController, animated: true)
+                    self.navigationController?.popToViewController(aViewController, animated: true)
                 }
             }
         }
@@ -133,17 +132,13 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        
-        
         let network: NetworkManager = NetworkManager.sharedInstance
         if(network.reachability.connection == .none) {
             ACDCUtilities.showMessage(title: "Alert", msg: "Internet connection appears to be offline.Please connect to a network in order to proceed.")
             return
-            
         }
         let selectedProgram = productList[indexPath.row].productTagName
         self.sendSelectedProductToServer(name: selectedProgram)
-        
     }
     
     

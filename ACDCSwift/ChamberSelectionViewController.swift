@@ -124,7 +124,7 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
             cell?.alpha = 0.5
             cell?.isUserInteractionEnabled = false
         } else {
-            cell?.chamberStatus.text = "Status : Available"
+            cell?.chamberStatus.text = "Status : Available"//If server is sending the status as "FREE" need to display as "Available"
             cell?.alpha = 1.0
             cell?.isUserInteractionEnabled = true
         }
@@ -157,6 +157,5 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
         
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.contentView.backgroundColor = UIColor.white
-        //selectedIndex = nil
     }
 }

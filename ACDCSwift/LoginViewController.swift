@@ -8,6 +8,7 @@
 
 import UIKit
 import AcdcNetwork
+import FirebaseAnalytics
 
 class LoginViewController: UIViewController,UITextFieldDelegate {
 
@@ -132,7 +133,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
 
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
-
+        let userIDStr = userIDOutlet.text!
+        
         acdcRequestAdapter.loginUser(with: userIDOutlet.text!, usrPassword: passwordOutlet.text!, successCallback: {(statusCode, responseResult) in
 
             guard let receivedStatusCode = statusCode else {
@@ -177,6 +179,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 
                 if(dataDictionary["storeId"] is String){
                     
+                    Analytics.logEvent("Login", parameters: ["user_name": userIDStr])                    
                     UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
                     
@@ -191,7 +194,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     }
                 }
                 else if(dataDictionary["storeId"] is NSNumber){
-
+                    Analytics.logEvent("Login", parameters: ["user_name": userIDStr])
                     UserDefaults.standard.set(dataDictionary["storeId"], forKey: "STORE_ID")
                     UserDefaults.standard.synchronize()
                     

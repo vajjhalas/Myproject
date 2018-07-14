@@ -84,7 +84,6 @@ class ReportProblemViewController: UIViewController,UITextViewDelegate,Hamburger
     }
     
     @IBAction func sendAction(_ sender: Any) {
-        //TODO:Add guard statements for textview text presence
         reportProblemToServer()
     }
     
@@ -234,10 +233,8 @@ extension ReportProblemViewController {
                         ACDCUtilities.showMessage(title: "Error", msg: "Something went wrong. Received bad response.")
                     }
                 }
-                
             }
-            
-            
+
         }) { (error) in
             //Error
             DispatchQueue.main.async {

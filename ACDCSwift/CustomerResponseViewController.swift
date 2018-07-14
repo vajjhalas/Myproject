@@ -78,23 +78,7 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
     }
 
     @IBAction func endSessionPressed(_ sender: Any) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "ModuleSelectionViewController") as! ModuleSelectionViewController
-//        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
-        
         endSessionWithFeedback()
-        
-        
-        
-//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-//        for aViewController in viewControllers {
-//            if aViewController is ModuleSelectionViewController {
-//                self.navigationController!.popToViewController(aViewController, animated: true)
-//            }
-//        }
-
     }
     
     @IBAction func customerStarSelected(_ sender: Any) {

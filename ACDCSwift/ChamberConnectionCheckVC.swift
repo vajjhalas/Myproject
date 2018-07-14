@@ -37,7 +37,6 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
     }
 
     // MARK: Hamburger menu delegate
-    
     func popToSelectedOption(selectedOption: String) {
         if selectedOption == "Home" {
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
@@ -146,7 +145,7 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
                         
                         let alert = UIAlertController(title: "Alert", message: "Chamber is not free. Please try again.", preferredStyle: .alert)
                         let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-                            self.navigateToIMEIForANewTransaction()
+                            self.navigateToIMEIForListOfChambers()
                         })
                         alert.addAction(popAction)
                         self.present(alert, animated: true)
@@ -155,14 +154,12 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
 
                     
                 }else if(receivedType.caseInsensitiveCompare("BUSY") == ComparisonResult.orderedSame){
-                    
-                   
-                    
+                
                     DispatchQueue.main.async {
                         
                         let alert = UIAlertController(title: "Alert", message: "Chamber is not free. Please try again.", preferredStyle: .alert)
                         let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
-                            self.navigateToIMEIForANewTransaction()
+                            self.navigateToIMEIForListOfChambers()
                         })
                         alert.addAction(popAction)
                         self.present(alert, animated: true)
@@ -210,7 +207,7 @@ class ChamberConnectionCheckVC: UIViewController,HamburgerMenuProtocol {
         
     }
     
-    func navigateToIMEIForANewTransaction() {
+    func navigateToIMEIForListOfChambers() {
         
         if let viewControllers = self.navigationController?.viewControllers
         {

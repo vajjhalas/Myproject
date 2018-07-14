@@ -31,6 +31,7 @@ class SMSPrintViewController: UIViewController,UITextFieldDelegate,CountryPicker
         case "SMS" :
             let countryPickerView = CountryPickerView(frame: CGRect(x: 2, y: 5, width: 120, height: 20))
             countryPickerView.delegate = self
+            countryPickerView.dataSource = self
             
             let separatorView : UIView = UIView()
             separatorView.frame = CGRect(x: 125, y: 1, width: 1, height: 28)
@@ -333,5 +334,41 @@ extension SMSPrintViewController {
                 }
             }
         }
+    }
+}
+
+///Mark- Country Pickerview prefered countries
+extension SMSPrintViewController: CountryPickerViewDataSource {
+    func preferredCountries(in countryPickerView: CountryPickerView) -> [Country] {
+            var countries = [Country]()
+            ["US", "IN"].forEach { code in
+                if let country = countryPickerView.getCountryByCode(code) {
+                    countries.append(country)
+                }
+            }
+            return countries
+        
+    }
+    
+    func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) -> String? {
+            return "Select a Country "
+       
+    }
+    
+    func showOnlyPreferredSection(in countryPickerView: CountryPickerView) -> Bool {
+        return true
+    }
+    
+    func navigationTitle(in countryPickerView: CountryPickerView) -> String? {
+        return ""
+    }
+    
+    func searchBarPosition(in countryPickerView: CountryPickerView) -> SearchBarPosition {
+        
+        return .hidden
+    }
+    
+    func showPhoneCodeInList(in countryPickerView: CountryPickerView) -> Bool {
+        return true
     }
 }

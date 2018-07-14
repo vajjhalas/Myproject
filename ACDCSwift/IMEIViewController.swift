@@ -384,6 +384,7 @@ extension IMEIViewController {
             
         }
         
+        //Paremeters to send
         guard let validIMEInumber = IMEItextField.text else {
             
             DispatchQueue.main.async {
@@ -391,8 +392,6 @@ extension IMEIViewController {
             }
             return
         }
-        
-
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
         let inputTransactionID = UserDefaults.standard.value(forKey: "TRANSACTION_ID") as! String
         
@@ -423,7 +422,6 @@ extension IMEIViewController {
                 UserDefaults.standard.set(validIMEInumber, forKey: "IMEI_TRANSACTION")
                 UserDefaults.standard.synchronize()
                 //parse dataResponse
-                //TODO:Are guard statements necessary while in try catch block?
                 let jsonResponse = try JSONSerialization.jsonObject(with:
                     dataResponse, options: [])
                 print("End result for IMEI init session is \(jsonResponse)")
@@ -457,9 +455,6 @@ extension IMEIViewController {
                else if(dataArray.count == 1) {
                  //if there is only one chamber check the status of the chamber, if "free" then try establishing chmaber connection
                     let chamberDataDict = dataArray[0];
-                    
-                    
-                    //TODO: Chamber free status uncomment in production
                     guard let chamberStatus = chamberDataDict["status"] as? String else {
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "ERROR", msg: "Chamber status not received")
@@ -493,7 +488,7 @@ extension IMEIViewController {
                         }
                     
                     }else {
-                        //TODO: Chamber is not FREE. Prompt an alert
+                        //Chamber is not FREE. Prompt an alert
                         DispatchQueue.main.async {
                             ACDCUtilities.showMessage(title: "Alert", msg: "Chamber is not free. Please free the chamber and try again.")
                         }
@@ -501,7 +496,7 @@ extension IMEIViewController {
                     
                 }else if(dataArray.count > 1) {
                  //if there are multiple chambers move to a screen and display chambers and and their status
-                    //TODO: Navigate to screen that displays the chamber list
+                    //Navigate to screen that displays the chamber list
                     DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "ChamberSelectionViewController") as! ChamberSelectionViewController

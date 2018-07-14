@@ -37,16 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 bgTask = UIBackgroundTaskInvalid
             }
         })
-        
-        // Perform your background task here
-//        print("The task has started")
-//        while !finished {
-//            print("Not finished")
-//            // when done, set finished to true
-//            // If that doesn't happen in time, the expiration handler will do it for us
-//        }
-        
-        // Indicate that it is complete
+  
       
     }
 
