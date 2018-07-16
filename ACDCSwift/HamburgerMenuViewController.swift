@@ -50,7 +50,7 @@ class HamburgerMenuViewController: UIViewController,UITableViewDelegate,UITableV
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: simpleTableIdentifier)
         }
-        cell?.textLabel?.text = tableViewCellData[indexPath.section][indexPath.row] as? String
+        cell?.textLabel?.text = tableViewCellData[indexPath.section][indexPath.row] 
         cell?.textLabel?.textAlignment = .left
         
         if tableViewCellData[indexPath.section][indexPath.row] == "Home" || tableViewCellData[indexPath.section][indexPath.row] == "Logout" {

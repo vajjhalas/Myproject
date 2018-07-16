@@ -139,10 +139,10 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
 
         acdcRequestAdapter.terminateACDCSession(sessionIdenfifier: inputSessionID, transactionIdentifier: inputTransactionID, successCallback: {(statusCode, responseResult) in
             
-            guard let dataResponse = responseResult else{
-                //error occured:Prompt alert
-                return
-            }
+//            guard let dataResponse = responseResult else{
+//                //error occured:Prompt alert
+//                return
+//            }
             //            do{
             //
             //
