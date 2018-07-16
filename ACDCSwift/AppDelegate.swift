@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Time is up.
             if bgTask != UIBackgroundTaskInvalid {
                 // Do something to stop our background task or the app will be killed
-                finished = true
                 application.endBackgroundTask(bgTask)
                 bgTask = UIBackgroundTaskInvalid
             }

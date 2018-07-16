@@ -8,9 +8,11 @@
 
 import UIKit
 
+/// This viewcontroller serves Splash screen which navigates automatically to InitialViewcontroller after a delay of 2 seconds
 class ViewController: UIViewController {
 
     @IBOutlet weak var activityIndicatorOutlet: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
