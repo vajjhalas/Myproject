@@ -119,14 +119,30 @@ class ChamberSelectionViewController: UIViewController,UICollectionViewDelegate,
             cell?.contentView.backgroundColor = UIColor.white
         }
         
-        if chamb.chamberStatus.uppercased() != "FREE" {
-            cell?.chamberStatus.text = "Status : \((chamb.chamberStatus))"
-            cell?.alpha = 0.5
-            cell?.isUserInteractionEnabled = false
-        } else {
-            cell?.chamberStatus.text = "Status : Available"//If server is sending the status as "FREE" need to display as "Available"
-            cell?.alpha = 1.0
-            cell?.isUserInteractionEnabled = true
+//        if chamb.chamberStatus.uppercased() != "FREE" {
+//            cell?.chamberStatus.text = "Status : \((chamb.chamberStatus))"
+//            cell?.alpha = 0.5
+//            cell?.isUserInteractionEnabled = false
+//        }else
+        
+        switch chamb.chamberStatus.uppercased() {
+            case "FREE":
+                cell?.chamberStatus.text = "Status : Available"//If server is sending the status as "FREE" need to display as "Available"
+                cell?.alpha = 1.0
+                cell?.isUserInteractionEnabled = true
+            case "BUSY":
+                cell?.chamberStatus.text = "Status : Busy"
+                cell?.alpha = 0.5
+                cell?.isUserInteractionEnabled = false
+            case "DEAD":
+                cell?.chamberStatus.text = "Status : Not Available"//If server is sending the status as "DEAD" need to display as "Not Available"
+                cell?.alpha = 0.5
+                cell?.isUserInteractionEnabled = false
+            
+            default:
+                cell?.chamberStatus.text = "Status : Not Available" // default not available
+                cell?.alpha = 0.5
+                cell?.isUserInteractionEnabled = false
         }
         
         return cell!

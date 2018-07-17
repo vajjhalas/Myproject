@@ -16,6 +16,8 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
     @IBOutlet weak var IMEIString: UILabel!
     @IBOutlet weak var overallTestResult: UILabel!
     @IBOutlet weak var resultImage: UIImageView!
+    @IBOutlet weak var programNameLabel: UILabel!
+
     
     var receivedPdfData : Data? = nil
     
@@ -30,8 +32,12 @@ class TestResultsViewController: UIViewController,SendResultsProtocol,HamburgerM
         let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(self.showMenu))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
-        let IMEINumber : String = UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as! String
+        let IMEINumber : String = (UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as? String) ?? ""
         IMEIString.text = "IMEI : \(IMEINumber)"
+        
+        let programName : String = (UserDefaults.standard.object(forKey: "SELECTED_PROGRAM") as? String) ?? ""
+
+        programNameLabel.text = "Program : \(programName)"
         
         overallTestResult.text = overallTestResultText
         resultImage.image = (overallTestResultText == "Qualified") ? UIImage.init(named: "qualified") : UIImage.init(named: "unqualified")

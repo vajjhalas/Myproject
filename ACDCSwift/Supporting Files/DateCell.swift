@@ -34,13 +34,10 @@ class ResultCell: Cell {
         super.init(frame: frame)
         
         imageView.frame = CGRect(x:10,y:10,width:20,height:20)
-//        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         label.frame = CGRect(x:40,y:0,width:100,height:40)
-//        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         label.font = UIFont (name: "SFCompactDisplay-Regular", size: 13)
         label.textAlignment = .left
-//        imageView.center = CGPoint(x:5.0, y:imageView.center.y)
         
         contentView.addSubview(imageView)
         contentView.addSubview(label)

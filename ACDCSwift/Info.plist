@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ACDC_Product_Version</key>
-	<string>1822.0</string>
+	<string>1829.0</string>
 	<key>BASE_URL</key>
 	<string>http://cgtdev.pervacioone.com:8080</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -23,9 +23,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1829.0</string>
 	<key>Framework_Verbose_Enable</key>
-	<true/>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

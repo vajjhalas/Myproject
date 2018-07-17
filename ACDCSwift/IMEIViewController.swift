@@ -143,6 +143,8 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if (string.isEmpty) {
+            errorMessageOutlet.text = ""
+            errorMessageOutlet.isHidden = true
             return true
         }
         if textField.text?.count == 15 {
@@ -214,9 +216,9 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             let transactionCount : Int = recordsArray.count
             let nextBtnY = nextButtonOutlet.frame.origin.y
             let spreadSheetY = spreadSheetVw.frame.origin.y
-            let maxSpreadSheetWidth  = nextBtnY - spreadSheetY - 20
-            if maxSpreadSheetWidth < CGFloat(40 * transactionCount) {
-                spreadSheetHeightConstraint.constant = maxSpreadSheetWidth
+            let maxSpreadSheetHeight  = nextBtnY - spreadSheetY - 20
+            if maxSpreadSheetHeight < CGFloat(40 * transactionCount) {
+                spreadSheetHeightConstraint.constant = maxSpreadSheetHeight
             }  else {
                 spreadSheetHeightConstraint.constant = CGFloat(40 * transactionCount)
             }
@@ -231,6 +233,8 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
             return 50
         } else if case 6 = column {
             return 130
+        } else if case 5 = column {
+            return 110
         } else {
             return 100
         }
@@ -301,6 +305,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
                 resCell.label.textColor = UIColor.black
                 resCell.backgroundColor = topRowColor
                 resCell.layer.masksToBounds = true
+                resCell.imageView.image = nil //so that reused cell will not have result image in the header
                 return resCell
             }
             resCell.label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1)
@@ -315,6 +320,7 @@ class IMEIViewController: UIViewController, SpreadsheetViewDelegate, Spreadsheet
         case 7:
             if indexPath.row == 0 {
                 cell?.label.text = "Action"
+                //cell?.label.textAlignment = .center
                 cell?.label.textColor = UIColor.white
             } else {
                 let underlineAttribute = [kCTUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
@@ -611,15 +617,15 @@ extension IMEIViewController {
                     if self.recordsArray.count == 0 {
                         self.errorMessageOutlet.isHidden = false
                         self.errorMessageOutlet.text = "No records found."
+                        self.spreadSheetVw.isHidden = true // Hide tableview When there is no data
                         return
                     }
                     
                     self.spreadSheetVw.isHidden = false
 
-                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "Results", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store Id", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
+                    let headerHistoryRecord = HistoryRecord.init(json: ["acdcSessionId": "", "sessionStatus": "Results", "sessionStage": "", "userId": "Store Rep ID", "storeRepId": "", "imei": "", "programUsed": "Purpose Of Visit", "chamberRetryAttempts": "", "imagecapturedtime": "", "chamberId": "", "storeid": "Store ID", "admServerUsed": "", "admNetworkVersion": "", "acdcApplicationVersion": "", "acdcFirmvareVersion": "", "overallResult": "", "startDateTime": "Date", "endDateTime": "", "customerRating": "", "operatorRating": "", "evaluationAccepted": "", "deviceExchanged": "", "additionalInfo": "", "storeLocation":"Store Location"])
                     self.recordsArray.insert(headerHistoryRecord, at: 0)
 
-//                    print(self.recordsArray)
                 
                     DispatchQueue.main.async {
                         self.spreadSheetVw.reloadData()

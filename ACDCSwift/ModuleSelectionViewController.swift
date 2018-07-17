@@ -154,6 +154,7 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
     func sendSelectedProductToServer(name:String) {
         
         let inputStoreID = UserDefaults.standard.value(forKey: "STORE_ID") as! String
+        let selectedProgram = name
         
         let acdcRequestAdapter = AcdcNetworkAdapter.shared()
         acdcRequestAdapter.startCosmeticCheck(forProgram: name, storeIdentifier: inputStoreID, successCallback: {(statusCode, responseResult) in
@@ -200,6 +201,10 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                     //what happens if nil?
                     inputTransactionID = parsedResponse["data"] as! String
                     
+                    UserDefaults.standard.set(selectedProgram, forKey: "SELECTED_PROGRAM")
+                    UserDefaults.standard.synchronize()
+                    
+                    
                     UserDefaults.standard.set(inputTransactionID, forKey: "TRANSACTION_ID")
                     UserDefaults.standard.synchronize()
                     
@@ -213,6 +218,10 @@ class ModuleSelectionViewController: UIViewController,UICollectionViewDelegate,U
                 else if(parsedResponse["data"] is NSNumber){
                     inputTransactionID = (parsedResponse["data"] as! NSNumber).stringValue
                     
+                    UserDefaults.standard.set(selectedProgram, forKey: "SELECTED_PROGRAM")
+                    UserDefaults.standard.synchronize()
+                    
+
                     UserDefaults.standard.set(inputTransactionID, forKey: "TRANSACTION_ID")
                     UserDefaults.standard.synchronize()
                     

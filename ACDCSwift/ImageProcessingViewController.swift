@@ -29,7 +29,8 @@ class ImageProcessingViewController: UIViewController {
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var IMEIString: UILabel!
-    
+    @IBOutlet weak var selectedProductLabel: UILabel!
+
     
     @IBOutlet weak var progressStatus: UILabel!
     @IBOutlet weak var capturedImageView: UIImageView!
@@ -51,6 +52,12 @@ class ImageProcessingViewController: UIViewController {
         let IMEINumber : String = UserDefaults.standard.object(forKey: "IMEI_TRANSACTION") as! String
         IMEIString.text = "IMEI : \(IMEINumber)"
    
+        
+        let programName : String = (UserDefaults.standard.object(forKey: "SELECTED_PROGRAM") as? String) ?? ""
+        
+        selectedProductLabel.text = "Program : \(programName)"
+
+        
         self.startImageCapture(for: "CaptureImage")
     }
     

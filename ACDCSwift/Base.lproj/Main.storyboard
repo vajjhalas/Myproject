@@ -1160,7 +1160,7 @@ Build v1822.01</string>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open the drawer on the ACDC chamber. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcR-Cp-ueq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open the drawer on the CGT chamber. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcR-Cp-ueq">
                                         <rect key="frame" x="191.5" y="0.0" width="151" height="70"/>
                                         <fontDescription key="fontDescription" name="Verdana-Italic" family="Verdana" pointSize="11"/>
                                         <nil key="textColor"/>
@@ -1316,7 +1316,7 @@ Build v1822.01</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status : Free" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yhp-yi-N9B">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status : Not Availble" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yhp-yi-N9B">
                                                     <rect key="frame" x="25" y="179" width="150" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="4HF-Pp-m8p"/>
@@ -1349,7 +1349,7 @@ Build v1822.01</string>
                                     <outlet property="delegate" destination="rvk-0e-CNr" id="GPe-6X-AIB"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one of the available ACDC appliances below." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zJ-EI-y0u">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one of the available CGT appliances below." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zJ-EI-y0u">
                                 <rect key="frame" x="306.5" y="25" width="499" height="282"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="499" id="Z3j-vY-Ved"/>
@@ -1535,6 +1535,16 @@ Build v1822.01</string>
                                     <action selector="reportAProblem:" destination="9GG-wC-lbf" eventType="touchUpInside" id="rIX-jC-evn"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Program: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="osT-JB-M8Z">
+                                <rect key="frame" x="190" y="109" width="300" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="9Rt-Ko-cPc"/>
+                                    <constraint firstAttribute="height" constant="43" id="XVn-CZ-OT7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" red="0.8862745098" green="0.17254901959999999" blue="0.43768988720000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1547,8 +1557,10 @@ Build v1822.01</string>
                             <constraint firstItem="zqd-ZZ-FSO" firstAttribute="centerX" secondItem="Ia2-k3-YNN" secondAttribute="centerX" id="T58-mz-GUw"/>
                             <constraint firstItem="zqd-ZZ-FSO" firstAttribute="centerY" secondItem="Ia2-k3-YNN" secondAttribute="centerY" id="c79-L4-Ti0"/>
                             <constraint firstItem="KRw-R1-ZTP" firstAttribute="top" secondItem="uA8-vI-XRk" secondAttribute="bottom" constant="9" id="cpH-FG-AAB"/>
+                            <constraint firstItem="rR2-vH-dF4" firstAttribute="leading" secondItem="osT-JB-M8Z" secondAttribute="leading" id="dMM-Y0-VaT"/>
                             <constraint firstItem="uA8-vI-XRk" firstAttribute="centerX" secondItem="Ia2-k3-YNN" secondAttribute="centerX" id="fM5-vT-jv8"/>
                             <constraint firstItem="zqd-ZZ-FSO" firstAttribute="width" secondItem="WYR-6J-eOR" secondAttribute="width" multiplier="2:3" id="hnl-v6-HnY"/>
+                            <constraint firstItem="rR2-vH-dF4" firstAttribute="top" secondItem="osT-JB-M8Z" secondAttribute="bottom" constant="8.5" id="sfA-dS-nZi"/>
                             <constraint firstItem="zqd-ZZ-FSO" firstAttribute="height" secondItem="WYR-6J-eOR" secondAttribute="height" multiplier="1:2" id="wb3-8z-ccF"/>
                             <constraint firstItem="mO0-cm-7xw" firstAttribute="trailing" secondItem="zqd-ZZ-FSO" secondAttribute="trailing" constant="-5" id="ynp-Fb-QJe"/>
                             <constraint firstItem="zqd-ZZ-FSO" firstAttribute="top" secondItem="rR2-vH-dF4" secondAttribute="bottom" constant="15" id="zgE-re-vZf"/>
@@ -1559,6 +1571,7 @@ Build v1822.01</string>
                         <outlet property="IMEIString" destination="rR2-vH-dF4" id="RIN-Uu-5W9"/>
                         <outlet property="dvtImageView" destination="zqd-ZZ-FSO" id="wCm-XD-N5W"/>
                         <outlet property="overallTestResult" destination="dht-r2-HGE" id="lEn-5x-sxY"/>
+                        <outlet property="programNameLabel" destination="osT-JB-M8Z" id="NK9-OD-kbs"/>
                         <outlet property="resultImage" destination="ndv-E1-NTv" id="TuI-Ql-eCy"/>
                         <outlet property="sendResultsOutlet" destination="wsq-ld-hb9" id="tgk-b9-GGm"/>
                     </connections>
@@ -1735,6 +1748,16 @@ Build v1822.01</string>
                                     <constraint firstAttribute="width" constant="260" id="hIO-Jb-zM4"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Program" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flr-95-36j">
+                                <rect key="frame" x="215" y="109" width="300" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="hEy-gs-kmB"/>
+                                    <constraint firstAttribute="height" constant="43" id="mH0-D6-pWr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" red="0.8862745098" green="0.17254901959999999" blue="0.43768988720000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1748,7 +1771,9 @@ Build v1822.01</string>
                             <constraint firstItem="bCs-Pe-uEk" firstAttribute="top" secondItem="0w1-Dh-7jo" secondAttribute="bottom" constant="30" id="nMw-bv-MDy"/>
                             <constraint firstItem="Pea-Uo-uNa" firstAttribute="bottom" secondItem="bCs-Pe-uEk" secondAttribute="bottom" constant="20" id="q9k-6N-I7D"/>
                             <constraint firstItem="ibi-gu-wcu" firstAttribute="height" secondItem="2hJ-ov-Oik" secondAttribute="height" multiplier="1:2" id="tRS-FQ-g1u"/>
+                            <constraint firstItem="PDY-0R-WGp" firstAttribute="top" secondItem="flr-95-36j" secondAttribute="bottom" constant="8.5" id="txG-PG-xE2"/>
                             <constraint firstItem="gHb-Qv-Ij1" firstAttribute="centerX" secondItem="Pea-Uo-uNa" secondAttribute="centerX" id="uz3-0q-KPY"/>
+                            <constraint firstItem="PDY-0R-WGp" firstAttribute="leading" secondItem="flr-95-36j" secondAttribute="leading" id="vRu-ji-BIW"/>
                             <constraint firstItem="0w1-Dh-7jo" firstAttribute="top" secondItem="gHb-Qv-Ij1" secondAttribute="bottom" constant="30" id="xVn-rM-Isd"/>
                             <constraint firstItem="ibi-gu-wcu" firstAttribute="top" secondItem="PDY-0R-WGp" secondAttribute="bottom" constant="15" id="yRK-oz-Axg"/>
                         </constraints>
@@ -1763,6 +1788,7 @@ Build v1822.01</string>
                         <outlet property="progessVw1" destination="jIR-J7-5hr" id="F03-9X-D92"/>
                         <outlet property="progessVw2" destination="Ury-Pu-AG2" id="ERa-01-WmP"/>
                         <outlet property="progressStatus" destination="gHb-Qv-Ij1" id="Np8-4h-JfS"/>
+                        <outlet property="selectedProductLabel" destination="flr-95-36j" id="0X2-GR-mf2"/>
                         <outlet property="view1" destination="z0i-07-jUX" id="YbZ-lg-L23"/>
                         <outlet property="view2" destination="L3r-o7-q3O" id="vzJ-xe-qdP"/>
                         <outlet property="view3" destination="ZO7-tc-2oi" id="bpR-UX-7e3"/>
@@ -1795,7 +1821,7 @@ Build v1822.01</string>
                                     <action selector="endSessionPressed:" destination="GK6-GV-rKY" eventType="touchUpInside" id="ULT-Tl-d6F"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We have now completed the ACDC session." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjP-vj-n3G">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We have now completed the CGT session." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjP-vj-n3G">
                                 <rect key="frame" x="306" y="111" width="500" height="93"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="500" id="Mby-Bw-GpM"/>

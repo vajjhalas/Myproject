@@ -9,22 +9,18 @@
 /* Begin PBXBuildFile section */
 		3725DB9020ECD80A001CE039 /* ChamberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725DB8F20ECD80A001CE039 /* ChamberModel.swift */; };
 		372FA19E20E6404300DDFB09 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FA19D20E6404300DDFB09 /* Connection.swift */; };
-		373EB4D920E0EDB90056089F /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D420E0EDB90056089F /* Moya.framework */; };
-		373EB4DA20E0EDB90056089F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D520E0EDB90056089F /* Result.framework */; };
-		373EB4DB20E0EDB90056089F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D620E0EDB90056089F /* Alamofire.framework */; };
-		373EB4DC20E0EDB90056089F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D720E0EDB90056089F /* MBProgressHUD.framework */; };
-		373EB4E920E0F0BD0056089F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D620E0EDB90056089F /* Alamofire.framework */; };
-		373EB4EA20E0F0BD0056089F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D620E0EDB90056089F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		373EB4EB20E0F0BD0056089F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D720E0EDB90056089F /* MBProgressHUD.framework */; };
-		373EB4EC20E0F0BD0056089F /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D720E0EDB90056089F /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		373EB4ED20E0F0BD0056089F /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D420E0EDB90056089F /* Moya.framework */; };
-		373EB4EE20E0F0BD0056089F /* Moya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D420E0EDB90056089F /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		373EB4EF20E0F0BD0056089F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D520E0EDB90056089F /* Result.framework */; };
-		373EB4F020E0F0BD0056089F /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4D520E0EDB90056089F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		373EB4F320E11A9C0056089F /* AcdcNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4F220E11A9C0056089F /* AcdcNetwork.framework */; };
-		373EB4F420E11CE80056089F /* AcdcNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4F220E11A9C0056089F /* AcdcNetwork.framework */; };
-		373EB4F520E11CE80056089F /* AcdcNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 373EB4F220E11A9C0056089F /* AcdcNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		373EB4F720E2600B0056089F /* IMEIHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */; };
+		37A22E1620FC876F00F9DB07 /* ProductEnumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A22E1520FC876F00F9DB07 /* ProductEnumModel.swift */; };
+		37C1E4A220FDC538008D07CB /* AcdcNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49D20FDC538008D07CB /* AcdcNetwork.framework */; };
+		37C1E4A320FDC538008D07CB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49E20FDC538008D07CB /* Alamofire.framework */; };
+		37C1E4A420FDC538008D07CB /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49F20FDC538008D07CB /* Moya.framework */; };
+		37C1E4A520FDC538008D07CB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E4A020FDC538008D07CB /* Result.framework */; };
+		37C1E4A620FDC538008D07CB /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E4A120FDC538008D07CB /* MBProgressHUD.framework */; };
+		37C1E4A820FDC543008D07CB /* AcdcNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49D20FDC538008D07CB /* AcdcNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37C1E4AA20FDC543008D07CB /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49E20FDC538008D07CB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37C1E4AC20FDC543008D07CB /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E4A120FDC538008D07CB /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37C1E4AE20FDC543008D07CB /* Moya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E49F20FDC538008D07CB /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37C1E4B020FDC543008D07CB /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37C1E4A020FDC538008D07CB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D3CAEE32BDAB5C7B4F19BC43 /* Pods_ACDCSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F29781C28B78E127E221759 /* Pods_ACDCSwift.framework */; };
 		DA02C00B20C8F835007CF72E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C00A20C8F835007CF72E /* AppDelegate.swift */; };
 		DA02C00D20C8F835007CF72E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02C00C20C8F835007CF72E /* ViewController.swift */; };
@@ -104,11 +100,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				373EB4EE20E0F0BD0056089F /* Moya.framework in Embed Frameworks */,
-				373EB4F020E0F0BD0056089F /* Result.framework in Embed Frameworks */,
-				373EB4F520E11CE80056089F /* AcdcNetwork.framework in Embed Frameworks */,
-				373EB4EA20E0F0BD0056089F /* Alamofire.framework in Embed Frameworks */,
-				373EB4EC20E0F0BD0056089F /* MBProgressHUD.framework in Embed Frameworks */,
+				37C1E4AE20FDC543008D07CB /* Moya.framework in Embed Frameworks */,
+				37C1E4A820FDC543008D07CB /* AcdcNetwork.framework in Embed Frameworks */,
+				37C1E4B020FDC543008D07CB /* Result.framework in Embed Frameworks */,
+				37C1E4AA20FDC543008D07CB /* Alamofire.framework in Embed Frameworks */,
+				37C1E4AC20FDC543008D07CB /* MBProgressHUD.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,12 +115,13 @@
 		3725DB8F20ECD80A001CE039 /* ChamberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberModel.swift; sourceTree = "<group>"; };
 		372FA19920E63BF200DDFB09 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372FA19D20E6404300DDFB09 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
-		373EB4D420E0EDB90056089F /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Moya.framework; sourceTree = "<group>"; };
-		373EB4D520E0EDB90056089F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = "<group>"; };
-		373EB4D620E0EDB90056089F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
-		373EB4D720E0EDB90056089F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MBProgressHUD.framework; sourceTree = "<group>"; };
-		373EB4F220E11A9C0056089F /* AcdcNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AcdcNetwork.framework; sourceTree = "<group>"; };
 		373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMEIHistoryModel.swift; sourceTree = "<group>"; };
+		37A22E1520FC876F00F9DB07 /* ProductEnumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEnumModel.swift; sourceTree = "<group>"; };
+		37C1E49D20FDC538008D07CB /* AcdcNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AcdcNetwork.framework; path = ACDCSwift/SupportingFrameworks/AcdcNetwork.framework; sourceTree = "<group>"; };
+		37C1E49E20FDC538008D07CB /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ACDCSwift/SupportingFrameworks/Alamofire.framework; sourceTree = "<group>"; };
+		37C1E49F20FDC538008D07CB /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = ACDCSwift/SupportingFrameworks/Moya.framework; sourceTree = "<group>"; };
+		37C1E4A020FDC538008D07CB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ACDCSwift/SupportingFrameworks/Result.framework; sourceTree = "<group>"; };
+		37C1E4A120FDC538008D07CB /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ACDCSwift/SupportingFrameworks/MBProgressHUD.framework; sourceTree = "<group>"; };
 		5F29781C28B78E127E221759 /* Pods_ACDCSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ACDCSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCDB51313F03D0AD8AD417F /* Pods-ACDCSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ACDCSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift.release.xcconfig"; sourceTree = "<group>"; };
 		DA02C00720C8F835007CF72E /* ACDCSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACDCSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,17 +190,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				373EB4D920E0EDB90056089F /* Moya.framework in Frameworks */,
-				373EB4EF20E0F0BD0056089F /* Result.framework in Frameworks */,
-				373EB4F320E11A9C0056089F /* AcdcNetwork.framework in Frameworks */,
-				373EB4DC20E0EDB90056089F /* MBProgressHUD.framework in Frameworks */,
-				373EB4F420E11CE80056089F /* AcdcNetwork.framework in Frameworks */,
-				373EB4EB20E0F0BD0056089F /* MBProgressHUD.framework in Frameworks */,
+				37C1E4A220FDC538008D07CB /* AcdcNetwork.framework in Frameworks */,
+				37C1E4A320FDC538008D07CB /* Alamofire.framework in Frameworks */,
+				37C1E4A420FDC538008D07CB /* Moya.framework in Frameworks */,
+				37C1E4A520FDC538008D07CB /* Result.framework in Frameworks */,
+				37C1E4A620FDC538008D07CB /* MBProgressHUD.framework in Frameworks */,
 				D3CAEE32BDAB5C7B4F19BC43 /* Pods_ACDCSwift.framework in Frameworks */,
-				373EB4DB20E0EDB90056089F /* Alamofire.framework in Frameworks */,
-				373EB4ED20E0F0BD0056089F /* Moya.framework in Frameworks */,
-				373EB4DA20E0EDB90056089F /* Result.framework in Frameworks */,
-				373EB4E920E0F0BD0056089F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,21 +216,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		373EB4D220E0ED7C0056089F /* SupportingFrameworks */ = {
-			isa = PBXGroup;
-			children = (
-				373EB4F220E11A9C0056089F /* AcdcNetwork.framework */,
-				373EB4D620E0EDB90056089F /* Alamofire.framework */,
-				373EB4D720E0EDB90056089F /* MBProgressHUD.framework */,
-				373EB4D420E0EDB90056089F /* Moya.framework */,
-				373EB4D520E0EDB90056089F /* Result.framework */,
-			);
-			path = SupportingFrameworks;
-			sourceTree = "<group>";
-		};
 		B8B4432E05DC1F73234FCDC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37C1E49D20FDC538008D07CB /* AcdcNetwork.framework */,
+				37C1E49E20FDC538008D07CB /* Alamofire.framework */,
+				37C1E4A120FDC538008D07CB /* MBProgressHUD.framework */,
+				37C1E49F20FDC538008D07CB /* Moya.framework */,
+				37C1E4A020FDC538008D07CB /* Result.framework */,
 				372FA19920E63BF200DDFB09 /* Reachability.framework */,
 				5F29781C28B78E127E221759 /* Pods_ACDCSwift.framework */,
 			);
@@ -279,7 +264,6 @@
 		DA02C00920C8F835007CF72E /* ACDCSwift */ = {
 			isa = PBXGroup;
 			children = (
-				373EB4D220E0ED7C0056089F /* SupportingFrameworks */,
 				DA02C00A20C8F835007CF72E /* AppDelegate.swift */,
 				DA02C00C20C8F835007CF72E /* ViewController.swift */,
 				DA02C03F20C911BE007CF72E /* LoginViewController.swift */,
@@ -298,15 +282,16 @@
 				372FA19D20E6404300DDFB09 /* Connection.swift */,
 				DA671F5D20EB96F6005027E3 /* PreviewPDFApi.swift */,
 				3725DB8F20ECD80A001CE039 /* ChamberModel.swift */,
+				37A22E1520FC876F00F9DB07 /* ProductEnumModel.swift */,
 				373EB4F620E2600B0056089F /* IMEIHistoryModel.swift */,
 				DA23FFB720F3379000B6C33B /* SMSPrintViewController.swift */,
 				DA02C00E20C8F835007CF72E /* Main.storyboard */,
 				DA02C01320C8F836007CF72E /* LaunchScreen.storyboard */,
 				DA02C01620C8F836007CF72E /* Info.plist */,
 				DAE9E89820F8762B006D6264 /* Assets.xcassets */,
+				DA02C03820C8F893007CF72E /* Images */,
 				DA22914420CA63DA005451E6 /* Supporting Files */,
 				DAFF2DB220D25CCD000555D5 /* Fonts */,
-				DA02C03820C8F893007CF72E /* Images */,
 			);
 			path = ACDCSwift;
 			sourceTree = "<group>";
@@ -402,6 +387,7 @@
 				08A2509EB8A49161D7079EAD /* [CP] Embed Pods Frameworks */,
 				373EB4F120E0F0BD0056089F /* Embed Frameworks */,
 				C35477FECEEF3E983CAEC6E6 /* [CP] Copy Pods Resources */,
+				37B6F01520FDC13100457882 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -568,6 +554,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACDCSwift/Pods-ACDCSwift-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		37B6F01520FDC13100457882 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
+		};
 		66DDD1EBA22F4C669C0576CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -626,6 +625,7 @@
 				DA656DD020DC188300DDD8D9 /* TiledView.swift in Sources */,
 				DA02C05320C9218F007CF72E /* IMEIViewController.swift in Sources */,
 				3725DB9020ECD80A001CE039 /* ChamberModel.swift in Sources */,
+				37A22E1620FC876F00F9DB07 /* ProductEnumModel.swift in Sources */,
 				DA02C05720C923CF007CF72E /* ChamberConnectionCheckVC.swift in Sources */,
 				DA671F5E20EB96F6005027E3 /* PreviewPDFApi.swift in Sources */,
 				DA22914620CA641C005451E6 /* ModuleSelectCollectionViewCell.swift in Sources */,
@@ -812,8 +812,9 @@
 			baseConfigurationReference = F522C88AF596F6754A088451 /* Pods-ACDCSwift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9AF3H5NEKU;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5NK64Z9467;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -825,8 +826,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pervacio.diagnostics;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perv.acdcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "10f062f3-a4a4-4880-9b71-39d53ac81fa1";
+				PROVISIONING_PROFILE_SPECIFIER = devolpmentProfile;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -837,8 +840,9 @@
 			baseConfigurationReference = 9BCDB51313F03D0AD8AD417F /* Pods-ACDCSwift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9AF3H5NEKU;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5NK64Z9467;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -850,8 +854,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pervacio.diagnostics;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perv.acdcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0cb2c434-ba15-4007-bb35-131c2723503b";
+				PROVISIONING_PROFILE_SPECIFIER = AppstoreACDCProfile;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};

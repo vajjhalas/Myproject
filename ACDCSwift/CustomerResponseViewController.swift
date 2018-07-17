@@ -210,13 +210,8 @@ class CustomerResponseViewController: UIViewController,HamburgerMenuProtocol {
                     
                     if(successStatus.caseInsensitiveCompare("success") == ComparisonResult.orderedSame) {
                         DispatchQueue.main.async {
-                            
-                            let alert = UIAlertController(title: "Thank you!", message: "Your feedback is recorded successfully.", preferredStyle: .alert)
-                            let popAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                                 self.navigateToProductSelection()
-                            })
-                            alert.addAction(popAction)
-                            self.present(alert, animated: true)
+                            
                         }
                     } else {
                         DispatchQueue.main.async {
